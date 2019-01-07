@@ -85,9 +85,9 @@ It uses the [GifAnimation library](https://github.com/extrapixel/gif-animation/t
 
 * Modify one of the `portrait` sketches to load and display the frames in a new way. The sketch should use simple mouse movement to make it interactive (just `mouseX` and `mouseY`). 
 
-* Create your own gitlab project and push your code.
+* Create your own UWaterloo gitlab project and push your code.
 
-* Generate a GIF animation 
+* Generate a GIF animation and share it in Slack
 
 
 
