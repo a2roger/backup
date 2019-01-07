@@ -3,8 +3,9 @@
 The following workshops are in repo directories:
 
 * `w0_portrait/` Workshop 0: Portrait 
-<!-- * `w1_bodyinput/` Workshop 1: Body Input 
-* `w2_datainput/` Workshop 2: Data Input 
-* `w3_generativeoutput/` Workshop 3: Generative Output 
-* `w4_soundoutput/` Workshop 4: Sound Output 
-* `w5_systems/` Workshop 5: Systems  -->
+
+<!-- * `w1_generativeoutput/` Workshop 1: Generative Output  -->
+<!-- * `w2_soundoutput/` Workshop 2: Sound Output  -->
+<!-- * `w3_bodyinput/` Workshop 3: Body Input  -->
+<!-- * `w4_datainput/` Workshop 4: Data Input  -->
+<!-- * `w5_systems/` Workshop 5: Systems   -->
