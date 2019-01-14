@@ -12,7 +12,7 @@ We'll explore different algorithms and techniques to generate visual output. The
 
 #### Required Reading and Viewing
 
-Read the first chapter from Matt Pearson's book, _Generative Art_, **[Generative Art: In Theory and Practice](https://livebook.manning.com/#!/book/generative-art/chapter-1/1)** and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
+Read the first chapter from Matt Pearson's book, _Generative Art_, **[Generative Art: In Theory and Practice](https://livebook.manning.com/#!/book/generative-art/chapter-1/1) (1st edition)** and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
 
 [![Casey Reas Creators Project](https://img.youtube.com/vi/_8DMEHxOLQE/0.jpg)](https://www.youtube.com/embed/_8DMEHxOLQE)
 
@@ -244,7 +244,7 @@ Then use the variable in your agent code. In this case, in `draw`:
   }
 ```
 
-##### 3. To add variety to your drawing, add a parameter to your agent class so not all agents are the same. 
+##### 4. To add variety to your drawing, add a parameter to your agent class so not all agents are the same. 
 
 For example, add a local variable to the Agent class to store the agent's shade (grey value):
 
@@ -276,7 +276,7 @@ Then use this shade when you draw the agent:
 ```
 
 
-##### 4. To add even more variety with interactive control, add a parameter to control how each agent picks a local behaviour parameter. 
+##### 5. To add even more variety with interactive control, add a parameter to control how each agent picks a local behaviour parameter. 
 
 We can go one step further and create a global parameter that controls a range to pick an agent parameter. For example, picking a random stroke weight to be assigned to each agent. 
 
@@ -304,7 +304,7 @@ Add code to use the chosen weight when you draw:
  ```
 
 
-##### 5. Add code to initialize agent positions.
+##### 6. Add code to initialize agent positions.
 
 So far, all agents start in the centre, the pattern of starting positions can have a huge effect on the drawing. 
 
@@ -347,7 +347,7 @@ The ideas above are just a starting point. You could combine different initializ
 
 
 
-##### 6. Experiment with more parameters or drawing rules.
+##### 7. Experiment with more parameters or drawing rules.
 
  Some ideas:
 
