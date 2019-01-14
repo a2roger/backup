@@ -1,6 +1,6 @@
 # Workshop 0: Portrait
 
-Create an of yourself.
+Create an interactive portrait of yourself.
 
 ## Goals
 
