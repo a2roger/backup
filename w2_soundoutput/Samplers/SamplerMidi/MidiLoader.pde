@@ -67,7 +67,7 @@ class MidiLoader {
         int velocity = sm.getData2();
         println("Note on, " + noteName + octave + " key=" + key + " velocity: " + velocity + " ticks=" + mainTrack.get(midi_index).getTick());
         
-        // Set Duraction;
+        // Set Duration;
         prev_tick = mainTrack.get(midi_index).getTick();
         long next_tick = mainTrack.get(midi_index+1).getTick();
         midi_trigger = millis() + 200;//(int) map(next_tick - prev_tick, 0, 200, 100, 1000);//round(map(duration, 0, 3, 0, 1000));

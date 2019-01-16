@@ -59,7 +59,7 @@ public void setup() {
   // setup the simple Gui
   gui = new Gui(this);
 
-  gui.addSlider("Bands", 2, 1024);
+  gui.addSlider("Bands", 2, 2048);
   gui.addSlider("Scale", 0.2, 100);
   gui.addSlider("smooth_factor", 0.0, 1.0);
 }      

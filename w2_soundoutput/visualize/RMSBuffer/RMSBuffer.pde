@@ -21,7 +21,9 @@ int Steps = 100;
 int PrevSteps = 100;
 int StepAmount = 0;
 float Y_Multiplier = 5;
+float Y_Global = 0;
 float X_Multiplier = 10;
+float X_Global = 0;
 int num_lines = 30;
 
 // Buffer
@@ -32,7 +34,7 @@ void setup() {
     size(1200,300);
 
     //Load and play a soundfile and loop it
-    sample = new SoundFile(this, "beat.aiff");
+    sample = new SoundFile(this, "UltraCat_03_Space_Love_Attack.mp3");
     sample.loop();
     
     // Create and patch the rms tracker
@@ -57,7 +59,9 @@ void setup() {
   
     gui.addSlider("Steps", 10, 200);
     gui.addSlider("Y_Multiplier", -20.0, 20.0);
+    gui.addSlider("Y_Global", -200.0, 200.0);
     gui.addSlider("X_Multiplier", -20.0, 20.0);
+    gui.addSlider("X_Global", -200.0, 200.0);
     gui.addSlider("Scale", 0.2, 8);
     gui.addSlider("smooth_factor", 0.0, 1.0);
     gui.addSlider("num_lines", 1, 100);
@@ -98,8 +102,8 @@ void draw() {
       if (current.x < 0 || abs(current.x - previous.x) > 200) continue;
       
       for (int i = 0; i < num_lines; i++){
-        float x_offset = (i - num_lines/2) * Y_Multiplier;
-        float y_offset = (i - num_lines/2) * X_Multiplier;
+        float x_offset = (i - num_lines/2) * Y_Multiplier + Y_Global;
+        float y_offset = (i - num_lines/2) * X_Multiplier + X_Global;
         
         float colorval = map(x_offset * y_offset, 0, 200, 0, 3);
         noStroke();

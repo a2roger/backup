@@ -29,8 +29,8 @@ void setup() {
   // setup the simple Gui
   gui = new Gui(this);
 
-  gui.addSlider("Room", 0, 1.2);
-  gui.addSlider("Wet", 0, 1.2);
+  gui.addSlider("Room", 0, 1.0);
+  gui.addSlider("Wet", 0, 1.0);
 }
 
 void draw() {
@@ -42,6 +42,11 @@ void draw() {
 void keyPressed() {
   for (int i=0; i < 3; i++) {  
     value[i]=int(random(270, 300));
+  }
+  
+  for (int i = 0; i < numsounds; ++i) {
+    verb[i].wet(Wet); 
+    verb[i].wet(Room); 
   }
 
   switch(key) {
