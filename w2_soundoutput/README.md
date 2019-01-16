@@ -12,8 +12,13 @@ Basic Turorials for sound output.
 
 [Minim Resource](http://code.compartmental.net/minim/audioplayer_class_audioplayer.html)
 
-
 [Sounds Analysis Tutorial](https://www.youtube.com/watch?v=2O3nm0Nvbi4)
+
+### Sounds Sources
+
+[Free Sound](https://freesound.org/)
+
+[Free Music Archive](freemusicarchive.org/)
 
 
 ## Preliminaries

@@ -49,9 +49,11 @@ void draw(){
           fill(260 + map(i, 0, numsounds, 0, 30),100, 100);
           noStroke();
           // Draw the rect in the positions we defined earlier in posx
-          rect(i * width/numsounds, 50, 128, 260);
+          rect(i * width/numsounds, 50, 128, 260
+          
           // Choose a random index of the octave array
           rate = octave[int(random(0,5))];
+          
           // Play the soundfile from the array with the respective rate and loop set to false
           file[i].play(rate, 1.0);
       }
