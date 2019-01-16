@@ -18,6 +18,37 @@ Basic Turorials for sound output.
 Download the `Sound` library and the `Minim` library from Processing's built in library manager. 
 
 
+## What is sound?
+
+How does sound as a medium differ from the visual? What makes it unique? 
+
+Sound is intrinsically physical and temporal. Ulike lightwaves, sound waves need a physical material to propergate through, and requires a generator (energy needs to be transferred to .  When building compositions, we need to consider how these soundwaves are temporally spaced, the shape of the wave, and how they change over time. There are other properties of course, such as tone, timbre, richness, tempo, and rythm that also need to be considered; but the entire domain of sound can be compacted into dimensions of time, shape, and change.
+
+### The canvas
+
+![https://www.audioreputation.com/audio-frequency-spectrum-explained/](img/Audio-Frequency-Spectrum-Explained.jpg "https://www.audioreputation.com/audio-frequency-spectrum-explained/") 
+
+
+The human hear has a hearing range that falls between 20Hz to 20kHZ. Though, the what we think of notes will fall into the 60Hz to 6400Hz range, where middle "A" is 440Hz. 
+
+![https://music.stackexchange.com/questions/10472/sound-spectrum-to-notes-software](img/spectrum.jpg "https://music.stackexchange.com/questions/10472/sound-spectrum-to-notes-software")
+
+Another way to visualize the sound spectrum is through analsysis. The image above shows how audio changes over time (x axis) and over the frequency range (y axis). Colour indicates volumn (amplitude). 
+
+
+## Sound and Generative Art
+
+Sounds, by itself, can be used as generative art. Philippe Pasquier and Arne Eigenfeldt explore this in their research into [Metacreation](http://metacreation.net/). 
+
+For your projects, sound could offer five different utilities:
+
+1. Input generation: seed values as a source of psuedo-randomness. 
+2. Output generation: use additive and/or subtractive synthesis as a means of sound output.
+3. Visualization: use music information retrival (MIR) to analysis and produce visualization based on intrinsic properties. 
+4. Monitoring: use external devices (i.e. microphones) to record or monitor the environment. 
+5. Sampling: use pre-recorded audio and manipulation techniques (i.e. effects) to create soundscapes. 
+
+
 ## Visualization
 
 Audio can be visualized in a number of different ways. The basic visualization techniques is to take the amplitude at momenets in time and to use a Fourier transfrom (FFT). Both offer different analysis on what the underlaying audio is doing. 
