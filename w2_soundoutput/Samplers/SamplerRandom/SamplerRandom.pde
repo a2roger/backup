@@ -9,7 +9,7 @@ int numsounds = 5;
 float[] octave = {0.25, 0.5, 1.0, 2.0, 4.0};
 
 // playSound array defines what will be triggered
-int[] playSound = {1,1,1,1,1};
+int[] playSound = {0,0,0,0,0};
 
 // Trigger keeps track of time. 
 int trigger;
@@ -57,7 +57,7 @@ void draw(){
       }
       
       // Renew the indexes of playSound so that at the next event the order is different and randomized.
-      playSound[i] = random(1) > 0.5 ? 1 : 0;
+      playSound[i] = random(1) < 0.35 ? 1 : 0;
     }
     
     // creates an offset between .2 and 1 second
