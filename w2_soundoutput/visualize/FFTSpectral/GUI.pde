@@ -61,6 +61,14 @@ class Gui {
     newLine();
   }
 
+  float getSliderValue(String name){
+      return controlP5.getController(name).getValue();
+  }
+  
+  void setSliderValue(String name, float value) {
+    controlP5.getController(name).setValue(value);
+  }
+
   void draw() {
     controlP5.show();
     controlP5.draw();
