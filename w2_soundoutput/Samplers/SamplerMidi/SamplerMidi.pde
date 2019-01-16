@@ -72,6 +72,7 @@ float midiToFreq(int note) {
   return (pow(2, ((note-69)/12.0)))*440;
 }
 
+
 int prevNote = -1;
 // **IMPORTANT TO IMPLEMENT THIS**
 void NoteCallback(int note, int velocity) {
