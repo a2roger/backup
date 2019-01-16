@@ -13,6 +13,9 @@ Basic Turorials for sound output.
 [Minim Resource](http://code.compartmental.net/minim/audioplayer_class_audioplayer.html)
 
 
+[Sounds Analysis Tutorial](https://www.youtube.com/watch?v=2O3nm0Nvbi4)
+
+
 ## Preliminaries
 
 Download the `Sound` library and the `Minim` library from Processing's built in library manager. 
