@@ -74,7 +74,7 @@ public void Setup_FFT() {
 }
 
 public void setup() {
-  size(640, 360);
+  size(1000, 1000);
   background(0);
   colorMode(HSB, 360, 100, 100);
 
@@ -133,25 +133,7 @@ public void draw() {
     size = (size > 5) ? 5 : size;
 
     float hue = start_hue + map(i, 0, bands, 0, 60);
-    //fill(start_hue + map(i, 0, bands, 0, 60), 100, 100);
-    //noStroke();
-
-    //// Coordinates
-    //float x =0, y = 0;
-    //if (!is_polar) {
-    //  x = width;
-    //  y = height - (i * height/bands);
-    //} else 
-    //{
-    //  float r = i * height/bands;
-    //  float theta = radians(map(position, 0, width, 0, 360));
-
-    //  // Convert into cartesian coordinates
-    //  x = r * cos(theta) + width/2.0;
-    //  y = r * sin(theta) + height/2.0;
-    //}
-
-    //ellipse(x, y, size, size);
+    
     // Store
     eMat[i][Steps - 1].SetColorSize(size, hue);
   }
