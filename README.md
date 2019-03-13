@@ -7,6 +7,4 @@ The following workshops are in repo directories:
 * [`w2_sound/` Workshop 2: Sound Output ](https://git.uwaterloo.ca/csfine383/workshops/tree/master/w2_sound)
 * [`w3_computervision/` Workshop 3: Computer Vision Input ](https://git.uwaterloo.ca/csfine383/workshops/tree/master/w3_computervision)
 * [`w4_data/` Workshop 4: Data Input ](https://git.uwaterloo.ca/csfine383/workshops/tree/master/w4_data)
-
-<!-- * `w4_datainput/` Workshop 4: Data Input  -->
-<!-- * `w5_systems/` Workshop 5: Systems   -->
+* [`w5_distributed/` Workshop 4: Distributed Systems ](https://git.uwaterloo.ca/csfine383/workshops/tree/master/w5_distributed)
