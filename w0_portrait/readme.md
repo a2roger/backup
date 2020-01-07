@@ -13,11 +13,10 @@ Create an interactive portrait of yourself.
 
 ## Processing
 
-1. Download Processing 3.4 [https://www.processing.org/]()
+1. Download the latest Processing [https://www.processing.org/]()
 	* Test your installation by running an example using menu `File/Examples...`
 2. Install Video library
-	* In Processing, open the Contribution Manager using the menu `Tools/Add Tool...`
-	* Click on "Libraries" tab
+	* In Processing, open `Sketch/Import Library...`
 	* search for "Video" and click "Install"
 
 
@@ -29,13 +28,12 @@ Create an interactive portrait of yourself.
 2. Make sure you have access to the workshop code:
  * [https://git.uwaterloo.ca/csfine383/workshops]()
 
-3. Install git on your local machine. 
- * [Official git downloads](https://git-scm.com/downloads) 
- * [Atlassian tutorial for installing git](https://www.atlassian.com/git/tutorials/install-git) (with other install options like [Homebrew](https://brew.sh/) on macOS)
+3. Setup git on your local machine 
+ *  We created a [**guide for using git in 383**](https://git.uwaterloo.ca/csfine383/HowTosAndOtherThings/blob/master/Manuals/GitManual.md).
 
-## Get the workshop code
+## Get the Workshop Code
 
-1. It's easiest if you clone the code into your Processing folder. 
+1. It's easiest if you clone the workshop code into your Processing folder. 
  * Open Processing Preferences to find out where your "Processing Sketchbook" lives (you can change the location too)
 
 2. Create a directory for all the workshop code, like `/workshops` 
@@ -79,6 +77,11 @@ The `portrait*` sketches are what you'll use as a starting point. Each loads the
 The `portrait1` sketch shows how to generate a GIF animation from Processing. You can integrate this code into the other portrait sketches if you use them as a starting point.
 
 It uses the [GifAnimation library](https://github.com/extrapixel/gif-animation/tree/3.0): you have to install this manually (do not install it using the Processing IDE). 
+1. Locate your "Processing Sketchbook" location in the dialog that is opened by the "Processing/About Processing" menu.
+1. Go to that folder and open the `libraries` subfolder. 
+1. Download the `GifAnimation.zip` and unzip it. 
+1. Drag the `gifanimation` subfolder of extracted zip to the Sketchbook `libraries` subfolder. 
+1. Restart Processing. 
 
 
 # Exercise
@@ -87,7 +90,9 @@ It uses the [GifAnimation library](https://github.com/extrapixel/gif-animation/t
 
 * Create your own UWaterloo gitlab project and push your code.
 
-* Generate a GIF animation and share it in Slack
+* Generate a GIF animation and share it in Slack.
+
+* Describe the results of your exercise in today's entry in your Digital Sketchbook.
 
 
 

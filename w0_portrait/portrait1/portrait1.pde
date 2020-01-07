@@ -1,6 +1,7 @@
 /*
  * Interactive portrait1: mouse triggers frames
  *  - move mouse horizontally to display corresponding frame
+ *  - press any key to start and stop GIF save
  */
 
 // load frames you saved in recorder
@@ -21,6 +22,7 @@ void draw() {
 
   image(frames[i], 0, 0);
   
+  // see if a gif frame should be saved
   gifSave(1);
 }
 
@@ -39,7 +41,7 @@ PImage[] loadFrames(String path, int n) {
 
 // Code for Making Gifs
 // (just copy and paste this to the bottom of your sketch and call
-// gifSave in draw)
+// gifSave in draw like above)
 
 // Don't install using "Sketch/Add Library...", you must do a 
 // manual installtion from the URL below. 
@@ -47,11 +49,13 @@ PImage[] loadFrames(String path, int n) {
 import gifAnimation.*; 
 GifMaker gifExport;
 
+int frame;
 boolean saveGif = false;
 
-// 
 void gifSave(int delay) {
   if (saveGif) {
+    frame++;
+    print(frame, " ");
     gifExport.setDelay(delay);
     gifExport.addFrame();
   }
@@ -62,10 +66,11 @@ void keyPressed() {
     gifExport = new GifMaker(this, "me.gif");
     gifExport.setRepeat(0);
     saveGif = true;
+    frame = 0;
     println("Start gif export");
   } else if (saveGif) {
     gifExport.finish();  
     saveGif = false;
-    println("End gif export");
+    println("\nEnd gif export");
   }
 }
