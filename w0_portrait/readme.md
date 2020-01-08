@@ -77,7 +77,7 @@ The `portrait*` sketches are what you'll use as a starting point. Each loads the
 The `portrait1` sketch shows how to generate a GIF animation from Processing. You can integrate this code into the other portrait sketches if you use them as a starting point.
 
 It uses the [GifAnimation library](https://github.com/extrapixel/gif-animation/tree/3.0): you have to install this manually (do not install it using the Processing IDE). 
-1. Locate your "Processing Sketchbook" location in the dialog that is opened by the "Processing/About Processing" menu.
+1. Locate your "Processing Sketchbook" location. On a Mac, this is in the dialog opened by the "Processing/Preferences". On Windows, this is under "File/Preferences".
 1. Go to that folder and open the `libraries` subfolder. 
 1. Download the `GifAnimation.zip` and unzip it. 
 1. Drag the `gifanimation` subfolder of extracted zip to the Sketchbook `libraries` subfolder. 
