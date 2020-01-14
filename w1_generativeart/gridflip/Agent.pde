@@ -1,7 +1,8 @@
 
 class Agent {
 
-  float angle; // line angle (-45 or 45)
+  // line angle (-45 or 45)
+  float angle; 
 
   // location of agent centre and line length
   float x;
@@ -22,7 +23,8 @@ class Agent {
     }
   }
 
-  void update() {    
+  void update() { 
+    
   }
 
   void draw() {

@@ -36,7 +36,7 @@ void setup() {
   gui.addSlider("seed", 1, 100); 
   gui.addSpace();
   gui.addSlider("circleSize", 5, 50);
-  gui.addSlider("randomness", 0, 50);
+  gui.addSlider("randomness", 0, 100);
 
   createAgents(tiles);
 }
@@ -91,6 +91,7 @@ void mouseReleased() {
 }
 
 void launch() {
+  // generate random numbers starting from this "seed"
   randomSeed(seed);
   // note how agent update is called here, not always in draw
   for (Agent a : agents) {

@@ -2,10 +2,8 @@
  * Simple GUI for parameter adjustment
  */
 
-
 import controlP5.*;
 import java.util.Calendar;
-
 
 class Gui {
 
@@ -78,8 +76,6 @@ class Gui {
       controlP5.getGroup("menu").show();
     } else {
       controlP5.getGroup("menu").close();
-      if (key == 'M') 
-        controlP5.getGroup("menu").hide();
     }
     
     // allow saving the frame too
@@ -89,6 +85,5 @@ class Gui {
       println("saving frame as '" + fn + "'");
       saveFrame(fn);
     }
-    
   }
 }

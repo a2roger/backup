@@ -18,7 +18,7 @@ Read the first chapter from Matt Pearson's book, _Generative Art_, **[Generative
 
 <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/_8DMEHxOLQE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
 
-(If you liked that video, you should watch more videos from the _Creators Project_ series.)
+(If you liked that video, you should watch more from the _Creators Project_ series.)
 
 
 # Pre-workshop Set Up
@@ -38,7 +38,7 @@ Try to complete the following _before_ the Workshop class.
 
 * [Generative Design Code Package for Processing 3.x](https://github.com/generative-design/Code-Package-Processing-3.x/releases/tag/latest)
 
-> Post to slack if you have trouble with set up. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
+> Post to Slack if you have trouble with set up. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
 
 
 # In-Class Workshop
@@ -55,17 +55,19 @@ A flexible way to create generative output is to encode drawing behaviour in an 
 
 <!-- ![thumbnail](img/gridflip.png) -->
 
-A grid of Agents, each is a short line that can be tilted in one of two directions. Use Gui menu to adjust parameters and SPACE to pick a new random layout.
+A grid of Agents, each is a short line that can be tilted in one of two directions. Use the Gui menu (top left box) to adjust parameters and SPACE to pick a new random layout.
 
 * `Agent` class: constructor, `update`, and `draw`
-* Using `random(1)` and a threshold between 0 and 1 to make weighted decisions
+* Using `random(1)` and a threshold between 0 and 1 to make weighted pseudo-random decisions
 * code that can easily switch between testing window and **full screen presentation**
 	- tile number is chosen based on _size_ of tile, not _number_ of tiles across
 * Transformation review
-* `Gui` class for parameter control:
+* `Gui` class for menu of parameter controls:
 	- where to wire it in
 	- adding sliders
 	- function callbacks
+	- `m` and `M` to hide and show menu
+	- (also `S` to save image of canvas)
 
 
 #### Experiments
@@ -84,7 +86,7 @@ In `setup()`, add a slider to the GUI to adjust `flipChance`.
 gui.addSlider("flipChance", 0, 1); 
 ```
 
-Add code to `Agent.update()` to flip the angle randomly based on `flipChance`. 
+Add code to `Agent.update()` to flip the angle randomly according on `flipChance`. 
 
 ```java
 if (random(1) < flipChance/frameRate) {
@@ -101,34 +103,34 @@ if (random(1) < flipChance/frameRate) {
 Run your code and adjust the flipChance slider to see the effect.
 
 
-##### 2. To bring the agents to life, try animating the angle change by using this code in `Agent.update()`:
+##### 2. To bring the agents to life, try animating the angle change by inserting this code into `Agent.update()`:
 
 ```java
-//angle = a;
+// angle = a;
 Ani.to(this, 2, "angle", a, Ani.ELASTIC_OUT);
 ```
 
-The  [Ani library](http://www.looksgood.de/libraries/Ani/) is very useful. For example, try changing the [animation easing function](http://www.looksgood.de/libraries/Ani/Ani_Cheat_Sheet.pdf) in the code above from `Ani.ELASTIC_OUT` to something else.
+The [Ani library](http://www.looksgood.de/libraries/Ani/) is very useful. For example, try changing the [animation easing function](http://www.looksgood.de/libraries/Ani/Ani_Cheat_Sheet.pdf) in the code above from `Ani.ELASTIC_OUT` to something else.
 
 
 #### Sketch: **`gridshape`** 
 
 A grid of Agents, each is a small SVG image that turns towards the mouse or scales based on distance from the mouse.
 
-* loading and drawing SVG shapes
-* `atan2` to find angle between two points
-* `dist` to find distance between two points
+* loading and drawing SVG shapes (in `createAgents` and `Agent.draw()`)
+* `atan2` to find angle between two points (in `Agent.update()`)
+* `dist` to find distance between two points (in `Agent.update()`)
 
 
 #### Experiments
 
-##### 1. Use the parameters to generate a form
+##### 1. Use the parameters to generate a static compositional form
 
 Choose a shape and adjust the parameters (or the code itself) to create a form you like. Press 's' to save your final form to disk and share with the class on Slack #general.
 
 ##### 2. Create your own SVG shape to use for an agent
 
-Use an online tool like [Method Draw](http://editor.method.ac/) or your favourite vector drawing program. The SVG should be about 100 by 100 pixels and have a completely transparent background. Simple shapes work great, and offsetting them from the centre of the SVG image area produces nice effects (load one of the SVG shapes in the Data directory to see how they're offset). Try some alpha transparency for the fill and pick different colours too. Save it and share it on Slack.
+Use an online tool like [Method Draw](http://editor.method.ac/) or your favourite vector drawing program. The SVG should be about 100 by 100 pixels and have a completely transparent background. Simple shapes work great. It's important to offsetting them from the centre of the SVG image area to produce interesting effects (load one of the SVG shapes in the Data directory to see how they're offset). Try some alpha transparency for the fill and pick different colours too. Save a composition and share it on Slack.
 
 
 #### Related

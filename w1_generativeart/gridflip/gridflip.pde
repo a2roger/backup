@@ -4,7 +4,7 @@
  *
  */
 
-Gui gui;
+Gui gui; 
 
 import de.looksgood.ani.*;
 
@@ -43,10 +43,10 @@ void createAgents(int tiles) {
 
   // step size between grid centres
   float step = width / tiles;
-  // the length of the agents line (diagonal line of tile)
+  // the length of an agent's line (diagonal line of tile)
   float length = sqrt(step * step + step * step);
 
-  // create an Agent and place it at centre of each tile
+  // create an Agent object and place it at centre of each tile
   for (float x = step/2; x < width; x += step)
     for (float y = step/2; y < height; y += step) {
       Agent a = new Agent(x, y, length);
@@ -72,6 +72,7 @@ void draw() {
 void keyPressed() {
   gui.keyPressed();
   
+  // SPACE to create new image
   if (key == ' ') createAgents(tiles);
 }
 
