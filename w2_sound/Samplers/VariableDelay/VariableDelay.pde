@@ -34,8 +34,8 @@ void draw() {
   // Map mouseY from 0.001 to 2.0 seconds for the delaytime 
   delay.time(map(mouseY, 0, height, 0.001, 2.0));
   
-  // Map mouseX from 0 to 0.8 for the delay feedback 
-  delay.feedback(map(mouseX, 0, width, 0.0, 0.8));
+  // Map mouseX from 0 to 0.8 for the delay feedback
+  delay.feedback(map(mouseX, 0, width, 0.0, 0.97));
 }
 
 void keyPressed()
