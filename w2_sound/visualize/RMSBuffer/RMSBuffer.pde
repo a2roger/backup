@@ -31,7 +31,7 @@ PVector[] point_buffer;
 
 void setup() {
     //fullScreen();
-    size(1200,300);
+    size(1200,600);
 
     //Load and play a soundfile and loop it
     sample = new SoundFile(this, "UltraCat_03_Space_Love_Attack.mp3");
@@ -102,8 +102,8 @@ void draw() {
       if (current.x < 0 || abs(current.x - previous.x) > 200) continue;
       
       for (int i = 0; i < num_lines; i++){
-        float x_offset = (i - num_lines/2) * Y_Multiplier + Y_Global;
-        float y_offset = (i - num_lines/2) * X_Multiplier + X_Global;
+        float y_offset = (i - num_lines/2) * Y_Multiplier + Y_Global;
+        float x_offset = (i - num_lines/2) * X_Multiplier + X_Global;
         
         float colorval = map(x_offset * y_offset, 0, 200, 0, 3);
         noStroke();

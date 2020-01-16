@@ -106,3 +106,11 @@ void Steps(int count) {
     // Adjust step
     StepAmount = width/count;
 }
+
+void keyPressed() {
+  if (key == CODED) {
+    if (keyCode == UP) {
+      background(125,125,125);
+    } 
+  }
+}

@@ -8,7 +8,6 @@ import processing.sound.*;
 // Declare the processing sound variables 
 SoundFile sample;
 FFT fft;
-AudioDevice device;
 Gui gui;
 
 // Declare a scaling factor
@@ -42,11 +41,11 @@ public void Setup_FFT() {
 
 public void setup() {
   size(640, 360);
+  colorMode(HSB, 360, 100, 100);
   background(125);
   
   // If the Buffersize is larger than the FFT Size, the FFT will fail
   // so we set Buffersize equal to bands
-  device = new AudioDevice(this, 44000, bands);
   
   //Load and play a soundfile and loop it. This has to be called 
   // before the FFT is created.
@@ -76,7 +75,6 @@ public void draw() {
   
   // Set background color, noStroke and fill color
   background(125);
-  fill(255,0,150);
   noStroke();
 
   fft.analyze();
@@ -87,6 +85,7 @@ public void draw() {
     sum[i] = sum[i] * (1 - smooth_factor) + fft.spectrum[i] * smooth_factor;
     
     // draw the rects with a scale factor
+    fill(map(i, 0, bands, 200, 260),100,100);
     rect( i*r_width, height, r_width, -sum[i]*height*Scale );
   }
 }

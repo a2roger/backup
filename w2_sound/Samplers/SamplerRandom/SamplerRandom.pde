@@ -63,6 +63,6 @@ void draw(){
     }
     
     // creates an offset between .2 and 1 second
-    trigger = millis() + int(random(200,1000));
+    trigger = millis() + int(random(200,2000 * map(mouseX, 0, width, 0, 1)));
   }
 }

@@ -9,6 +9,8 @@ int numsounds = 5;
 int value[] = {0, 0, 0};
 float Room = 0.5;
 float Wet = 0.2;
+float Damp = 0.2;
+
 
 void setup() {
   size(640, 360);
@@ -31,6 +33,8 @@ void setup() {
 
   gui.addSlider("Room", 0, 1.0);
   gui.addSlider("Wet", 0, 1.0);
+  gui.addSlider("Damp", 0, 1.0);
+
 }
 
 void draw() {
@@ -46,7 +50,8 @@ void keyPressed() {
   
   for (int i = 0; i < numsounds; ++i) {
     verb[i].wet(Wet); 
-    verb[i].wet(Room); 
+    verb[i].room(Room); 
+    verb[i].damp(Room);
   }
 
   switch(key) {

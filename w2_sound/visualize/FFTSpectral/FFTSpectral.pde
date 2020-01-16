@@ -8,7 +8,6 @@ import processing.sound.*;
 // Declare the processing sound variables 
 SoundFile sample;
 FFT fft;
-AudioDevice device;
 Gui gui;
 
 // Declare a scaling factor
@@ -35,7 +34,7 @@ float StepAmount = 0;
 float start_hue = 260;
 
 // Change to polar
-boolean is_polar = true;
+boolean is_polar = false;
 
 public void Setup_FFT() {
   // Create temp sum
@@ -78,10 +77,6 @@ public void setup() {
   background(0);
   colorMode(HSB, 360, 100, 100);
 
-  // If the Buffersize is larger than the FFT Size, the FFT will fail
-  // so we set Buffersize equal to bands
-  device = new AudioDevice(this, 44000, bands);
-
   //Load and play a soundfile and loop it. This has to be called 
   // before the FFT is created.
   sample = new SoundFile(this, "Mecha_Action.aiff");
@@ -114,7 +109,7 @@ public void draw() {
     gui.setSliderValue("Bands", Bands);
   }
 
-  // Copy down viz
+  // Copy down viz (next step to previous step)
   for (int j = 0; j < Steps - 1; ++j) {
     for (int i = 0; i < bands; ++i) {
       eMat[i][j].DeepCopy(eMat[i][j+1]);
@@ -170,5 +165,9 @@ void keyPressed() {
   if (key == ' ') {
     bands = Bands;
     Setup_FFT();
+  }
+  if (key=='p')
+  {
+    is_polar = !is_polar;
   }
 }
