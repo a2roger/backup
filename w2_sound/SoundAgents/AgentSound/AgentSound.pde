@@ -26,15 +26,15 @@ boolean interact = true;
 Minim minim;
 
 void setup() {
-  //size(800, 600);
-  fullScreen();
+  size(800, 600);
+  //fullScreen();
 
   agentsCount = num_samples;
 
   // setup the simple Gui
   gui = new Gui(this);
 
-  gui.addSlider("agentsCount", 10, height);
+  gui.addSlider("agentsCount", 3, 20);
 
   colorMode(HSB, 360, 100, 100, 100);
   background(0);

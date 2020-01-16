@@ -108,7 +108,7 @@ void draw() {
         float colorval = map(x_offset * y_offset, 0, 200, 0, 3);
         noStroke();
         fill(255, colorval, 150);
-        //ellipse(current.x + x_offset, current.y + y_offset, rms*50, rms*50);
+        ellipse(current.x + x_offset, current.y + y_offset, rms*50, rms*50);
         
         stroke(255, colorval, 150);
         line(current.x + x_offset, current.y + y_offset, previous.x + x_offset, previous.y + y_offset);
