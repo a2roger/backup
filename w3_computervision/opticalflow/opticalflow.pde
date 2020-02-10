@@ -62,6 +62,8 @@ void draw() {
     // mirror
     opencv.flip(1);
 
+    // this calculates the "direction" each cell of an
+    // image after it's divided into a grid
     opencv.calculateOpticalFlow();
 
     // calculate average direction
@@ -73,7 +75,7 @@ void draw() {
       direction = new PVector();
     }
 
-    // grab image for display
+    // grab image of video frame for display
     output = opencv.getSnapshot(); 
   }
 
@@ -102,6 +104,10 @@ void draw() {
 
   // the interactove visualization part
   if (makeDrawing) {
+    
+    // this shows how to draw into an image each frame, 
+    // just like drawing into a canvas background
+  
     // make the drawing
     //direction = new PVector(1,1);
     PVector nextPoint = PVector.add(lastPoint, PVector.mult(direction, 10));

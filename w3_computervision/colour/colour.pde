@@ -52,6 +52,7 @@ void setup() {
 
   opencv = new OpenCV(this, cam.width, cam.height);
 
+  // create images to save H, S, B parts each frame
   frameH = new OpenCV(this, cam.width, cam.height);
   frameS = new OpenCV(this, cam.width, cam.height);
   frameB = new OpenCV(this, cam.width, cam.height);
@@ -77,19 +78,24 @@ void draw() {
     opencv.flip(1);
     debug = opencv.getSnapshot(); // grab debug image here
 
+    // switch to HSB image format
     opencv.useColor(HSB);
 
     // reduce noise
     Imgproc.medianBlur(opencv.matGray, opencv.matGray, 3);
 
-    // <4> Copy the Hue channel of our image into 
-    //     the gray channel, which we process.
+    // Copy the Hue channel of our image into 
+    // the gray channel, which we process.
     frameH.setGray(opencv.getH().clone());
+    // returns a mask of all pixels that fall between two values
+    // (in this case, a range of hues)
     frameH.inRange(rangeLow, rangeHigh);
 
+    // avoid pixels that have low saturation
     frameS.setGray(opencv.getS().clone());
     frameS.inRange(50, 255);
 
+    // avoid pixels that are very dark
     frameB.setGray(opencv.getB().clone());
     frameB.inRange(50, 255);
 
@@ -182,6 +188,7 @@ void mousePressed() {
   int hue = int(map(hue(c), 0, 255, 0, 180));
   println("hue to detect: " + hue);
 
+  // add some variance in the hue 
   rangeLow = hue - 20;
   rangeHigh = hue + 20;
 }

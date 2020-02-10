@@ -48,7 +48,7 @@ void draw() {
     // blurring kernel size
     //int ksize = int(adjustY(1, 30));
     int ksize = 3;
-    opencv.blur(ksize);
+    //opencv.blur(ksize);
 
     // medianBlur aperture must be odd and greater than 1, 
     // for example: 3, 5, 7
@@ -57,7 +57,7 @@ void draw() {
     Imgproc.medianBlur(opencv.getGray(), opencv.getGray(), aperture);
 
     // histogram equalization (like auto levels in photoshop)
-    Imgproc.equalizeHist(opencv.getGray(), opencv.getGray());
+    //Imgproc.equalizeHist(opencv.getGray(), opencv.getGray());
 
     // threshold cutoff is between 0 and 255
     int cutoff = int(adjustY(0, 255));
@@ -71,10 +71,11 @@ void draw() {
     // morphological operations (useful for cleaning up noisy image masks)
     //opencv.dilate();
     //opencv.erode();
-    opencv.close(5);
+    //opencv.close(5);
     //opencv.open(5);
-
+    
     debug = opencv.getSnapshot(); // grab debug image here
+
   }
 
   // debug output: image and framerate for now
@@ -92,8 +93,6 @@ void draw() {
   fill(255, 0, 0);
   text(nfc(frameRate, 1), 20, 20);
 }
-
-
 
 // helper functions to adjust values with mouse
 

@@ -63,7 +63,9 @@ void draw() {
 
   // draw the image
   pushMatrix();
-  scale(1 / scale); // inverse of the downsample scale
+  // scale the image back up for display 
+  // (this is the inverse of the downsample scale)
+  scale(1 / scale); 
   image(output, 0, 0 );
   popMatrix();
 

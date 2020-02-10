@@ -26,7 +26,7 @@ Try to complete the following __before__ this Workshop class.
 
 #### 1. Install the "OpenCV for Processing" library
 
-Using `Tools/Add Tool...`, click on "Libraries" tab, search for library name and click "Install". 
+Using `Sketch/Import Library.../Add Library...`, search for the library name and click "Install". 
 
 > **Note that OpenCV is a very large library, so install it where you have a fast connection** (e.g. avoid eduroam at peak times.)
 
@@ -50,7 +50,7 @@ Note some of the included OpenCV examples use other libraries, for example "Imag
 
 > **If everything above works, then you're all set!** 
 
-> **If something didn't work, please post to our Slack channel.** Provide details like what operating system you're using (e.g. MacOSX 10.12.6), what sketch caused the error, what happened when you ran it, and what errors you saw in the console) 
+> **If something didn't work, please post to our Slack channel.** Provide details like what operating system you're using (e.g. MacOSX 10.14.6), what sketch caused the error, what happened when you ran it, and what errors you saw in the console) 
 
 #### 3. Get the latest "Workshop" code from Gitlab
 
@@ -68,11 +68,12 @@ During the workshop, we'll review the Processing code in this directory. Each sk
 Sketch: **`face`**
 
 * the `OpenCV` object and `opencv.loadImage`
+* scaling down the camera image to speed up computer vision processing (see `scale` variable)
 * `flip` to mirror image: for interaction, it's important to use a mirror setup
 * `getSnapshot` and displaying output image (including transform)
 * debug text (`frameRate`)
 * face detection using `opencv.detect` and getting list of face bounding boxes
-* other features to track, code completion on `OpenCV.CASCADE_`
+* other features to track, try code completion on `OpenCV.CASCADE_` or look at [options in documentation](http://atduskgreg.github.io/opencv-processing/reference/gab/opencv/OpenCV.html)
 
 #### Experiments
 
@@ -84,7 +85,7 @@ Sketch: **`opticalflow`**
 
 * `calculateOpticalFlow` and `getAverageFlow`
 * `PVector`, vector math, and dealing with NaN
-* `PGraphics` object for drawing "off canvas"
+* **`PGraphics` object for drawing into an image** (a very useful concept for many projects!)
 * adjusting image transparency `tint` and `noTint` 
 * importance of providing some subtle feedback
 
@@ -94,7 +95,7 @@ Sketch: **`opticalflow`**
 Sketch: **`pipeline`**
 
 * The pipeline paradigm in computer vision 
-* Image filters to clean up noisy capture frames
+* Image filters like `blur` to clean up noisy capture frames
 * Using native OpenCV (e.g. `Imgproc.medianBlur`)
 * Thresholding to get an image mask (`threshold` and `adaptiveThreshold`)
 * Morphological operators to clean up noise after thresholding and create a clean image __mask__ (`dilate`, `erode`, `open`, `close`)
@@ -112,9 +113,14 @@ Use `adjustX` and `adjustY` to change different parameters of the pipeline to cr
 
 Sketch: **`contours`**
 
+* `adjustX` is morphological closing, `adjustY` is binary threshold
 * using `findContours` to detect the contours and return a list 
 * drawing contours using `Contour.draw()`
-* get contour area
+* full contour (in yellow)
+* compute an approximate contour with `Contour.getPolygonApproximation()` (drawn in red)
+* compute the convext hull of a contour with `Contour.getConvexHull()` (drawn in green)
+* compute bounding box of contour with `Contour.getBoundingBox()` (drawn in blue)
+* get contour area with `Contour.area()`
 
 #### Experiments
 
@@ -148,7 +154,7 @@ Create a body drawing program by extending one of the demos in this workshop. It
 
 These are extra code demos not covered in the workshop, but worth looking at on your own.
 
-### Background Subtraction
+## Background Subtraction
 
 Sketch: **`background1`**
 
@@ -163,6 +169,15 @@ Sketch: **`background2`**
 > Note: OpenCV for Processing seems to have a bug with how MOG is wrapped (or there's a bug in OpenCV 2.4). There's no way to adjust the rate that the background model is updated.
 
 [OpenCV reference](https://docs.opencv.org/2.4/modules/video/doc/motion_analysis_and_object_tracking.html?highlight=backgroundsubtractormog#backgroundsubtractormog)
+
+## OpenCV and TensorFlow in P5.js
+
+This site shows how to use OpenCV with P5.js, a JavaScript framework modelled after Processing. It shows examples of more advanced face tracking, object recognition, and body tracking, and more. Many examples use deep learning models via TensorFlow or similar frameworks. 
+[https://kylemcdonald.github.io/cv-examples/]()
+
+## Kinect Depth Camera
+
+There are several Processing libraries that interface with the [Microsoft Kinect Depth Camera](https://en.wikipedia.org/wiki/Kinect) (v1 and v2). We have a limited number of these cameras for you to use. Some features will only work on a Windows machine. 
 
 # References and Resources
 
