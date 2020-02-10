@@ -13,7 +13,7 @@ Learn the basics of interactive computer vision using the [OpenCV for Processing
 * Complete small OpenCV programming experiments with the demo code
 * Create a small computational artwork that uses the body as input
 
-#### Required Reading
+#### Recommended Reading
 
 **Golan Levin, [Computer Vision for Artists and Designers: Pedagogic Tools and Techniques for Novice Programmers](http://www.flong.com/texts/essays/essay_cvad/)**
 
