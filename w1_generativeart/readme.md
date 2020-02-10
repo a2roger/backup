@@ -27,7 +27,7 @@ Try to complete the following _before_ the Workshop class.
 
 #### 1. Install required libraries
 
-* [**Ani**](http://www.looksgood.de/libraries/Ani/), a lightweight library for creating animations and transitions ([easing style cheat sheet](http://benedikt-gross.de/libraries/Ani/Ani_Cheat_Sheet.pdf))
+* [**Ani**](http://www.looksgood.de/libraries/Ani/), a lightweight library for creating animations and transitions ([easing style cheat sheet](http://www.looksgood.de/libraries/Ani/Ani_Cheat_Sheet.pdf))
 * [**ControlP5**](http://www.sojamo.de/libraries/controlP5/), a GUI library to build custom user interfaces 
 * **GenerativeDesign**, a collection of various functions for generative design
 
@@ -38,7 +38,7 @@ Try to complete the following _before_ the Workshop class.
 
 * [Generative Design Code Package for Processing 3.x](https://github.com/generative-design/Code-Package-Processing-3.x/releases/tag/latest)
 
-> Post to Slack if you have trouble with set up. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
+> Post to Slack if you have trouble with setup. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
 
 
 # In-Class Workshop
