@@ -1,6 +1,7 @@
 /*
  * twitter demo
  *   based off of simpletweet example code
+ *   NOTE: See readme.md in this sketch directory for instructions to setup OAuth
  */
 
 import gohai.simpletweet.*;
@@ -47,33 +48,13 @@ SimpleTweet initSimpleTweet() {
 
   SimpleTweet st = new SimpleTweet(this);
 
-  /*
-   * How to set up your OAuth keys and tokens:
-   * 1. Create a text file called "auth_twitter.json" that looks like this:
-   *
-   *      {
-   *       "ConsumerKey" : "", 
-   *       "ConsumerSecret" : "",
-   *       "AccessToken" : "",
-   *       "AccessTokenSecret" : ""
-   *      }
-   *
-   * 2. Create a new Twitter app on https://apps.twitter.com/
-   *    then go to the tab "Keys and tokens".
-   *
-   * 3. Copy the consumer key and secret and fill the values 
-   *    in your json file.
-   *
-   * 4. Click the button to generate the access tokens for your account
-   *    copy and paste those values into the json file as well.
-   */
-
+  // NOTE: See readme.md in this sketch directory for instructions to setup OAuth
   // make sure the path points to your "auth" file
   JSONObject auth = loadJSONObject("../../../auth_twitter.json");
 
   // set the OAuth keys and tokens
-  st.setOAuthConsumerKey(auth.getString("ConsumerKey"));
-  st.setOAuthConsumerSecret(auth.getString("ConsumerSecret"));
+  st.setOAuthConsumerKey(auth.getString("APIKey"));
+  st.setOAuthConsumerSecret(auth.getString("APISecretKey"));
   st.setOAuthAccessToken(auth.getString("AccessToken"));
   st.setOAuthAccessTokenSecret(auth.getString("AccessTokenSecret")); 
 

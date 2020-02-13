@@ -12,7 +12,7 @@ void setup() {
   XML xml = loadXML(url);
   println("  loaded");
   
-  println(xml);
+  //println(xml);
   
   XML[] items = xml.getChild("channel").getChildren("item");
   

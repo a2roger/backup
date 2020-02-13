@@ -57,10 +57,17 @@ void draw() {
   rect(0, 0, width, height);
    
   fill(255);
-  text(words[index], width/2, height/2);
+  float x = width/2;
+  float y = height/2;
+  //// float the text up and down
+  //float floatRange = 100;
+  //y += -floatRange/2 + floatRange * noise(frameCount/500.0);
+  text(words[index], x, y);
   
+  // interval of frames to update the string
   int update = int(adjustX(1, 60)); // ~16 looks nice
   
+  // simple timer method to do something every few frames
   if (frameCount % update == 0) {
     index++;
   }

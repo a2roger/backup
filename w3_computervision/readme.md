@@ -207,9 +207,3 @@ import org.opencv.imgproc.Imgproc;
 ```
 
 See the `HistogramSkinDetection` example sketch included with the OpenCV for Processing library for examples of how to use native commands.
-
-
-
-
-
-

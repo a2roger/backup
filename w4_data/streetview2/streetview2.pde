@@ -2,19 +2,26 @@
  * streetview2
  *   Grabs images of random postal code locations.
  *
+ *   NOTE:  you need an API key, use this page
+ *          https://developers.google.com/maps/documentation/streetview/get-api-key  
+ *
  */
-
 import java.net.*;
 
-// get an API key on this page:
-// https://developers.google.com/maps/documentation/streetview/intro
-String API_KEY = "";
+// you can also paste an API key here (but not recommended)
+String API_KEY;
 
 Table postalCodes;
 
-
 void setup() {
   size(500, 500);
+  
+  // load API key from auth file
+  // (if this fails, make sure you create the auth_google.json file in the
+  // parent directory to the workshop repo, and that you have a valid Google
+  // API key)
+  JSONObject auth = loadJSONObject("../../../auth_google.json");
+  API_KEY = auth.getString("API_KEY");  
 
   // postal code csv is from http://www.geonames.org/
   postalCodes = loadTable("ca_postal_codes.csv", "header");

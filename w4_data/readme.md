@@ -24,13 +24,13 @@ Try to complete the following __before__ the Workshop class.
 
 * **Simple Tweet** for reading and posting to Twitter
 
-Do this just like you did for the Video libraries in Workshop 0.`Tools/Add Tool...`, click on "Libraries" tab, search for library name and click "Install". 
+Do this just like you did for the Video libraries in Workshop 0. Using `Sketch/Import Library.../Add Library...`, search for the library name and click "Install". 
 
 #### 2. Verify the libraries work
 
-To test the Simple Tweet library, try running the `SearchTwitter` sketch from the the `Contributed Folders` tree folder in `File/Examples...`. Since you haven't setup OAuth yet, the sketch will crash with a message beginning with an "ArithmeticException: /by zero" error and a message in the console starting with "400:The request was invalid." As long as you see the same error and message for the crash, everything should be installed correctly. We'll setup OAuth for Twitter in class.
+To test the Simple Tweet library, try running the `SearchTwitter` sketch from the the `Contributed Folders` tree folder in `File/Examples...`. Since you haven't setup OAuth yet, the sketch will crash with a message beginning with an "ArithmeticException: /by zero" error and a message in the console starting with "401:Authentication credentials." As long as you see the same error and message for the crash, everything should be installed correctly. We'll setup OAuth for Twitter during the workshop.
 
-> Post to Slack if you have trouble running the library demos. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error)  
+> Post to Slack if you have trouble running the library demos. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error). 
 
 #### 3. Get the latest "Workshop" code from Gitlab
 
@@ -64,6 +64,7 @@ Loads text from Project Gutenberg, processes it into individual words, and plays
 
 Extra
 * transparency and partial background for animation effects
+* flloating text using `noise`
 
 #### Try and Experiment
 
@@ -76,7 +77,7 @@ Visualize code as abstract fields of brackets.
 * In your loop, add a condition to only render the character using the `text()` function when the character is a bracket (square, round, curly). 
 * You'll have to keep track of the x and y position, similar to the temperature demo below.
 * Tweak the spacing of characters, their fill colour (with transparency), and the size of you canvas (try it tall and thin like a print).
-* You can make this "paint" the characters over time by tracking the current character position in a global variable and incrementing it each frame (which might be pretty slow) or write a loop in draw to look at 100 characters or so each frame
+* You can make this "paint" the characters over time by tracking the current character position in a global variable and incrementing it each frame (which might be pretty slow) or write a loop in draw to look at 100 characters or so each frame.
 
 #### References
 
@@ -94,21 +95,6 @@ Minimal sketch to load a csv into a `Table`, display some meta information, and 
 * iterating through rows
 * getting data by column in a row
 
-#### Try and Experiment
-
-Plot the latitude and longitude of each postal code as a point.
-* You need to `map` longitude values to the x-coordinate and latitude values to y-coordinate. 
-  - Longitudes range from -139.4351 (West Coast) to -52.6961 (East Coast)
-  - Latitudes range from 70.4643 (North) to 42.0377 (Southern border)  
-  - (I left out postal code HOH, see the file!)
-* Access the longitude and latitude using `getFloat` method of the `TableRow`. See the code demos above.
-* To make it more dynamic, plot one point each frame in `draw`. This means you need to keep track of a row index for the table, and increase it each frame.
-
-Experiment further:
-
-* Experiment with different size points (using `strokeWeight`) and different colours and transparency (using `stroke`)
-* You also try connecting the postal code points by lines, and try different sort orders on the table to see the effect (see `sort` and `sortReverse` methods of table)
-
 #### Sketch: **`temperature`** 
 
 Loads historical weather readings taken every 15 min from the [UWaterloo Weather station](http://weather.uwaterloo.ca/) and displays temperatures in a simple visualization.
@@ -116,6 +102,21 @@ Loads historical weather readings taken every 15 min from the [UWaterloo Weather
 * `loadTable` with a URL
 * transforming data to a visualization
 * `colorMode` to specify colours in HSB space
+
+#### Try and Experiment
+
+Starting from the csv sketch, plot the latitude and longitude of each postal code as a point.
+* You need to `map` longitude values to the x-coordinate and latitude values to y-coordinate. 
+  - Longitudes range from -139.4351 (West Coast) to -52.6961 (East Coast)
+  - Latitudes range from 70.4643 (North) to 42.0377 (Southern border)  
+  - (I left out postal code HOH, see the file!)
+* Access the longitude and latitude using `getFloat` method of the `TableRow` (like in the temperature demo).
+* To make it more dynamic, plot one point each frame in `draw`. This means you need to keep track of a row index for the table, and increase it each frame.
+
+Experiment further:
+
+* Experiment with different size points (using `strokeWeight`) and different colours and transparency (using `stroke`)
+* You also try connecting the postal code points by lines, and try different sort orders on the table to see the effect (see `sort` and `sortReverse` methods of table)
 
 ## RSS Feeds in XML
 
@@ -131,6 +132,7 @@ Loads an RSS feed of [curling news](http://www.cbc.ca/cmlink/rss-sports-curling)
 * Strategy to figure out where data is in the XML RSS feed by loading it in a web browser
 * Using the `XML` class methods to extract the information you want
     - `getChild`, `getChildren`, `getContent`, ...
+* Explanation of `<![CDATA[ ... ]]>`
 * Iterating through XML objects
 
 #### Sketch: **`forecast`**
@@ -138,7 +140,7 @@ Loads an RSS feed of [curling news](http://www.cbc.ca/cmlink/rss-sports-curling)
 Loads a [weather feed](https://weather.gc.ca/rss/city/on-82_e.xml) and displays current weather conditions for Canadian cities. Press a key to get the weather for a new random city.
 
 * Strategy to figure out where data is in the XML RSS feed
-* `try` and `catch` to handle exceptions, like bad URL
+* `try` and `catch` to handle exceptions, like a bad URL when I guess city codes for this weather feed.
 
 
 <!-- #### Sketch: **`transit`**
@@ -163,7 +165,7 @@ Extract a block of html with various readings from a real ocean buoy;
 Extend
 
 * Use [`match` and a regular expression](https://processing.org/reference/match_.html) to extract a specific value, like "Significant Wave Height"
-* Translate the buoy information into visualization (what could you do?)
+* Translate the buoy information into a visualization (what could you do?)
 * Query many buoys at regular intervals to create a combined visualization (see a list at [National Data Buoy Center](http://www.ndbc.noaa.gov/)).
 
 
@@ -179,7 +181,7 @@ Useful, but somewhat out-of-date tutorial on RSS in Processing:
 
 Grabs Google streetview images using the Google Streetview API.
 
-> Note: You need a Google Streetview API Key to run this code.
+> Note: You need a [Google Streetview API Key](https://developers.google.com/maps/documentation/streetview/get-api-key) to run this code.
 
 * Querystring API
 * Creating and using API key
@@ -196,7 +198,7 @@ Grabs images of random postal code locations.
 
 #### Try and Experiment
 
-TBD
+Setup a Google API key, and run the streetview1 code. Don't call it too many timers, or you'll have to start paying for it.
 
 
 #### Reference
@@ -221,7 +223,7 @@ There is much, much more to [Twitter Developer APIs](https://developer.twitter.c
 
 #### Try and Experiment
 
-TBD
+Setup a Twitter OAuth.
 
 
 # Exercise
@@ -231,8 +233,8 @@ Extend one of the exercies or demos to create a small computational artwork that
 
 # References and Resources
 
-[Big Data: 33 Brilliant And Free Data Sources For 2016 (Forbes)](
-https://www.forbes.com/sites/bernardmarr/2016/02/12/big-data-35-brilliant-and-free-data-sources-for-2016/#fe34cc3b54db)
+[These Are The Best Free Open Data Sources Anyone Can Use (FreeCodeCamp)](
+https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/)
 
 [50 Amazing Free Data Sources You Should Know (inforgram)](https://infogram.com/blog/free-data-sources/)
 

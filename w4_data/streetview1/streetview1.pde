@@ -1,16 +1,24 @@
 /*
  * streetview1
  *   Shows how to access streetview images with a querystring API.
- *   
+ *
+ *   NOTE:  you need an API key, use this page
+ *          https://developers.google.com/maps/documentation/streetview/get-api-key  
  *
  */
  
- // get an API key on this page:
-// https://developers.google.com/maps/documentation/streetview/intro
-String API_KEY = "";
+// you can also paste an API key here (but not recommended)
+String API_KEY;
 
 void setup() {
   size(500, 500);
+  
+  // load API key from auth file
+  // (if this fails, make sure you create the auth_google.json file in the
+  // parent directory to the workshop repo, and that you have a valid Google
+  // API key)
+  JSONObject auth = loadJSONObject("../../../auth_google.json");
+  API_KEY = auth.getString("API_KEY");
 
   PImage img;
 
@@ -32,6 +40,8 @@ PImage getStreetViewImage(String location, int w, int h, int fov, int head, int 
     "&location=" + location + 
     "&fov=" + fov + "&heading=" + head + "&pitch=" + pitch + 
     "&key=" + API_KEY;
+    
+    println(url);
 
   return loadImage(url, "jpg");
 }
