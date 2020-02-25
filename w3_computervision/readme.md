@@ -173,7 +173,7 @@ Sketch: **`background2`**
 ## OpenCV and TensorFlow in P5.js
 
 This site shows how to use OpenCV with P5.js, a JavaScript framework modelled after Processing. It shows examples of more advanced face tracking, object recognition, and body tracking, and more. Many examples use deep learning models via TensorFlow or similar frameworks. 
-[https://kylemcdonald.github.io/cv-examples/]()
+[https://kylemcdonald.github.io/cv-examples/](https://kylemcdonald.github.io/cv-examples/)
 
 ## Kinect Depth Camera
 
