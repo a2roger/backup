@@ -22,10 +22,10 @@ void setup() {
   // each file is ~12MB, and it will download everytime you
   // run a sketch if you access by URL.
   // Note: 2015 and prior URLs are formated "http://weather.uwaterloo.ca/download/2014_weather_station_data.csv"
-  //String fn = "http://weather.uwaterloo.ca/download/Hobo_15minutedata_2016.csv";
+  String fn = "http://weather.uwaterloo.ca/download/Hobo_15minutedata_2016.csv";
 
   // local file (in data/" directory of this sketch)
-  String fn = "Hobo_15minutedata_2018.csv";
+  //String fn = "Hobo_15minutedata_2018.csv";
   println("Loading `" + fn + "'...");
   table = loadTable(fn, "header");
   println("  loaded " + table.getRowCount() + " rows in " +
@@ -36,7 +36,7 @@ void setup() {
     println(c, table.getColumnType(c));
   }
   
-  // maek the viz
+  // make the viz
   createTemperatureViz();
 }
 
