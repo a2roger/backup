@@ -55,8 +55,8 @@ The example above demonstrates sending message from the client to the server, bu
 
 Notes:
 * expanded protocol to add id and event for client messages
-* HashMap to track state of each client
-* InputState class to store client state
+* HashMap on server to track state of each client
+* InputState class in server to store client state
 
 #### Experiments
 

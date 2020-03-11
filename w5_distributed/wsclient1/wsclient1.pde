@@ -19,6 +19,7 @@ void mouseDragged() {
   // first create message to send to server
   wsc.sendMessage(mouseX + "," + mouseY);
   // then draw some local feedback
+  noStroke();
   fill(0);
   ellipse(mouseX, mouseY, 10, 10);
 }
@@ -28,7 +29,11 @@ void keyPressed() {
 }
 
 // event callback when server sends message
-// (note this is not on drawing thread)
+// NOTE: this isn't on the drawing thread
 void webSocketEvent(String msg) {
   println(msg);
+  
+  // drawing here may not work because of thread boundaries and
+  // different graphics contexts
+  
 }

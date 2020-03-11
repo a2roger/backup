@@ -55,13 +55,14 @@ class Message {
 ConcurrentLinkedQueue<Message> q = new ConcurrentLinkedQueue<Message>();
 
 // event callback when client sends message
-// NOTE: this isn't on the drawing thread, so you can't draw here
+// NOTE: this isn't on the drawing thread
 void webSocketServerEvent(String msg) {
 
   Message m = new Message(msg);
   println(m);
   
-  // drawing here may not work because of thread boundaries
+  // drawing here may not work because of thread boundaries and
+  // different graphics contexts
   //noStroke();
   //fill(255);
   //ellipse(m.x, m.y, 10, 10);
