@@ -1,7 +1,7 @@
 import websockets.*;
 
-// needed for reliabile transfering data from message 
-// thread to drawing thread
+// threadsafe datastructure for transfering data 
+// from message thread to drawing thread
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 WebsocketServer ws;
@@ -10,6 +10,7 @@ void setup() {
   size(400, 400);
 
   // start server
+  // "3001" is the HTTP port to use
   ws = new WebsocketServer(this, 3001, "");
 
   background(0);
@@ -17,7 +18,7 @@ void setup() {
 
 void draw() {
 
-  // process the queue of messages
+  // process the queue of messages from the server
   while (!q.isEmpty()) {
     // pull off message from tail, and paint it as ellipse
     Message m = q.poll();
@@ -28,6 +29,7 @@ void draw() {
 }
 
 void keyPressed() {
+  // send a message to the client
   ws.sendMessage("hi from server");
 }
 
@@ -52,7 +54,7 @@ class Message {
 // from socket thread to main thread
 ConcurrentLinkedQueue<Message> q = new ConcurrentLinkedQueue<Message>();
 
-// callback when client sends message
+// event callback when client sends message
 // NOTE: this isn't on the drawing thread, so you can't draw here
 void webSocketServerEvent(String msg) {
 
