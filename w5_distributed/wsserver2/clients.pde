@@ -25,7 +25,7 @@ class InputState {
       "(" + mouseX + "," + mouseY + ")";
   }
 
-  // the clients state, the same as Processing
+  // the client's state, made to look like Processing input state
   int frameNum;
   int mouseX;
   int mouseY;
@@ -69,11 +69,13 @@ void updateClientStates() {
   while (!q.isEmpty()) {
     Message m = q.poll();
 
+    // clients is a hashmap of client id to client state
     if (!clients.containsKey(m.id)) {
       println("New Client: " + m.id);
       clients.put(m.id, new InputState());
     }
 
+    // now we update the client state
     if (m.e.equals("mm") || m.e.equals("md")) {
       clients.get(m.id).update(frameCount, m.x, m.y, m.e.equals("md"));
     }

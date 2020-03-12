@@ -5,8 +5,8 @@ WebsocketServer ws;
 void setup() {
   size(400, 400);
   ws = new WebsocketServer(this, 3001, "");
-  background(0);
 
+  // create the visualization PGraphics
   PGraphics d = createGraphics(width, height);
   d.beginDraw();
   d.background(0);
@@ -20,18 +20,19 @@ PGraphics vizGraphics;
 boolean showCursors = true;
 
 // choose different visualization here
-Viz viz = new CompetitiveDrawingViz();
+Viz viz = new DrawingViz();
 
 void draw() {
   background(0);
 
   updateClientStates();
   
-  // draw the selected visualization into d
+  // draw the selected visualization into a PGraphics
+  // then display it
   viz.draw(vizGraphics);
-  
   image(vizGraphics, 0, 0);
 
+  // render information about the clients
   fill(255, 255, 0);
   for (String c : clients.keySet()) {
 

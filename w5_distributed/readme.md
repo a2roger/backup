@@ -15,8 +15,7 @@ Complete the following _before_ the Workshop 5 class.
 
 #### 1. Install required libraries
 
-* [**Websockets**](https://github.com/alexandrainst/processing_websockets), a very simple websocket implementation for Processing )
-
+* [**Websockets**](https://github.com/alexandrainst/processing_websockets), a very simple websocket implementation for Processing.
 
 > Use the menu `Sketch/Import Library.../Add Library...`, in the dialogue that opens, search for the library name and click "Install". 
 
@@ -71,6 +70,12 @@ We'll go through the different visualizations.
 ## (EXTRA) Node.js and P5.js Socket Communication: **`nodep5`**
 
 Daniel Shiffman has a [series of short tutorial videos](https://youtu.be/bjULmG8fqc8) explaining how to use sockets with Node.js and P5.js. 
+
+Other related references:
+
+https://github.com/antiboredom/websocket-p5
+
+https://github.com/processing/p5.js/wiki/p5.js,-node.js,-socket.io
 
 ## Exercise
 
