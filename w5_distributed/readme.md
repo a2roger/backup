@@ -11,7 +11,7 @@ We'll explore the idea of connecting multiple sketches together and create a pla
 
 # Pre-workshop Set Up
 
-Complete the following _before_ the Workshop 5 class.
+Complete the following _before_ the workshop class.
 
 #### 1. Install required libraries
 
@@ -77,7 +77,7 @@ https://github.com/antiboredom/websocket-p5
 
 https://github.com/processing/p5.js/wiki/p5.js,-node.js,-socket.io
 
-## Exercise
+# Digital Sketchbook Exercise
 
 Work with a partner to brainstorm a multi-person, mouse-based performance based on the communication capabilities of the socket code framework. Think of a simple idea, if time allows, we'll try and implement it together.
 
