@@ -14,6 +14,8 @@ We'll explore how to use Processing to construct and render 3D objects, control 
 
 _No pre-workshop setup is necessary._
 
+> **Note:** On MacOS, you may see red warning messages in the console  when you run Processing code using the P3D renderer. It's safe to ignore it. 
+
 # In-Class Workshop
 
 During the workshop, we'll review the different Processing code examples and do small exercises.
@@ -21,6 +23,8 @@ During the workshop, we'll review the different Processing code examples and do 
 ## 3D Basics
 
 ### Sketches: **`rectrotate`**
+
+Demonstrates the basics of setting up your canvas for 3D graphics, drawing 3D primitives, and using 3D transformations.
 
 Topics and demos:
 - Coordinate system:
@@ -37,9 +41,17 @@ Topics and demos:
     - `scale(x,y,z)` – *Also scales the stroke weight, which can look weird for large values*
     - `rotateX(t)`, `rotateY(t)`, `rotateZ(t)`
 
-#### Experiment
+#### Experiments
 
-TBD
+1. Try commenting out the `translate` line, what happens? Why?
+2. Add the code below to draw a "2D" line right after the box,  what happens? Why?
+```Java
+line(0, -75, 0, 75);
+```
+3. Change the third argument of `translate` to be `mouseX - 100` like the code below. What happens? Why?
+```Java
+translate(width/2, height/2, mouseX - 100);
+```
 
 ## Cameras and Lights 
 
