@@ -22,7 +22,7 @@ During the workshop, we'll review the different Processing code examples and do 
 
 ## 3D Basics
 
-### Sketches: **`rectrotate`**
+### Sketches: **`boxrotate`**
 
 Demonstrates the basics of setting up your canvas for 3D graphics, drawing 3D primitives, and using 3D transformations.
 
@@ -55,33 +55,52 @@ translate(width/2, height/2, mouseX - 100);
 
 ## Cameras and Lights 
 
-### Sketches: **`cameras`** and **`pointlights`**
+### Sketch: **`cameras`
+
+Interactive control of a virtual 3D camera and basic lighting.
 
 Topics and demos:
-- `lights()`
 - `camera(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ)`
 - `perspective(FOVy, aspect, zNear, zFar)`
+- `lights()`
+
+#### Experiments
+
+TBD
+
+
+### Sketch: **`pointlights`**
+
+Controlling virtual lights and setting material properties. 
+
+Topics and demos:
 - `ambientLight(colour)`
 - `pointLight(colour, x, y, z)`
 - There are also spotlights (`spotLight()`) and directional lights (`directionalLight`), but in interest of time, won't go into detail on those
 - `lightSpecular(colour)` and `shininess(s)`
 
-#### Experiment
+#### Experiments
 
 TBD
 
 ## Constructing and Texturing 3D Objects
 
-### Sketches: **`pyramidshape`** and **`texturecustomshape`**
+### Sketch: **`pyramidshape`** 
 
 Topics and demos:
-
 - `beginShape(mode)` + `vertex(x,y,z)` + `endShape()`
+
+
+### Sketch:  **`texturecustomshape`**
+
+Topics and demos:
+- texture maps: loading and applying
 - UV maps (e.g., like a projection of Earth's surface using latitude and longitude)
 - `vertex(x,y,z,`**`u,v`**`)`
 - UV map can change dynamically
 
-#### Experiment
+
+#### Experiments
 
 TBD
 

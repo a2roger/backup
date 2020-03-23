@@ -22,10 +22,10 @@ void draw() {
   if (keyPressed && key == '1') {
       perspective(
         map(mouseY, 0, height, 0, PI),
-        1.0*width/height, 
+        1.0 * width/height, 
         1, 1000);
   } else {
-      camDist = mouseY*3;
+      camDist = mouseY * 3;
   }       
   
   if (keyPressed && key == '2') {

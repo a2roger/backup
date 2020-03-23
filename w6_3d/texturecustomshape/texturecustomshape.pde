@@ -21,6 +21,11 @@ float offset(float value) {
 
 void draw() {
   background(#55ddff);
+  
+  // rotate scene a bit to show it in 3D
+  translate(35, -50, 0);
+  rotateY(0.2);
+  rotateX(-0.2);
 
   // Draw cliffside
   fill(#443322);
