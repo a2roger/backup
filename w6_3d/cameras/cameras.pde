@@ -37,8 +37,8 @@ void draw() {
   // Draw a box on a plane
   noStroke();
   fill(#668888);
-  box(300,1,300);
-  translate(0,-25,0);
+  box(300, 1, 300);
+  translate(0, -25, 0);
   fill(#887766);
   box(50);
 }

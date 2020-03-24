@@ -23,7 +23,7 @@ void draw() {
   background(#55ddff);
   
   // rotate scene a bit to show it in 3D
-  translate(35, -50, 0);
+  translate(55, -20, 150);
   rotateY(0.2);
   rotateX(-0.2);
 
@@ -31,15 +31,19 @@ void draw() {
   fill(#443322);
   rect(0, 145, width, height);
 
+  translate(0,0,1);
+
   // Draw piece of sky above waterfall
   fill(#55ddff);
   rect(width/2 - 50, 145, 100, 5);
+
+  translate(0,0,1);
 
   // Draw resevoir
   // NOTE: This draws BEHIND the waterfall despite being drawn first,
   // because its z-value is lower than the bottom of the waterfall.
   fill(#0055bb);
-  ellipse(width/2, height, 2*width, 100);
+  ellipse(width/2, height, 2*width, 150);
 
   // Draw waterfall
   pushMatrix();
