@@ -84,7 +84,7 @@ It uses the [GifAnimation library](https://github.com/extrapixel/gif-animation/t
 1. Go to that folder and open the `libraries` subfolder. 
 1. Download the `GifAnimation.zip` and unzip it. 
 1. Drag the `gifanimation` subfolder of extracted zip to the Sketchbook `libraries` subfolder. 
-1. Restart Processing. 
+1. **Restart Processing.** (Processing will not be able to detect the manually-added library until it is restarted.)
 
 
 # Exercise
