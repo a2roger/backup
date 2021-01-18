@@ -1,6 +1,6 @@
 # Workshop 1: Generative Output
 
-We'll explore different algorithms and techniques to generate visual output. The content for this workshop is based on the book [Generative Design](http://www.generative-gestaltung.de/) (and the book's example [code](http://www.generative-gestaltung.de/code)) by Hartmut Bohnacker, Benedikt Groß, Julia Laub, and Claudius Lazzeroni. 
+We'll explore different algorithms and techniques to generate visual output. The content for this workshop is based on the book [Generative Design](http://www.generative-gestaltung.de/1/) (and the book's example [code](https://github.com/generative-design/Code-Package-Processing-3.x/releases/tag/latest)) by Hartmut Bohnacker, Benedikt Groß, Julia Laub, and Claudius Lazzeroni. 
 
 > In these workshop notes, the acronym "GD" refers to the Generative Design book. Related sections and code examples given using the format used in the book (e.g. **P.2.1.2** for sections, `P_2_1_2_01` for code).
 
@@ -12,7 +12,7 @@ We'll explore different algorithms and techniques to generate visual output. The
 
 #### Required Reading and Viewing
 
-Read the first chapter from Matt Pearson's book, _Generative Art_, **[Generative Art: In Theory and Practice](https://livebook.manning.com/#!/book/generative-art/chapter-1/1) (1st edition)** and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
+Read the first chapter from Matt Pearson's book, _Generative Art_, **Generative Art: In Theory and Practice (1st edition)** [available through the school library online](https://learning-oreilly-com.proxy.lib.uwaterloo.ca/library/view/generative-art/9781935182627/kindle_split_013.html) and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
 
 [![Casey Reas Creators Project](https://img.youtube.com/vi/_8DMEHxOLQE/0.jpg)](https://www.youtube.com/embed/_8DMEHxOLQE)
 
@@ -21,9 +21,9 @@ Read the first chapter from Matt Pearson's book, _Generative Art_, **[Generative
 (If you liked that video, you should watch more from the _Creators Project_ series.)
 
 
-# Pre-workshop Set Up
+# Set-Up
 
-Try to complete the following _before_ the Workshop class.
+Several libraries and code need to be downloaded in preparation for the workshop.
 
 #### 1. Install required libraries
 
@@ -38,12 +38,12 @@ Try to complete the following _before_ the Workshop class.
 
 * [Generative Design Code Package for Processing 3.x](https://github.com/generative-design/Code-Package-Processing-3.x/releases/tag/latest)
 
-> Post to Slack if you have trouble with setup. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
+> Post to Teams if you have trouble with setup. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
 
 
-# In-Class Workshop
+# Workshop
 
-During the workshop, we'll review the different Processing code examples and do small exercises.
+In this workshop, we'll review different Processing code examples and do small exercises.
 
 ## Agents and Rules
 
@@ -57,18 +57,81 @@ A flexible way to create generative output is to encode drawing behaviour in an 
 
 A grid of Agents, each is a short line that can be tilted in one of two directions. Use the Gui menu (top left box) to adjust parameters and SPACE to pick a new random layout.
 
-* `Agent` class: constructor, `update`, and `draw`
-* Using `random(1)` and a threshold between 0 and 1 to make weighted pseudo-random decisions
-* code that can easily switch between testing window and **full screen presentation**
-	- tile number is chosen based on _size_ of tile, not _number_ of tiles across
-* Transformation review
-* `Gui` class for menu of parameter controls:
-	- where to wire it in
-	- adding sliders
-	- function callbacks
-	- `m` and `M` to hide and show menu
-	- (also `S` to save image of canvas)
+##### `Agent` Class
 
+Have a look at the `Agent` class in `Agent.pde`. It's made up of:
+- constructor: sets up its properties
+  * The constructor is using `random(1)` and a threshold between 0 and 1 to make weighted pseudo-random decisions. For example `random(1) > 0.5` will be true about half the time, whereas `random(1) > 0.75` will be true about a quarter of the time.
+- `update()`: called each frame, and can be used to update the agent's properties (e.g. position, speed, colour)
+- `draw()`: using the current properties of the agent, draws the agent using Processing drawing commands
+
+The code can easily switch between testing window and **full screen presentation**: comment out the `size()` line and uncomment the `fullScreen()` line. The tile number is chosen based on _size_ of tile, not _number_ of tiles across
+
+
+##### `Gui` Class
+
+As a tool to assist with development, the Processing sketches in this workshop each have a `Gui.pde` file. This contains code that can help you easily tweak parameters in your own code without rerunning it, by adding sliders to a menu.
+
+- press `m` or `M` to hide and show menu
+- press `S` to save an image of canvas
+
+To add a slider to the menu, in `setup()`, add:
+```
+gui.addSlider(variableName, minimumValue, maximumValue);
+```
+where `variableName` is a string with the name of a variable to control, and `minimumValue`/`maximumValue` are the values to which to constrain the slider.
+
+The values from the sliders can be used in one of two ways:
+1. Create a global `float` variable with the same name as the passed `variableName`. When the slider is dragged, the variable will automatically update to the slider's value, and you can use it in `draw()`/etc.
+2. Create a function with the same name as the passed `variableName` with a single `float` parameter. It will be called every time the slider is adjusted.
+
+
+##### Review of Transformations in Processing
+
+The agent is using Processing's transformation functions `translate()` and `rotate()` to position and orient itself.
+
+Drawing code can be individually transformed by wrapping it in `pushMatrix(); [...] popMatrix();`. Otherwise, transformations will accumulate. For example, in the left image, the two translations are stacked on top of each other (the second square is at `(30, 30)`):
+```java
+translate(10, 10);
+rect(0, 0, 50, 50);
+
+translate(20, 20);
+rect(0, 0, 50, 50);
+```
+whereas in the right image, the transformations are applied to the squares independently.
+```java
+pushMatrix();
+translate(50, 10);
+rect(0, 0, 50, 50);
+popMatrix();
+
+pushMatrix();
+translate(50, 20);
+rect(0, 0, 50, 50);
+popMatrix();
+```
+
+![stacking](img/leftnomatrix.png)
+
+
+The order of transformation is also important. The image on the left translates, then rotates the square (about its top left-corner):
+```java
+translate(50, 0);
+rotate(1);
+rect(0, 0, 50, 50);
+```
+whereas the image on the right rotates, then translates (the coordinate frame of the square is rotated too, so the square is translated along a direction in this coordinate frame):
+```java
+rotate(1);
+translate(50, 0);
+rect(0, 0, 50, 50);
+```
+
+![ordering](img/leftrotsecond.png)
+
+
+
+* Transformation review (for more on this, see [Processing's tutorial](https://processing.org/tutorials/transform2d/))
 
 #### Experiments
 
@@ -117,20 +180,46 @@ The [Ani library](http://www.looksgood.de/libraries/Ani/) is very useful. For ex
 
 A grid of Agents, each is a small SVG image that turns towards the mouse or scales based on distance from the mouse.
 
-* loading and drawing SVG shapes (in `createAgents` and `Agent.draw()`)
-* `atan2` to find angle between two points (in `Agent.update()`)
-* `dist` to find distance between two points (in `Agent.update()`)
+To draw SVG images in Processing, `createAgents()` loads the file into a `PShape`:
+```java
+PShape shape = loadShape("module_" + shapeNum + ".svg");
+```
+and each agent draws it in `Agent.draw()` using the `shape()` function:
+```java
+shape(shape, 0, 0, s, s);
+```
+
+##### What's `atan2`?
+
+`atan2(x, y)` can let you compute angles between things. It's similar to `atan(y/x)`, but has the benefit of also producing the correct angle even when x is less than or equal to zero.
+
+`Agent.update()` uses `atan2()` to find the angle from the agent to the mouse:
+```java
+angle = degrees(atan2(mouseY - y, mouseX - x));
+```
+
+In short, to find the angle in degrees between two points `(ax, ay)` and `(bx, by)`, do:
+```java
+degrees(atan2(by - ay, bx - ax))
+```
+
+
+`Agent.update()` also uses the convenient `dist()` function to find the distance between the mouse and the agent:
+```java
+float d = dist(mouseX, mouseY, x, y);
+```
 
 
 #### Experiments
 
 ##### 1. Use the parameters to generate a static compositional form
 
-Choose a shape and adjust the parameters (or the code itself) to create a form you like. Press 's' to save your final form to disk and share with the class on Slack #general.
+Choose a shape and adjust the parameters (or the code itself) to create a form you like. Press 's' to save your final form to disk. If you like, you may include this image in your Public Digital Sketchbook entry.
+
 
 ##### 2. Create your own SVG shape to use for an agent
 
-Use an online tool like [Method Draw](http://editor.method.ac/) or your favourite vector drawing program. The SVG should be about 100 by 100 pixels and have a completely transparent background. Simple shapes work great. It's important to offsetting them from the centre of the SVG image area to produce interesting effects (load one of the SVG shapes in the Data directory to see how they're offset). Try some alpha transparency for the fill and pick different colours too. Save a composition and share it on Slack.
+Use an online tool like [Method Draw](http://editor.method.ac/) or your favourite vector drawing program. The SVG should be about 100 by 100 pixels and have a completely transparent background. Simple shapes work great. It's important to offsetting them from the centre of the SVG image area to produce interesting effects (load one of the SVG shapes in the Data directory to see how they're offset). Try some alpha transparency for the fill and pick different colours too. Load this SVG into the code, and save a composition. If you like, you may include this image in your Public Digital Sketchbook entry.
 
 
 #### Related
@@ -146,8 +235,9 @@ See also GD **P.2.1.1**, p. 206, and these code examples:
 
 Animating the change in position of circles in a grid using controlled random generators.
 
-* calling `Agent.update` from other event functions (not always draw)
-* using `randomSeed`
+This sketch calls `Agent.update()` from event functions other than `draw()`: `draw()` is called each frame to enable the circles to animate, but `Agent.update()` is called when SPACE is pressed, updating the positions for the agents to animate towards
+
+This sketch uses `randomSeed()` to seed the random number generator; this means that each time the code is run, the results of the `random()` calls (and the resulting composition) will be the same
 
 See also GD **P.2.1.2**, p. 210, and these code examples:
 * `P_2_1_2_01`: changing size and position of circles in a grid
@@ -159,11 +249,8 @@ See also GD **P.2.1.2**, p. 210, and these code examples:
 
 Shows that agent rules can come from pixel information. Compare to GD sketch `P_4_3_1_01` which doesn't separate behaviours into agents and uses mouse input to vary parameters.
 
-* Code is a little buggy, and need way to connect agents to each other
-* Would be interesting to run this on live video
-
 See also GD **P.4.3.1**, p. 302, and these code examples:
-* `P_4_3_1_01`: pixel mapping. each pixel is translated into a new element
+* `P_4_3_1_01`: pixel mapping; each pixel is translated into a new element
 
 
 ## Drawing with Agents
@@ -174,8 +261,9 @@ See also GD **P.4.3.1**, p. 302, and these code examples:
 
 Agents move around the canvas leaving a trail.
 
-* semi-random direction and step size (`maxStep` and `probTurn`)
-* `interact = true` turns on additional inter-agent behaviour
+The agents follow a semi-random direction and step size: `maxStep` controls how far the agent can travel each step, and `probTurn` controls how much the agent rotates each step.
+
+Setting `interact = true` turns on additional inter-agent behaviour. If the agents move within a close distance of each other, one agent gets deleted and the other accumulates its stroke weight.
 
 > **Question:** One problem with this agent is that eventually they go too fast and it's hard to slow them down again: what code could you add to keep the speed in check?
 
@@ -185,19 +273,39 @@ Agents move around the canvas leaving a trail.
 
 Agents move around the canvas leaving a trail based on noise.
 
-* Perlin noise (run GD `M_1_4_01` to visualize noise function)
+##### Perlin noise
 
-See also GD **M.1.5**, p. 335, and these code examples:
+This sketch uses Perlin noise (`noise()`), which enables generation of "smooth" pseudo-random sequences at various spatial or temporal frequencies.
+
+These are examples of what Perlin noise looks like at different scales:
+
+![perlinnoise](img/perlinnoise.png)
+
+This is the code that was used to generate the above image:
+```java
+size(400, 100);
+for (float factor : new float[] {0.01, 0.05, 0.1, 4}) {
+  for (int x = 0; x < 100; x++) {
+    for (int y = 0; y < 100; y++) {
+      stroke((int)(255 * noise(x*factor, y*factor)));
+      point(x, y);
+    }
+  }
+  translate(100, 0);
+}
+```
+
+(Run GD `M_1_4_01` to visualize noise function.) See also GD **M.1.5**, p. 335, and these code examples:
 * `M_1_4_01`: creates a terrain like mesh based on noise values.
 * `M_1_5_02_TOOL`:  noise values (noise 2d) are used to animate a bunch of agents
 
 
-### Exercise
+### Exercise: Make your own agent
 
 Create your own drawing agent using the sketch `agentstarter`. This code has the basic shell for an agent-based drawing program, but all agents currently are initialized at the centre of the canvas and they don't move (look carefully, there's a small black dot at the centre). 
 
 
-##### 1. Add code to  to create kinematic drawing rules.
+##### 1. Add code to to create kinematic drawing rules.
 
 A simple drawing rule is to move to a random position nearby. Try adding the code below to `Agent.update()`:
 
@@ -351,15 +459,14 @@ The ideas above are just a starting point. You could combine different initializ
 
 ##### 7. Experiment with more parameters or drawing rules.
 
- Some ideas:
+Some ideas:
 
 * add a rule that always pulls the agent in one direction (like all agents are pulled slowly downward)
 * insert scale and rotate transforms, and make their arguments a global parameter or something different for each agent
 * add a rule where agents track the mouse in some way (like `gridshapes`)
-* add a rule that lets agent's interact (like the code in `drawlines`)
+* add a rule that lets agents interact (like the code in `drawlines`)
 * change how (or what) an agent draws, it could be bezier curves, ellipses, or multiple lines. Even 3D shapes or meshes.
 * use an image, SVG shape, or mouse movement as a seed for agent movements. Give each agent access to the thing you want them to use as guidance, and they can (slightly) conform their movements to that shape, or their colour to the underlying pixel values, etc. 
-* use the kinds of input we talked about for A1 to initialize or control your agents
 * create a family of Agent classes that work together to create a drawing. Some agents could make highlights, some could be rectangular and others curvy, some could even insert text.
 
 # Extras 
@@ -403,9 +510,9 @@ See GD **M.3.0**, p. 370, and these code examples:
 * `M_3_4_01_TOOL` interactive control of 3D mesh parameters 
 
 
-# Exercise
+# Exercise for Public Sketchbook
 
-Continue to iterate the drawing agent you started in the exercise above, and post three generated images (just static PNG images) that demonstrate the range of forms possible using your rules and parameter settings.
+Continue to iterate the drawing agent you started in the exercise above ("Exercise: Make your own agent"), and post three generated images (just static PNG images is fine) that demonstrate the range of forms possible using your rules and parameter settings.
 
 
 <!-- # References and Resources
