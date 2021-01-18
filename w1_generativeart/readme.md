@@ -29,7 +29,6 @@ Several libraries and code need to be downloaded in preparation for the workshop
 
 * [**Ani**](http://www.looksgood.de/libraries/Ani/), a lightweight library for creating animations and transitions ([easing style cheat sheet](http://www.looksgood.de/libraries/Ani/Ani_Cheat_Sheet.pdf))
 * [**ControlP5**](http://www.sojamo.de/libraries/controlP5/), a GUI library to build custom user interfaces 
-* **GenerativeDesign**, a collection of various functions for generative design
 
 > Use the menu `Sketch/Import Library.../Add Library...`, in the dialogue that opens, search for the library name and click "Install". 
 
@@ -62,10 +61,10 @@ A grid of Agents, each is a short line that can be tilted in one of two directio
 Have a look at the `Agent` class in `Agent.pde`. It's made up of:
 - constructor: sets up its properties
   * The constructor is using `random(1)` and a threshold between 0 and 1 to make weighted pseudo-random decisions. For example `random(1) > 0.5` will be true about half the time, whereas `random(1) > 0.75` will be true about a quarter of the time.
-- `update()`: called each frame, and can be used to update the agent's properties (e.g. position, speed, colour)
+- `update()`: called each frame (in this particular sketch – it can be called elsewhere if desired), and can be used to update the agent's properties (e.g. position, speed, colour)
 - `draw()`: using the current properties of the agent, draws the agent using Processing drawing commands
 
-The code can easily switch between testing window and **full screen presentation**: comment out the `size()` line and uncomment the `fullScreen()` line. The tile number is chosen based on _size_ of tile, not _number_ of tiles across
+The code can easily switch between testing window and **full screen presentation**: comment out the `size()` line and uncomment the `fullScreen()` line. The tile number is chosen based on _size_ of tile, not _number_ of tiles across.
 
 
 ##### `Gui` Class
@@ -76,7 +75,7 @@ As a tool to assist with development, the Processing sketches in this workshop e
 - press `S` to save an image of canvas
 
 To add a slider to the menu, in `setup()`, add:
-```
+```java
 gui.addSlider(variableName, minimumValue, maximumValue);
 ```
 where `variableName` is a string with the name of a variable to control, and `minimumValue`/`maximumValue` are the values to which to constrain the slider.
@@ -129,9 +128,7 @@ rect(0, 0, 50, 50);
 
 ![ordering](img/leftrotsecond.png)
 
-
-
-* Transformation review (for more on this, see [Processing's tutorial](https://processing.org/tutorials/transform2d/))
+For more information about transformations in Processing, see [Processing's tutorial](https://processing.org/tutorials/transform2d/).
 
 #### Experiments
 
@@ -191,7 +188,7 @@ shape(shape, 0, 0, s, s);
 
 ##### What's `atan2`?
 
-`atan2(x, y)` can let you compute angles between things. It's similar to `atan(y/x)`, but has the benefit of also producing the correct angle even when x is less than or equal to zero.
+`atan2(y, x)` can let you compute angles between things. It's similar to `atan(y/x)`, but has the benefit of also producing the correct angle even when x is less than or equal to zero.
 
 `Agent.update()` uses `atan2()` to find the angle from the agent to the mouse:
 ```java
@@ -237,7 +234,7 @@ Animating the change in position of circles in a grid using controlled random ge
 
 This sketch calls `Agent.update()` from event functions other than `draw()`: `draw()` is called each frame to enable the circles to animate, but `Agent.update()` is called when SPACE is pressed, updating the positions for the agents to animate towards
 
-This sketch uses `randomSeed()` to seed the random number generator; this means that each time the code is run, the results of the `random()` calls (and the resulting composition) will be the same
+This sketch uses `randomSeed()` to seed the random number generator; this means that each time the code is run, the results of the `random()` calls (and the resulting compositions) will be the same.
 
 See also GD **P.2.1.2**, p. 210, and these code examples:
 * `P_2_1_2_01`: changing size and position of circles in a grid
@@ -512,7 +509,7 @@ See GD **M.3.0**, p. 370, and these code examples:
 
 # Exercise for Public Sketchbook
 
-Continue to iterate the drawing agent you started in the exercise above ("Exercise: Make your own agent"), and post three generated images (just static PNG images is fine) that demonstrate the range of forms possible using your rules and parameter settings.
+Continue to iterate the drawing agent you started in the exercise above ("Exercise: Make your own agent"), and post three generated images (just static PNG images is fine) that demonstrate the range of forms possible using your rules and parameter settings. Describe the parameters and drawing rules that you added.
 
 
 <!-- # References and Resources
