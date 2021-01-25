@@ -16,7 +16,7 @@ void setup() {
 }
 
 void draw() {
-  //background(#112244);
+  background(#112244);
 
   translate(width/2, height/2);
   rotateZ(noise(0.23, 15 * frameCount * 0.00013));

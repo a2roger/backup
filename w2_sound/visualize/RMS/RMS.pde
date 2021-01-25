@@ -10,10 +10,10 @@ SoundFile sample;
 Amplitude rms;
 
 // Declare a scaling factor
-float Scale=5;
+float Scale = 5;
 
 // Declare a smooth factor
-float smooth_factor=0.25;
+float smooth_factor = 0.25;
 
 // Used for smoothing
 float sum, rmsPrev;
@@ -21,7 +21,7 @@ float sum, rmsPrev;
 Gui gui;
 
 public void setup() {
-    size(640,360);
+    size(640, 360);
 
     //Load and play a soundfile and loop it
     sample = new SoundFile(this, "beat.aiff");
@@ -50,7 +50,7 @@ public void draw() {
     float rms = rmsPrev * (1 - smooth_factor) + raw * smooth_factor;  
 
     // rms.analyze() return a value between 0 and 1. It's
-    float rms_scaled=(rms*Scale*height);
+    float rms_scaled = (rms*Scale*height);
     rmsPrev = rms;
 
     // We draw an ellispe coupled to the audio analysis

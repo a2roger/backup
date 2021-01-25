@@ -15,6 +15,7 @@ float Scale=2.5;
 
 // Define how many FFT bands we want
 int bands = 128;
+// Hold new number of bands until ' ' presssed
 int Bands = 128;
 
 // declare a drawing variable for calculating rect width
@@ -45,12 +46,11 @@ public void Setup_FFT() {
     for (int i = 0; i < bands; ++i) { //<>//
 
       // Coordinates
-      float x =0, y = 0;
+      float x = 0, y = 0;
       if (!is_polar) {
         x = j * StepAmount;
         y = height - (i * height/bands);
-      } else 
-      {
+      } else {
         float r = i * height/bands;
         float theta = radians(map(j, 0, Steps, 0, 360));
 
@@ -59,7 +59,7 @@ public void Setup_FFT() {
         y = r * sin(theta) + height/2.0;
       }
       
-      eMat[i][j] = new EllipseContainer(j, i, start_hue, StepAmount, bands);
+      eMat[i][j] = new EllipseContainer(bands);
       eMat[i][j].SetCoord(x, y);
     }
   }
@@ -103,7 +103,7 @@ public void draw() {
 
   // Check bands for power of 2
   if ((Bands & (Bands - 1)) != 0) {
-    // Log base 2
+    // Snap number of bands to the nearest power of 2
     float factor = (float)(Math.log(Bands)/Math.log(2.0));
     Bands = (int) pow(2, (round(factor)));
     gui.setSliderValue("Bands", Bands);
@@ -116,6 +116,7 @@ public void draw() {
     }
   }
 
+  // Frequency spectrum will be stored in fft.spectrum
   fft.analyze();
 
   for (int i = 0; i < bands; i++) {
@@ -124,8 +125,8 @@ public void draw() {
     sum[i] = sum[i] * (1 - smooth_factor) + fft.spectrum[i] * smooth_factor;
 
     // draw the rects with a scale factor
-    float size = sum[i] *Scale * 100;
-    size = (size > 5) ? 5 : size;
+    float size = sum[i] * Scale * 100;
+    size = min(size, 5);
 
     float hue = start_hue + map(i, 0, bands, 0, 60);
     
@@ -140,14 +141,12 @@ public void draw() {
     }
   }
 
-  //// Change position
+  // Change position
   position -= StepAmount;
   if (position <= 0) {
-    if (!is_polar)
-    {
-      //background(0);
-    } else 
-    start_hue = (start_hue + 0.5) % 360;
+    if (is_polar) {
+      start_hue = (start_hue + 0.5) % 360;
+    }
     position = width;
   }
 }
@@ -166,8 +165,7 @@ void keyPressed() {
     bands = Bands;
     Setup_FFT();
   }
-  if (key=='p')
-  {
+  if (key == 'p') {
     is_polar = !is_polar;
   }
 }

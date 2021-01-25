@@ -5,18 +5,9 @@ class EllipseContainer
   public float y = -1; 
   public float size = -1;
   public float hue = 0;
-  public float start_hue;
   public float bands; 
 
-  private int mX;
-  private int mY;
-  private float mStepAmount;
-
-  public EllipseContainer(int posx, int posy, float sHue, float _stepAmount, float _bands) {
-    mX = posx;
-    mY = posy;
-    start_hue = sHue;
-    mStepAmount = _stepAmount;
+  public EllipseContainer(float _bands) {
     bands = _bands;
   }
 
@@ -49,9 +40,9 @@ class EllipseContainer
 
   public void Draw() {
     if (size < 0) return;
-    ellipse(x, y, size, size);
-
+    
     fill(hue, 100, 100);
     noStroke();
+    ellipse(x, y, size, size);
   }
 }

@@ -7,10 +7,10 @@ SoundFile sample;
 Amplitude rms;
 
 // Declare a scaling factor
-float Scale=5;
+float Scale = 5;
 
 // Declare a smooth factor
-float smooth_factor=0.1;
+float smooth_factor = 0.1;
 
 // Vars
 float rmsPrev = 0;
@@ -70,7 +70,7 @@ void draw() {
     float rms = rmsPrev * (1 - smooth_factor) + raw * smooth_factor;  
 
     // rms.analyze() return a value between 0 and 1. It's
-    float rms_scaled=(rms*Scale*height);
+    float rms_scaled = (rms*Scale*height);
     rmsPrev = rms;
     
     // Draw visualization
