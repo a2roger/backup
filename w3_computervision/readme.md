@@ -94,14 +94,14 @@ The way this sketch can detect faces is through *cascades*. These are files that
 ```java
 opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);
 ```
-To load the cascade for faces (tell OpenCV to look for faces). We then use:
+to load the cascade for faces (tell OpenCV to look for faces). We then use:
 ```java
 faces = opencv.detect();
 ```
 in `draw()` to detect the matches for the current cascade (find all the faces). `opencv.detect()` returns a Java AWT `Rectangle` object that stores the `x`, `y` position and width and height of a bounding box for each detected face.
 
 OpenCV supports tracking of other features beyond faces.
-Face detection with OpenCV (`CASCADE_FRONTALFACE`) tends to be rather stable. On the other hand, other cascade files like `CASCADE_EYE` and `CASCADE_MOUTH` more frequently don't detect properly or detect things that aren't eyes or mouths as if they are. Try replacing `CASCADE_FRONTALFACE` with [some other cascades in the documentation](http://atduskgreg.github.io/opencv-processing/reference/gab/opencv/OpenCV.html) (or try code completion on `OpenCV.CASCADE_`) to see how it works.
+Face detection with OpenCV (`CASCADE_FRONTALFACE`) tends to be rather stable. On the other hand, other cascade files like `CASCADE_EYE` and `CASCADE_MOUTH` more frequently don't detect properly or detect things that aren't eyes or mouths as if they are. Try replacing `CASCADE_FRONTALFACE` with [some other cascades in the documentation](http://atduskgreg.github.io/opencv-processing/reference/gab/opencv/OpenCV.html) (or try code completion on `OpenCV.CASCADE_`), to see how it works.
 
 > Note: Cascade files are just (very) large XML files describing features. For example, the `CASCADE_FRONTALFACE` cascade starts with:
 > ```xml
@@ -131,20 +131,20 @@ Face detection with OpenCV (`CASCADE_FRONTALFACE`) tends to be rather stable. On
 
 #### **Tip: Performance Considerations**
 
-You'll notice this sketch has a `scale` variable, which scales down the video resolution passed into `Capture` and `OpenCV`. OpenCV is able to operate more quickly on smaller images. You may find it beneficial to reduce the scale to improve the performance of your art pieces. However, reducing the scale *too* much might cause the computer vision algorithms to fail. For example, if the scale is changed from its default of `0.5` by reducing it to `0.1`, OpenCV fails to detect any faces with Matthew's webcam.
+You'll notice this sketch has a `scale` variable, which scales down the video resolution passed into `Capture` and `OpenCV`. OpenCV is able to operate more quickly on smaller images. You may find it beneficial to reduce the scale to improve the performance of your art pieces. However, reducing the scale *too* much might cause the computer vision algorithms to fail. For example, if the scale is changed from its default of `0.5` to a smaller value of `0.1`, OpenCV fails to detect any faces with Matthew's webcam.
 
 This sketch shows its performance in frames per second (FPS) in red in the top left of the output window (using the `frameRate` built-in variable). Ideally, this number should be about 60 FPS, but when doing computationally intensive computer vision, this number might reduce drastically. Below around 20 FPS, this latency will start to become readily apparent and could detract from a composition.
 
 
 #### Experiments
 
-* Face swap by loading an image and displaying it on top of the tracked face (use a `PImage` and display a scaled version using `image`). There's an emoji image you can use in the `/data` directory.
+* Face swap by loading an image and displaying it on top of the tracked face (use a `PImage` and display a scaled version using `image()`). There's an emoji image you can use in the `/data` directory.
 
 ## Optical Flow
 
 Sketch: **`opticalflow`**
 
-This sketch shows a visual representation of the optical flow over a live feed of your computer's webcam. Optical flow represents an estimate of relative motion between multiple image frames over time. Because it depends on changes in image frames, unlike face detection, it doesn't work on an individual images. *Optical flow is super useful because it lets you use motion in video input as a way of controlling a composition.* However, it can be rather CPU-intensive (slow).
+This sketch shows a visual representation of the optical flow over a live feed of your computer's webcam. Optical flow represents an estimate of relative motion between multiple image frames over time. Because it depends on changes in image frames, unlike face detection, it doesn't work on individual images. *Optical flow is super useful because it lets you use motion in video input as a way of controlling a composition.* However, it can be rather CPU-intensive (slow).
 
 After setting up OpenCV similarly to the `face` sketch above, this sketch calls the `opencv.calculateOpticalFlow()` method, which computes the optical flow in each cell of the image after it's divided into a grid. We then run
 ```java
@@ -156,20 +156,20 @@ to get the average flow (direction of motion) over the whole image, as a `PVecto
 
 If you want to get the flow in a specific area of the video feed, you can use can use `getAverageFlowInRegion(x, y, w, h)`. This would enable you to, for example, separate out the motion made by your left hand and by your right hand, by splitting the image down the centre.
 
-If the motion is very small, `opencv.getAverageFlow()` may return a vector with an NaN `x` or `y` value. This sketch uses `Float.isNaN()` as follows to make sure this doesn't happen:
+If the motion is very small, `opencv.getAverageFlow()` may return a vector with a NaN (invalid) `x` or `y` value. This sketch uses `Float.isNaN()` as follows to make sure this doesn't happen:
 ```java
 if (Float.isNaN(direction.x) || Float.isNaN(direction.y)) {
   direction = new PVector();
 }
 ```
 
-> Note: This sketch draws the camera image semi-transparently above the background. It uses the `tint(grey_value, alpha_transparency)` function to set the transparency, and `noTint()` to restore it.
+> Note: This sketch draws the camera image semi-transparently above the background. It uses the `tint(grey_value, alpha_transparency)` built-in function to set the transparency, and `noTint()` to restore it.
 
 #### Drawing with Optical Flow
 
 Try setting the `makeDrawing` global variable to true. This uses the average optical flow (`direction`) to enable a line to be drawn following the direction of motion. Try writing on the output window by moving your hand around in the view of the camera.
 
-In `draw()`, we draw a line from a previous position to a new position moved in the direction of the optical flow. Rather than drawing this line directly on the screen, we use a `PGraphics` object stored in the global variable `vis` as a buffer. This buffer is then drawn to the output window each frame. `PGraphics` are transparent graphics buffers that have the same drawing functions as the output window, like `stroke()` and `line()`. By having a separate buffer for the pixels drawn by these lines, we don't have to maintain a list of previously drawn points. *`PGraphics` are a very useful concept that can be applied in many projects.*
+In `draw()`, we draw a line from a previous position to a new position moved in the direction of the optical flow. Rather than drawing this line directly on the screen, we use a `PGraphics` object stored in the global variable `vis` as a buffer. This buffer is then drawn to the output window each frame. `PGraphics` are transparent graphics buffers that have the same drawing functions as the output window, like `stroke()` and `line()`. By having a separate buffer for the pixels drawn by these lines, we don't have to manually maintain a list of previously drawn points. *`PGraphics` are a very useful concept that can be applied in many projects.*
 
 
 ## Image Processing Pipeline
@@ -178,20 +178,18 @@ Sketch: **`pipeline`**
 
 This sketch demonstrates the computer vision pipeline and showcases some image filters that OpenCV can apply.
 
-Computer vision approaches often follow a "pipeline" paradigm, in which there are multiple distinct stages. Here are four stages that represent how this pipeline could work:
+Computer vision approaches often follow a "pipeline" paradigm, in which there are multiple distinct stages. Here is a four stage decription of such a pipeline:
 
-1. *Data input*: In the sketches so far, this data has been sourced from your computer's webcam, but static images or videos could also be used. The second stage is the pre-processing stage. 
-2. *Pre-processing*: the data doing things like simplifying colours, scaling, and reducing noise
-3. processing e.g. face tracking or contour tracking
+1. *Data input*: In the sketches so far, this data has been sourced from your computer's webcam, but static images or videos could also be used.
+2. *Pre-processing*: Preparing the data for being processed, doing things like simplifying colours, scaling, and reducing noise.
+3. *Processing*: For example, doing face tracking or contour tracking.
 4. *Using the processed data*: The faces/contours/etc. found in the previous step could drive different parts of an artwork. (Outside an art context, this step might involve something like machine learning clasification or event monitoring.)
 
 This sketch uses blur and median blur image filters to clean up noisy capture frames. The Processing OpenCV library provides a number of filter functions on the `OpenCV` object, like `blur`, `dilate`, and `erode` (the latter two are explained below). It also supports using lower level "native" OpenCV functions. As an example, this sketch shows how the `Imgproc.medianBlur()` function can be used.
 
 After slightly blurring the image to remove noise and sharp edges, we apply a *threshold* filter to make an image *mask*. The most basic threshold, `opencv.threshold(cutoff)`, simply makes any pixels below the cutoff value black, and any pixels above the cutoff value white. The `opencv.adaptiveThreshold()` function can be used to apply a threshold locally to smaller parts of the image. This is useful when the lighting is different across different parts of the image.
 
-After applying the threshold filters, we can apply morphological operations, such as `dilate`, `erode`, `open`, and `close`. These can help clean up noise after thresholding to create a cleaner image mask.
-
-Here is a brief description of each of these operations:
+After applying the threshold filters, we can apply morphological operations, such as `dilate`, `erode`, `open`, and `close`. These can help clean up noise after thresholding to create a cleaner image mask. Here is a brief description of each of these operations:
 - `erode`: shrinks bright regions
 - `dilate`: grows bright regions
 - `open`: erode then dilate
@@ -214,7 +212,7 @@ Use `adjustX` and `adjustY` to change different parameters of the pipeline to cr
 
 Sketch: **`contours`**
 
-This sketch outlines different contours identified in a live feed of your computer's webcam. Contours curves along regions with similar colours and lightness. With proper thresholding, you can use contour finding to track the outline of your arms or fingers as in works like *Text Rain* (Camille Utterbak and Romy Achituv, 1999) and *Hand From Above* (Chris O'Shea, 2009).
+This sketch outlines different contours identified in a live feed of your computer's webcam. Contours are curves along regions with similar colours and lightness. With proper thresholding, you can use contour finding to track the outline of your arms or fingers as in works like *Text Rain* (Camille Utterbak and Romy Achituv, 1999) and *Hand From Above* (Chris O'Shea, 2009).
 
 To find the contours, this sketch calls the `opencv.findContours()` method. It takes two boolean parameters: the first controls whether to find nested contours (holes in other contours), the second controls whether to sort the resulting contours by size in descending order. The method returns all the identified Contours as an `ArrayList` of `Countour`s (a type built into the Processing OpenCV library).
 
@@ -225,7 +223,7 @@ In `draw()`, we iterate through each of the contours and draw them in yellow. To
 
 The area of a contour can be obtained with `Contour.area()`. We use this method in this sketch to ignore contours below a certain size.
 
-Like the previous `pipeline` sketch, this sketch also uses the mosue to tweak filter parameters. `adjustX()` controls morphological closing, `adjustY()` controls binary threshold.
+Like the previous `pipeline` sketch, this sketch also uses the mouse to tweak filter parameters. `adjustX()` controls morphological closing, `adjustY()` controls binary threshold.
 
 #### Experiments
 
@@ -246,7 +244,7 @@ We extract out the individual HSB channels into separate OpenCV objects, using c
 ```java
 frameH.setGray(opencv.getH().clone());
 ```
-From this, we can filter out values we don't want by masking the channels with `inRange(lowerBound, upperBound)`. This method works like `threshold()`, but rather than having a single cutoff, there is a lower bound and an upper bound. Any pixel with a brightness between the bounds becomes white and other pixels become black. In the case of this sketch, we mask out colours that are too far away in hue, too unsaturated, or too dark. We then use the bitwise and boolean operation to compute the *intersection* of all these masks (i.e. pixels that match all of these criteria). OpenCV supports other boolean operations using `Core.bitwise_*` functions ([OpenCV reference](https://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html#bitwise-and)).
+From this, we can filter out values we don't want by masking the channels with `inRange(lowerBound, upperBound)`. This method works like `threshold()`, but rather than having a single cutoff, there is a lower bound and an upper bound. Any pixel with a brightness between the two bounds becomes white, and other pixels become black. In the case of this sketch, we mask out colours that are too far away in hue, too unsaturated, or too dark. We then use the bitwise and boolean operation to compute the *intersection* of all these masks (i.e. pixels that match all of these criteria). OpenCV supports other boolean operations using `Core.bitwise_*` functions ([OpenCV reference](https://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html#bitwise-and)).
 
 Finally, like the `contours` sketch above, this sketch finds the contours in the mask. It calculates the centroid of the largest contour using the `calcCentroid()` function near the bottom of the sketch code. This function returns the average position of a list of points.
 
@@ -259,7 +257,7 @@ Improve the drawing program so the size of the contour changes the strokeWidth.
 
 (See [*Picasso Draws With Light*](http://time.com/3746330/behind-the-picture-picasso-draws-with-light/).)
 
-# Public Sketchbook Exercise
+# Exercise for Public Sketchbook
 
 Create a body drawing program by extending one of the demos in this workshop. It's OK if it's hard to control, the important thing is that a participant would feel like their body movements are somehow making the drawing. Capture and include a short video your program's output, and provide a brief (approx. 250 word) description of how you use input and what computer vision approaches you apply.
 
