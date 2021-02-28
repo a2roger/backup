@@ -6,7 +6,7 @@
 void setup() {
  
   // you can also load from the web by giving a URL
-  //String fn = "http://www.gutenberg.org/cache/epub/2489/pg2489.txt";
+  //String fn = "https://www.gutenberg.org/files/1342/1342-0.txt";
   // this file better tbe in the /data subdirectory
   String fn = "1342-0.txt";
   

@@ -1,5 +1,5 @@
 /*
- * guttenberg - demos text processing
+ * gutenberg - demos text processing
  *   Loads text from Project Gutenberg, processes it into 
  *   individual words, and plays the words in sequence as an animation. 
  */
@@ -11,21 +11,20 @@ void setup() {
   size(720, 480);
   
   // you can also load from the web by giving a URL
-  //String fn = "http://www.gutenberg.org/cache/epub/2489/pg2489.txt";
-  //String start = "*END THE SMALL PRINT!";
+  //String fn = "https://www.gutenberg.org/files/1342/1342-0.txt";
   
   String fn = "1342-0.txt";
   
   // I looked at the file, and found this frontmatter text comes
   // right before the actual book text. It seems to be different for 
   // each file (or at least different types of books)
-  String start = "Produced by Anonymous Volunteers";
+  String start = "Chapter 61";
 
   println("Loading `" + fn + "'...");
   String[] lines = loadStrings(fn);
   println("  loaded " + lines.length + " lines");
 
-  // strip out guttenberg frontmatter and endmatter
+  // strip out gutenberg frontmatter and endmatter
   StringBuilder s = new StringBuilder();
   boolean frontmatter = true;
   for (String l: lines) {
