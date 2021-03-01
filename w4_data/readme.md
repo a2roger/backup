@@ -49,7 +49,10 @@ In this workshop, we'll review the different Processing code examples in this di
 
 #### Sketch: **`text`** 
 
-This is a minimal sketch showing how to load text from a file. It uses the `loadStrings()` built-in function to load the lines of the specified file as an array of strings (text):
+This is a minimal sketch showing how to load text from a file. The output is printed to the Processing console (there is no graphical output).
+
+
+It uses the `loadStrings()` built-in function to load the lines of the specified file as an array of strings (text):
 ```java
 String[] lines = loadStrings(fn);
 ```
@@ -139,7 +142,7 @@ To better understand how to load and process data, let's visualize a piece of co
 
 #### Sketch: **`csv`** 
 
-This is a minimal sketch showing how to load a csv into a `Table`, display some meta information, and iterate through the data.
+This is a minimal sketch showing how to load a csv into a `Table`, display some meta information, and iterate through the data. The output is printed to the Processing console (there is no graphical output).
 
 Processing has built-in functions and classes enabling loading of csv ("comma-separated values") files. These are plain text files in which each line of text represents a row of a table, and columns of the table are delimited using commas (",") in each line of text in the file. The csv file included with this sketch is a table of Canadian postal codes and their corresponding place names, provinces, and coordinates.
 
@@ -189,9 +192,9 @@ RSS stands for [Really Simple Syndication](https://en.wikipedia.org/wiki/RSS), a
 
 #### Sketch: **`rss`**
 
-This sketch loads an RSS feed of [curling news](http://www.cbc.ca/cmlink/rss-sports-curling) and shows how to do some XML processing by printing the title of each news story. RSS data is just a specific format of feed data stored as XML, and is usually hosted on a webserver.
+This sketch loads an RSS feed of [curling news](http://www.cbc.ca/cmlink/rss-sports-curling) and shows how to do some XML processing by printing the title of each news story. The output is printed to the Processing console (there is no graphical output).
 
-To load in the XML feed, we use the `loadXML()` function. As you might expect at this point, this function can take in either a local filename or a URL pointing to a remote file, just like `loadStrings()` and `loadTable()`. `loadXML()` returns an instance of the built-in `XML` class.
+RSS data is just a specific format of feed data stored as XML, and is usually hosted on a webserver. To load in the XML feed, we use the `loadXML()` function. As you might expect at this point, this function can take in either a local filename or a URL pointing to a remote file, just like `loadStrings()` and `loadTable()`. `loadXML()` returns an instance of the built-in `XML` class.
 
 To figure out where the data is within the XML RSS feed, you can inspect it using a web browser, or download it and use a text editor. Try opening the [feed XML in the sketch](http://www.cbc.ca/cmlink/rss-sports-curling) to see what it looks like. The `<![CDATA[ ... ]]>` tags you see around text are a special tag indicating that the contained text is *character data*, and should not be interpreted as XML itself.
 
@@ -242,7 +245,7 @@ Useful, but somewhat out-of-date tutorial on RSS in Processing:
 
 #### Sketch: **`streetview1`**
 
-This sketch shows how to grabs Google streetview images using the Google Streetview API.
+This sketch shows how to grab Google streetview images using the Google Streetview API.
 
 > Note: You need a [Google Streetview API Key](https://developers.google.com/maps/documentation/streetview/get-api-key) to run this code.
 
@@ -250,7 +253,7 @@ This sketch shows how to grabs Google streetview images using the Google Streetv
 
 Google Streetview uses a *querystring* API, meaning that adding parameters to a special API URL performs actions using the API. To get an image from Streetview, the URL *endpoint* is: https://maps.googleapis.com/maps/api/streetview. The parameters `size` (how big the image should be), `location` (a string representing a location, e.g., "48.8742,2.2948", "Kitchener,ON"), `fov`, `heading`, and `pitch` (these three represent the camera field-of-view and direction at the given `location`), and `key` (the API key you generated).
 
-The start of the parameter list is indicated with "`?`" in the URL. Each parameter is incuded in the format `parameter=value`; for example, `size=500x500`. Multiple parameters are separated with "`&`". The sketch concatenates strings together to form a complete querystring:
+The start of the parameter list is indicated with "`?`" in the URL. Each parameter is included in the format `parameter=value`; for example, `size=500x500`. Multiple parameters are separated with "`&`". The sketch concatenates strings together to form a complete querystring:
 ```java
 String url = "https://maps.googleapis.com/maps/api/streetview" + 
   "?size=" + w + "x" + h + 
@@ -305,7 +308,7 @@ There is much more to [Twitter Developer APIs](https://developer.twitter.com/en.
 
 # Exercise for Public Sketchbook
 
-Extend one of the exercies or demos to create a small computational artwork that uses data as input. Capture and include a short video of your artwork, and provide a brief (approx. 250 word) description of what data you use and how you use the data within your artwork.
+Extend one of the exercises or demos to create a small computational artwork that uses data as input. Capture and include a short video of your artwork, and provide a brief (approx. 250 word) description of what data you use and how you use the data within your artwork.
 
 
 
@@ -314,5 +317,5 @@ Extend one of the exercies or demos to create a small computational artwork that
 [These Are The Best Free Open Data Sources Anyone Can Use (FreeCodeCamp)](
 https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/)
 
-[50 Amazing Free Data Sources You Should Know (inforgram)](https://infogram.com/blog/free-data-sources/)
+[50 Amazing Free Data Sources You Should Know (infogram)](https://infogram.com/blog/free-data-sources/)
 
