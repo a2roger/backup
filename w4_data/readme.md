@@ -75,7 +75,7 @@ Like the previous sketch, this sketch loads text from Project Gutenberg, a colle
 ```java
 String start = "Chapter 61";
 ```
-The sketch then adds the remainder of the file (the book contents without the frontmatter) to the `StringBuilder` line-by-line, and convert the `StringBuilder` to a string using `StringBuilder.toString()`.
+The sketch then adds the remainder of the file (the book contents without the frontmatter) to the `StringBuilder` line-by-line, and converts the `StringBuilder` to a string using `StringBuilder.toString()`.
 
 *Tokenizing*: To get the individual words from the text to display, we use Processing's built-in `splitTokens(string, delimiter)`, which splits up a string at one or more occurrences of any character in `delimiter`. We pass in the book text as the `string` and `" "` (a space character) as the `delimiter`. This process is called *tokenization*.
 
@@ -95,7 +95,7 @@ produce the array
 ```java
 {"a", "b,c d"}
 ```
-Processing also has a `startsWith()` string method, that returns whether or not the string starts with the given substraing.
+Processing also has a `startsWith()` string method, that returns whether or not the string starts with the given substring.
 
 To show the words at regular intervals, the sketch uses a parameter called `update` (controlled by the mouse's `x` position) as follows:
 ```java
@@ -123,7 +123,7 @@ This causes the y-position of the word to float up and down, controlled by the `
 
 #### Try and Experiment
 
-To better understand how to load and process data, let's visualize a piece of computer code as an abstract fields of brackets. Try following these steps:
+To better understand how to load and process data, let's visualize a piece of computer code as abstract fields of brackets. Try following these steps:
 
 1. Load some public source code from GitHub. For example, [`PApplet.java`](https://raw.githubusercontent.com/processing/processing/master/core/src/processing/core/PApplet.java) from the Processing language.
 2. Create a loop to iterate through each character in the string of code (stored in the String `all` if you use the minimal text demo as starter code). 
@@ -148,9 +148,9 @@ Processing has built-in functions and classes enabling loading of csv ("comma-se
 
 To load a csv file, we use the `loadTable()` function. Just like the `loadStrings()` function, this function can take in either a local filename or a URL pointing to a remote file (see the next sketch, `temperature`, for an example of using a remote file). `loadTable()` returns a `Table` object, a class built into Processing.
 
-The `Table` ([reference](https://processing.org/reference/Table.html), [javadoc](http://processing.github.io/processing-javadocs/core/processing/data/Table.html)) class has various methods to read and manipulate the table. For example, `.getRowCount()` and `.getColumnCount()` can be used to figure out the size of the table. Table columns can be indexed either using their number (int) or their title (string). To get all the column titles, use the `.getColumnTitles()` method.
+The `Table` class ([reference](https://processing.org/reference/Table.html), [javadoc](http://processing.github.io/processing-javadocs/core/processing/data/Table.html)) has various methods to read and manipulate the table. For example, `.getRowCount()` and `.getColumnCount()` can be used to figure out the size of the table. Table columns can be indexed either using their number (int) or their title (string). To get all the column titles, use the `.getColumnTitles()` method.
 
-In this sketch, we iterate through the table. In each iteration, we obtain each row using `table.getRow(i)` where `i` is the row number. Each table row is represented using the `TableRow` class. We use the `TableRow.getString()` method to get the place name as a string for each row. `TableRow` has other typed methods like `.getInt()` and `.getFloat()` to extract different types out from table cells.
+In this sketch, we iterate through the rows of the table. In each iteration, we obtain the row using `table.getRow(i)` where `i` is the row number. Each table row is represented using the `TableRow` class. We use the `TableRow.getString()` method to get the place name as a string for each row. `TableRow` has other typed methods like `.getInt()` and `.getFloat()` to extract different types out from table cells.
 
 
 #### Sketch: **`temperature`** 
@@ -196,7 +196,7 @@ This sketch loads an RSS feed of [curling news](http://www.cbc.ca/cmlink/rss-spo
 
 RSS data is just a specific format of feed data stored as XML, and is usually hosted on a webserver. To load in the XML feed, we use the `loadXML()` function. As you might expect at this point, this function can take in either a local filename or a URL pointing to a remote file, just like `loadStrings()` and `loadTable()`. `loadXML()` returns an instance of the built-in `XML` class.
 
-To figure out where the data is within the XML RSS feed, you can inspect it using a web browser, or download it and use a text editor. Try opening the [feed XML in the sketch](http://www.cbc.ca/cmlink/rss-sports-curling) to see what it looks like. The `<![CDATA[ ... ]]>` tags you see around text are a special tag indicating that the contained text is *character data*, and should not be interpreted as XML itself.
+To figure out where the data is within the XML RSS feed, you can inspect it using a web browser, or download it and use a text editor. Try opening the [feed XML in the sketch](http://www.cbc.ca/cmlink/rss-sports-curling) to see what it looks like. The `<![CDATA[ ... ]]>` tags you see around text are special tags indicating that the contained text is *character data*, and should not be interpreted as XML itself.
 
 In the case of this curling news, there is one `channel` tag that contains a bunch of `item` tags. Each of these `item` tags represents a single news story, and contains a `title` tag with the title of the news story. The title of each item is ach news item is stored in an `item` tag. We use `.getChild("channel")` to get the channel item, and then `.getChildren("item")` to get an array of `XML` objects representing each of the items. Iterating through each item, we get the title text with `.getChild("title").getContent()`.
 
@@ -206,7 +206,7 @@ This sketch loads a [weather feed](https://weather.gc.ca/rss/city/on-82_e.xml) f
 
 As with the `rss` sketch, we have to understand the structure of the feed and can do this by opening the XML in a web browser. In this case, we see that the weather information is in `title` tags that start with "Current Conditions", contained in `entry` tags.
 
-The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these number is unclear, this sketch tries a random number from 1 to 99 using a try-catch block. If it fails, it repeats with a new random number until it finds one that corresponds to a real region.
+The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99 using a try-catch block. If it fails, it repeats with a new random number until it finds one that corresponds to a real region.
 
 
 <!-- #### Sketch: **`transit`**
@@ -248,6 +248,14 @@ Useful, but somewhat out-of-date tutorial on RSS in Processing:
 This sketch shows how to grab Google streetview images using the Google Streetview API.
 
 > Note: You need a [Google Streetview API Key](https://developers.google.com/maps/documentation/streetview/get-api-key) to run this code.
+>
+> We also highly recommend that, for the course, you enable the "Allow Unsigned Usage" option of your Streetview API key, to avoid having to cryptographically sign every request to the API. To do this, navigate to:
+> https://console.cloud.google.com/google/maps-apis/credentials
+> You should see a webpage similar to the one in the image below.
+>
+> Select "Street View Static API" from the drop-down (indicated with "**A**"), and then select "ALLOW UNSIGNED USAGE" (indicated with "**B**").
+> ![streetview1](img/disabling_streetview_secret.png)
+
 
 ![streetview1](img/streetview1.png)
 
@@ -272,7 +280,7 @@ This sketch grabs images of random postal code locations.
 
 This sketch uses a csv table of Canadian postal codes and latitude-longitude coordinates as the source of locations. It picks a random postal code, and passes the corresponding coordinates to the Streetview API. This is an example of how an artwork might combine multiple data sources in one piece.
 
-To see if a location exists before grabbing an image, the sketch includes an `isStreetViewImage()` function, that uses the `metadata` Streetview endpoint. This endpoint returns a JSON object. Like XML, JSON is a format commonly used to store hierarchical data. Processing has a built-in `JSONObject` type to process JSON data. In the case of Streetview, if the `metadata` response for a given location has a status of `"OK"`, then the location should have a corresponding image.
+To see if a location exists before grabbing an image, the sketch includes an `isStreetViewImage()` function, which uses the `metadata` Streetview endpoint. This endpoint returns a JSON object. Like XML, JSON is a format commonly used to store hierarchical data. Processing has a built-in `JSONObject` type to process JSON data. In the case of Streetview, if the `metadata` response for a given location has a `status` of `"OK"`, then the location should have a corresponding image.
 
 #### Try and Experiment
 
@@ -288,6 +296,8 @@ Set up a Google API key, and run the streetview1 and streetview2 code. Don't run
 
 This sketch grabs a set of 100 tweets matching a given keyword ("#poem" by default).
 
+![streetview2](img/twitter.png)
+
 It uses the [**Simple Tweet** Processing library](https://github.com/gohai/processing-simpletweet), which in turn depends on the [**twitter4j** Java library](http://twitter4j.org/en/). See the `readme.md` file in the twitter code folder for instructions on setting up OAuth on Twitter.
 
 To use the Simple Tweet library, the first thing to do is set the OAuth keys and tokens. We create a new `SimpleTweet` object and set the four different required keys and tokens with the `.setOAuth*()` methods.
@@ -297,7 +307,7 @@ To get a list of tweets that match a query, we use the following code:
 QueryResult result = simpletweet.twitter.search(query);
 ArrayList<Status> tweets = (ArrayList)result.getTweets();
 ```
-where `simpletweet` is our `SimpleTweet` instance. `QueryResult` is a class specific to twitter4j, from which extract an `ArrayList` of tweets (`Status`). For each tweet, we can get the text using `Status.getText()` and the username with `Status.getUser().getScreenName()`.
+where `simpletweet` is our `SimpleTweet` instance. `QueryResult` is a class specific to twitter4j, from which we extract an `ArrayList` of tweets (`Status`). For each tweet, we can get the text using `Status.getText()` and the username with `Status.getUser().getScreenName()`.
 
 There is much more to [Twitter Developer APIs](https://developer.twitter.com/en.html) and Search Tweet functionality in the twitter4j Java library. Note that not all of the Twitter API calls are wrapped in the Processing Library, but you can access them directly with "native" Java calls.
 
