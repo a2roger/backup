@@ -114,7 +114,7 @@ https://github.com/antiboredom/websocket-p5
 
 https://github.com/processing/p5.js/wiki/p5.js,-node.js,-socket.io
 
-# Digital Sketchbook Exercise
+# Exercise for Public Sketchbook
 
 Create a simple, multi-person, mouse-based artwork based on the communication capabilities of the socket code framework. Capture and include a short video of your artwork, and provide a brief (approx. 250 word) description of the artwork and how you use sockets within your artwork.
 
