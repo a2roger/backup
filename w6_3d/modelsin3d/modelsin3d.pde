@@ -6,6 +6,7 @@ boolean drawMultiple = false;
 
 void setup() {
   size(800, 400, P3D);
+  frameRate(60); // macOS Big Sur bug workaround
   tree = loadShape("tree.obj");
   alternateTexture = loadImage("tree_texture_alternate.jpg");
 }

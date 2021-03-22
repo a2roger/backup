@@ -14,6 +14,7 @@ float sX;
 
 void setup() {
   size(300, 300, P3D);
+  frameRate(60); // macOS Big Sur bug workaround
 }
 
 void draw() {

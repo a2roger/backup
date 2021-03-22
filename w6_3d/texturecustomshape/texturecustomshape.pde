@@ -7,6 +7,7 @@ float currentOffset = 0;
 void setup() {
   size(500, 500, P3D);
   texture = loadImage("waterfall.jpg");
+  frameRate(60); // macOS Big Sur bug workaround
   textureMode(NORMAL); // Normalized UV coordinates (IMAGE is other option)
   textureWrap(REPEAT); // As opposed to CLAMP
 }

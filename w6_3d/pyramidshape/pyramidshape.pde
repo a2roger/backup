@@ -4,6 +4,7 @@ float s = 100;
 
 void setup() {
   size(300, 300, P3D);
+  frameRate(60); // macOS Big Sur bug workaround
 }
 
 void draw() {
@@ -14,7 +15,7 @@ void draw() {
   rotateY(map(mouseX, 0, width, 0, 2*PI));
   rotateX(map(mouseY, 0, height, 0, 2*PI));
   // Uncomment to move triangle origin
-  translate(-s/2, -s/2, 0);
+  //translate(-s/2, -s/2, 0);
 
   beginShape(TRIANGLES);
   

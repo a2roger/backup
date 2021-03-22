@@ -2,6 +2,7 @@
 void setup() {
   // need to set the "renderer" to P3D
   size(300, 300, P3D);
+  frameRate(60); // macOS Big Sur bug workaround
 }
 
 void draw() {
