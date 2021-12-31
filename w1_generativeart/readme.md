@@ -338,164 +338,148 @@ for (float factor : new float[] {0.01, 0.05, 0.1, 4}) {
 * `M_1_5_02_TOOL`:  noise values (noise 2d) are used to animate a bunch of agents
 
 
-### Exercise: Make your own agent
+### Exercise: Make your own drawing agent
 
 Create your own drawing agent using the sketch `agentstarter`. This code has the basic shell for an agent-based drawing program, but all agents currently are initialized at the centre of the canvas and they don't move (look carefully, there's a small black dot at the centre). 
 
 
-##### 1. Add code to to create kinematic drawing rules.
+#### 1. Add code to to create kinematic drawing rules.
 
 A simple drawing rule is to move to a random position nearby. Try adding the code below to `Agent.update()`:
 
 ```js
-  void update() {
-    // save last position
-    px = x;
-    py = y;
-
-    // pick a new position
-    x = x + random(-param, param);
-    y = y + random(-param, param);
-  }
+// pick a new position    
+this.x += random(-p.myParam, p.myParam);
+this.y += random(-p.myParam, p.myParam);  
  ```
 
-##### 2. Run your code and adjust the _param_ slider in the Gui to see what happens. 
+#### 2. Run your code and adjust the _myParam_ slider in the Gui to see what happens. 
 
-Adjusting the param slider makes it more or less random. You should change the param variable and slider name to be something meaningful, like "maxStepSize".
+Adjusting myParam slider changes how fast the agents move. You should change the myParam variable and slider name to be something meaningful, like "maxStepSize".
 
 
-##### 3. Add a parameter to change a global drawing property.
+#### 3. Add a parameter to change a global drawing property.
 
 For example, add a global parameter for the opacity of the stroke.
 
-Create a global variable like:
+Add a new "opacity" parameter to your GUI by adding these properties to your `p` object (top of `sketch.js`), like this:
 
 ```js
-float opacity = 20;
-```
-
-Add code to create a Gui slider in `setup` (the string must be exactly the same as the variable name for the Gui to automatically change the value):
-
-```js
-  gui.addSlider("opacity", 0, 255);
-```
-
-Then use the variable in your agent code. In this case, in `draw`:
-
-```js
-  void draw() {
-    // draw a line between last position
-    // and current position
-    strokeWeight(1);
-    stroke(0, opacity); // using global opacity variable
-    line(px, py, x, y);
-  }
-```
-
-##### 4. To add variety to your drawing, add a parameter to your agent class so not all agents are the same. 
-
-For example, add a local variable to the Agent class to store the agent's shade (grey value):
-
-```js 
-class Agent {
-
-  float shade; 
+let p = {
 
   ...
- ```
 
- In the Agent constructor, pick a shade randomly. For example, this picks black or white:
+  // opacity of the agents
+  opacity: 255,
+  opacityMin: 0,
+  opacityMax: 255,
+}
+```
+Then use the variable in your agent code. In this case, in `Agent.draw()`:
+
+```js
+draw() {
+    strokeWeight(1);
+    stroke(0, p.opacity); // using global opacity variable
+    line(this.px, this.py, this.x, this.y);
+}
+```
+
+#### 4. To add variety to your drawing, add a parameter to your agent class so not all agents are the same. 
+
+For example, add a field to the Agent class to store the agent's shade (grey value). In the Agent constructor, pick a shade randomly between black or white:
 
 ```js 
-    // pick a random grey shade
-    shade = 255 * int(random(0, 2));
+  constructor() {
+      ...
+
+      // pick a random grey shade
+      this.shade = random(255)
+  }
 ```
 
 Then use this shade when you draw the agent:
 
 ```js
-  void draw() {
-    // draw a line between last position
-    // and current position
+draw() {
     strokeWeight(1);
-    stroke(shade, opacity); // using agent's shade variable
-    line(px, py, x, y);
-  }
+    stroke(this.shade, p.opacity); // using agent's shade variable
+    line(this.px, this.py, this.x, this.y);
+}
 ```
 
 
-##### 5. To add even more variety with interactive control, add a parameter to control how each agent picks a local behaviour parameter. 
+#### 5. To add even more variety with interactive control, add a parameter to control how each agent picks a local behaviour parameter. 
 
 We can go one step further and create a global parameter that controls a range to pick an agent parameter. For example, picking a random stroke weight to be assigned to each agent. 
 
-Create a global variable called `maxWeight` and add it to the Gui. Think about a reasonable range for stroke weights in your drawing (thick lines can be interesting, even 100 looks great).
+Create another GUI parameter called `maxWeight`. Think about a reasonable range for stroke weights in your drawing (thick lines can be interesting, even 100 looks great).
 
-Add a variable called `weight` to the Agent class, so each agent can keep track of its own weight.
-
-Now assign a random stroke weight in the Agent constructor like this:
+In the Agent constructor, initialize a new field called `weight` and assign a random stroke weight like this:
 
 ```js
-    // pick random stroke weight
-    weight = random(1, maxWeight);
+    // pick random stroke weight 
+    this.weight = random(1, p.maxWeight);
 ```
-
-Add code to use the chosen weight when you draw:
+Now each Agent can keep track of its own stroke weight, and use the chosen weight in draw():
 
 ```js
-  void draw() {
-    // draw a line between last position
-    // and current position
-    strokeWeight(weight); // using agent's weight variable 
-    stroke(shade, opacity);
-    line(px, py, x, y);
-  }
+draw() {
+    strokeWeight(this.weight); // using agent's weight variable 
+    stroke(this.shade, p.opacity); 
+    line(this.px, this.py, this.x, this.y);
+}
  ```
 
 
-##### 6. Add code to initialize agent positions.
+#### 6. Add code to initialize agent positions.
 
 So far, all agents start in the centre, the pattern of starting positions can have a huge effect on the drawing. 
 
-For example, the starting position could be decided randomly by each Agent like this:
+For example, the starting position could be decided randomly in the Agent constructor like this:
 
 ```js
-  Agent() {
+  constructor() {
     // random starting position
-    int m = 100; // margin
-    x = random(m, width - m);
-    y = random(m, height - m);
+    let m = 100; // margin
+    this.x = random(m, width - m);
+    this.y = random(m, height - m);
   }
 ```
 
-Or by using the `Agent(x, y)` constructor, agents could be initialized in a grid by changing the `createAgents` function like this:
+Or by using an `Agent(x, y)` constructor like in the grid agent demos we saw earlier, agents could be initialized in a grid by changing the `createAgents` function. First change the Agent constructor to:
+```js
+  constructor(x, y) {
+      this.x = x; // width / 2;
+      this.y = y; //height / 2;
+      ...
+```
+Then in the createAgents function, change the main loop to:
+```js
+  // create Agents
+  for (x = 100; x < width - 100; x += 5)
+    for (y = 100; y < height - 100; y += 5) {
+      let a = new Agent(x, y);
+      agents.push(a);
+  }
+```
+
+Or you could even spawn new agents as you draw a line. Comment out the main loop that creates Agents in `createAgents` and create a p5.js mouse dragged event function, like this:
 
 ```js
-void createAgents() {
-  background(255);
-  // create Agents in a centred starting grid
-  agents = new ArrayList<Agent>();
-  for (float x = 100; x < width - 100; x += 5)
-    for (float y = 100; y < height - 100; y += 5) {
-      Agent a = new Agent(x, y);
-      agents.add(a);
-    }
+
+function mouseDragged() {
+  agents.push(new Agent(mouseX, mouseY));
 }
 ```
 
-Or you could even spawn new agents as you draw a line, like this:
-
-```js
-void mouseDragged() {
-  Agent a = new Agent(mouseX, mouseY);
-  agents.add(a);
-}
-```
+A good extension to this would be to "kill off" agents after a few seconds, otherwise you'll be running thousands of agents which may make your sketch really slow.
 
 The ideas above are just a starting point. You could combine different initialization methods together, add more rules to control agent based on grid location, mouse speed, a noise function, what position the last agent had, etc.
 
 
 
-##### 7. Experiment with more parameters or drawing rules.
+#### 7. Experiment with more parameters or drawing rules.
 
 Some ideas:
 

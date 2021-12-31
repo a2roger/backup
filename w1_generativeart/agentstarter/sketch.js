@@ -13,6 +13,10 @@ let p = {
   agentNumMax: 500,
 
   // add more params here ...
+  myParam: 1,
+  myParamMin: 0.1,
+  myParamMax: 10.0,
+  myParamStep: 0.1,  
 
 }
 

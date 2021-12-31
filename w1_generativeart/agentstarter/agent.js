@@ -20,8 +20,7 @@ class Agent {
         this.py = this.y;
 
         // pick a new position    
-        this.x += random(-5, 5);
-        this.y += random(-5, 5);
+
     }
 
     draw() {
