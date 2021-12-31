@@ -283,7 +283,10 @@ See also GD **P.2.1.2**, p. 210, and these code examples:
 
 #### Sketch: **`gridpixels`** 
 
-Shows that agent rules can come from pixel information. Compare to GD sketch `P_4_3_1_01` which doesn't separate behaviours into agents and uses mouse input to vary parameters.
+Demonstrates how agent rules can come from pixel information. Here, each agent's colour is chosen as a pixel colour of an underlying image.  
+
+
+Compare to GD sketch `P_4_3_1_01` which doesn't separate behaviours into agents and uses mouse input to vary parameters.
 
 See also GD **P.4.3.1**, p. 302, and these code examples:
 * `P_4_3_1_01`: pixel mapping; each pixel is translated into a new element
