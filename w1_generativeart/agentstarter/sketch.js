@@ -77,6 +77,10 @@ function keyPressed() {
   if (key == ' ') {
     createAgents();
   }
+  // SHIFT-S saves the current canvas
+  if (key == 'S') {
+    save('canvas.png')
+  }
 }
 
 function windowResized() {

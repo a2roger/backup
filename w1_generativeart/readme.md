@@ -212,7 +212,18 @@ let d = dist(mouseX, mouseY, this.x, this.y);
 
 #### 1. Use the parameters to generate a static compositional form
 
-Choose a shape and adjust the parameters (or the code itself) to create a form you like. Press 's' to save your final form to disk. If you like, you may include this image in your Public Digital Sketchbook entry.
+Choose a shape and adjust the parameters (or the code itself) to create a form you like. Press 'S' to save your final form to disk. If you like, you may include this image in your Public Digital Sketchbook entry.
+
+Here's the code to save the canvas to an image (which you download from the browser):
+```js
+function keyPressed() {
+  // SHIFT-S saves the current canvas
+  if (key == 'S') {
+    save('canvas.png')
+  }
+}
+```
+
 
 
 #### 2. Create your own SVG shape to use for an agent
