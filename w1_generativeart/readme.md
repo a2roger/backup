@@ -10,7 +10,7 @@ We'll explore different algorithms and techniques to generate visual output. The
 * Experiment with autonomous agents to generate emergent patterns
 * Use physical systems like attraction and repulsion to generate visual form
 
-#### Required Reading and Viewing
+###$ Required Reading and Viewing
 
 Read the first chapter from Matt Pearson's book, _Generative Art_, **Generative Art: In Theory and Practice (1st edition)** [available through the school library online](https://learning-oreilly-com.proxy.lib.uwaterloo.ca/library/view/generative-art/9781935182627/kindle_split_013.html) and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
 
@@ -40,25 +40,21 @@ Several libraries and code need to be downloaded in preparation for the workshop
 > Post to Teams if you have trouble with setup. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
 
 
-# Workshop
+# Agents and Rules
 
 In this workshop, we'll review different Processing code examples and do small exercises.
 
-## Agents and Rules
-
 A flexible way to create generative output is to encode drawing behaviour in an _Agent_. An Agent is simply an encapsulation class that maintains and updates its own state based on some rules, and then draws part of an image. The usual approach is to create many Agents so they work collectively to generate semi-autonomous output. 
 
-### Grids of Agents 
-
-#### Sketch: **`gridflip`** 
+## Sketch: **`gridflip`** 
 
 <!-- ![thumbnail](img/gridflip.png) -->
 
-A grid of Agents, each is a short line that can be tilted in one of two directions. Use the Gui menu (top left box) to adjust parameters and SPACE to pick a new random layout.
+This is a **grid of Agents**, each is a short line that can be tilted in one of two directions. Use the Gui menu (top left box) to adjust parameters and SPACE to pick a new random layout.
 
-##### `Agent` Class
+### Agent Class
 
-Have a look at the `Agent` class in `Agent.pde`. It's made up of:
+Have a look at the `Agent` class in `agent.js`. It's made up of:
 - constructor: sets up its properties
   * The constructor is using `random(1)` and a threshold between 0 and 1 to make weighted pseudo-random decisions. For example `random(1) > 0.5` will be true about half the time, whereas `random(1) > 0.75` will be true about a quarter of the time.
 - `update()`: called each frame (in this particular sketch – it can be called elsewhere if desired), and can be used to update the agent's properties (e.g. position, speed, colour)
@@ -67,30 +63,69 @@ Have a look at the `Agent` class in `Agent.pde`. It's made up of:
 The code can easily switch between testing window and **full screen presentation**: comment out the `size()` line and uncomment the `fullScreen()` line. The tile number is chosen based on _size_ of tile, not _number_ of tiles across.
 
 
-##### `Gui` Class
+### Settings GUI
 
-As a tool to assist with development, the Processing sketches in this workshop each have a `Gui.pde` file. This contains code that can help you easily tweak parameters in your own code without rerunning it, by adding sliders to a menu.
+Am important part of generative coding is to interactively tweak key parameters used in your code while it runs. For this reason, many of the workshop demos use the [p5.gui library](https://github.com/bitcraftlab/p5.gui) (which extends and wraps the [quicksettings library](https://github.com/bit101/quicksettings)). 
 
-- press `m` or `M` to hide and show menu
-- press `S` to save an image of canvas
+![SettingsGui](img/paramGui.png) 
 
-To add a slider to the menu, in `setup()`, add:
-```java
-gui.addSlider(variableName, minimumValue, maximumValue);
+A generic setup function is included in `utilities.js`. You can use this as follows.
+
+In your main js file, create a JavaScript object to hold your settings, for example:
+```js
+// my parameters
+let p = {
+  // fillscreen param as a checkbox
+  fillScreen: false,
+
+  // weight param as a slider
+  weight: 1,
+  weightMin: 0.5,
+  weightMax: 32,
+}
 ```
-where `variableName` is a string with the name of a variable to control, and `minimumValue`/`maximumValue` are the values to which to constrain the slider.
+I tend to use a single letter variable name (like `p` for "parameters") to make it easy to access in my code. 
 
-The values from the sliders can be used in one of two ways:
-1. Create a global `float` variable with the same name as the passed `variableName`. When the slider is dragged, the variable will automatically update to the slider's value, and you can use it in `draw()`/etc.
-2. Create a function with the same name as the passed `variableName` with a single `float` parameter. It will be called every time the slider is adjusted.
+In your `setup()`, call this helper function with your param object:
+
+```js
+// add params to a GUI
+createParamGui(p);
+```
+
+**That's it!** Now you'll have a simple GUI to adjust your params when your program is running. All you need to do is reference them in your code like this:
+
+```js
+stroke(p.weight);
+```
+
+The GUI can be hidden or shown using the 's' key. 
+
+There are often cases when you need to run some code every time a parameter changes. For this reason, you can call the helper function with an optional callback. 
+
+```js
+// add params to a GUI
+createParamGui(p, paramChanged);
+```
+
+This example will call the function `paramChanged` every time a param is changed in the GUI. It will pass the name of the param that changed as a string.
+
+```js
+// global callback from the settings GUI
+function paramChanged(name) {
+  if (name == "tileSize" || name == "fillScreen") {
+    createAgents()
+  } 
+}
+```
 
 
-##### Review of Transformations in Processing
+### Review of Transformations in Processing
 
-The agent is using Processing's transformation functions `translate()` and `rotate()` to position and orient itself.
+The agent is using transformation functions `translate()` and `rotate()` to position and orient itself.
 
-Drawing code can be individually transformed by wrapping it in `pushMatrix(); [...] popMatrix();`. Otherwise, transformations will accumulate. For example, in the left image, the two translations are stacked on top of each other (the second square is at `(30, 30)`):
-```java
+Drawing code can be individually transformed by wrapping it in `push(); [...] pop();`. Otherwise, transformations will accumulate. For example, in the left image, the two translations are stacked on top of each other (the second square is at `(30, 30)`):
+```js
 translate(10, 10);
 rect(0, 0, 50, 50);
 
@@ -98,29 +133,29 @@ translate(20, 20);
 rect(0, 0, 50, 50);
 ```
 whereas in the right image, the transformations are applied to the squares independently.
-```java
-pushMatrix();
+```js
+push();
 translate(50, 10);
 rect(0, 0, 50, 50);
-popMatrix();
+pop();
 
-pushMatrix();
+push();
 translate(50, 20);
 rect(0, 0, 50, 50);
-popMatrix();
+pop();
 ```
 
 ![stacking](img/leftnomatrix.png)
 
 
 The order of transformation is also important. The image on the left translates, then rotates the square (about its top left-corner):
-```java
+```js
 translate(50, 0);
 rotate(1);
 rect(0, 0, 50, 50);
 ```
 whereas the image on the right rotates, then translates (the coordinate frame of the square is rotated too, so the square is translated along a direction in this coordinate frame):
-```java
+```js
 rotate(1);
 translate(50, 0);
 rect(0, 0, 50, 50);
@@ -128,96 +163,102 @@ rect(0, 0, 50, 50);
 
 ![ordering](img/leftrotsecond.png)
 
-For more information about transformations in Processing, see [Processing's tutorial](https://processing.org/tutorials/transform2d/).
+For more information about transformations in p5.js, see [Allison Parrish's tutorial](https://creative-coding.decontextualize.com/transformations-and-functions/).
 
-#### Experiments
+### Experiments
 
-##### 1. Add code to make the agents randomly "flip". 
+#### 1. Make the agents randomly "flip". 
 
-Create a new global variable that represents the chance that an Agent flips their angle _each second_.
+Create a new parameter that represents the chance that an Agent flips their angle _each second_. In the params object `p`, add  a `flipChance` parameter and specify the min and max slider values for the GUI:
 
-```java
-float flipChance = 0.01;
+```js
+// flip chance
+flipChance: 0.01,
+flipChanceMin: 0,
+flipChanceMax: 1,
+flipChanceStep: 0.01,
 ```
 
-In `setup()`, add a slider to the GUI to adjust `flipChance`. 
+Add code to `Agent.update()` to flip the angle randomly according on `p.flipChance`. 
 
-```java
-gui.addSlider("flipChance", 0, 1); 
-```
-
-Add code to `Agent.update()` to flip the angle randomly according on `flipChance`. 
-
-```java
-if (random(1) < flipChance/frameRate) {
-  float a = -45;
-  if (angle < 0) {
-    a = 45;
+```js
+if (random(1) < p.flipChance/frameRate()) {
+    
+    let a = -45;
+    if (this.angle < 0) {
+      a = 45;
+    }
+    this.angle = a;
   }
-  angle = a;
-}
 ```
 
-> Why do you think `flipChance` is divided by `frameRate`?
+> Why do you think `p.flipChance` is divided by `frameRate()`?
 
 Run your code and adjust the flipChance slider to see the effect.
 
 
-##### 2. To bring the agents to life, try animating the angle change by inserting this code into `Agent.update()`:
+#### 2. Bring Agents to life with animation. 
 
-```java
-// angle = a;
-Ani.to(this, 2, "angle", a, Ani.ELASTIC_OUT);
+The flipping behaviour is instantaneous, adding some animation can really bring agents to life.  Try inserting this code into `Agent.update()`:
+
+```js
+// this.angle = a;
+gsap.to(this, {angle: a, duration: 0.5} )       
 ```
 
-The [Ani library](http://www.looksgood.de/libraries/Ani/) is very useful. For example, try changing the [animation easing function](http://www.looksgood.de/libraries/Ani/Ani_Cheat_Sheet.pdf) in the code above from `Ani.ELASTIC_OUT` to something else.
+This uses the [GreenSock animation library](http://www.looksgood.de/libraries/Ani/) to change the value of the Agent field `angle` to the new target value in `a` over a duration of 0.5 seconds.  This is called "tweening" or "keyframing". GreenSock will make this change in the background, and because we render Agents with those intermediate angle values at 60 FPS, we get an animation. Most GreenSock operations are triggered and configured using [the `gsap` object](https://greensock.com/docs/v3/GSAP). For example, try changing the `gsap.to` call to this:
 
-
-#### Sketch: **`gridshape`** 
-
-A grid of Agents, each is a small SVG image that turns towards the mouse or scales based on distance from the mouse.
-
-To draw SVG images in Processing, `createAgents()` loads the file into a `PShape`:
-```java
-PShape shape = loadShape("module_" + shapeNum + ".svg");
+```js
+gsap.to(this, {angle: a, duration: 3, ease: "elastic.out(1.3, 0.3)"} )   
 ```
-and each agent draws it in `Agent.draw()` using the `shape()` function:
-```java
-shape(shape, 0, 0, s, s);
+The [ease property](https://greensock.com/docs/v3/Eases) configures the timing and behaviour for tweening. Try experimenting with different `ease` types.  
+
+## Sketch: **`gridshape`** 
+
+Another grid of Agents, this time each is a small SVG image that turns towards the mouse and scales based on the distance from the mouse.
+
+
+SVG files are images loaded using  `loadImage()`:
+```js
+  // load the SVG shape 
+  shape = loadImage("data/module_" + p.shapeNum + ".svg");
 ```
 
-##### What's `atan2`?
+and each agent draws it in `Agent.draw()` using the `image()` function:
+```js
+image(shape, 0, 0);
+```
 
-`atan2(y, x)` can let you compute angles between things. It's similar to `atan(y/x)`, but has the benefit of also producing the correct angle even when x is less than or equal to zero.
+### What's `atan2`?
+
+`atan2(y, x)` computes angles between things. It's similar to `atan(y/x)`, but has the benefit of also producing the correct angle even when x is less than or equal to zero.
 
 `Agent.update()` uses `atan2()` to find the angle from the agent to the mouse:
-```java
-angle = degrees(atan2(mouseY - y, mouseX - x));
+```js
+// calculate angle between mouse position and actual position of the shape
+this.angle = degrees(atan2(mouseY - this.y, mouseX - this.x));
 ```
-
-In short, to find the angle in degrees between two points `(ax, ay)` and `(bx, by)`, do:
-```java
+In general, to find the angle in degrees between two points `(ax, ay)` and `(bx, by)`, do:
+```js
 degrees(atan2(by - ay, bx - ax))
 ```
 
-
 `Agent.update()` also uses the convenient `dist()` function to find the distance between the mouse and the agent:
-```java
-float d = dist(mouseX, mouseY, x, y);
+```js
+let d = dist(mouseX, mouseY, this.x, this.y);
 ```
 
 
-#### Experiments
+### Experiments
 
-##### 1. Use the parameters to generate a static compositional form
+#### 1. Use the parameters to generate a static compositional form
 
 Choose a shape and adjust the parameters (or the code itself) to create a form you like. Press 's' to save your final form to disk. If you like, you may include this image in your Public Digital Sketchbook entry.
 
 
-##### 2. Create your own SVG shape to use for an agent
+#### 2. Create your own SVG shape to use for an agent
 
-Use an online tool like [Method Draw](http://editor.method.ac/) or your favourite vector drawing program. The SVG should be about 100 by 100 pixels and have a completely transparent background. Simple shapes work great. It's important to offsetting them from the centre of the SVG image area to produce interesting effects (load one of the SVG shapes in the Data directory to see how they're offset). Try some alpha transparency for the fill and pick different colours too. Load this SVG into the code, and save a composition. If you like, you may include this image in your Public Digital Sketchbook entry.
-
+Use an online tool like [Method Draw](http://editor.method.ac/) or your favourite vector drawing program. The SVG should be *about* 100 by 100 pixels and have a completely transparent background. Simple shapes work great. You can offset them from the centre of the SVG image area to produce interesting effects (some of the SVG shapes in the data directory do this). Try some alpha transparency for the fill and pick different colours too. Add your SVG to your data directory, and save a composition. If you like, you may include this image in your Public Digital Sketchbook entry.
 
 #### Related
 
@@ -279,7 +320,7 @@ These are examples of what Perlin noise looks like at different scales:
 ![perlinnoise](img/perlinnoise.png)
 
 This is the code that was used to generate the above image:
-```java
+```js
 size(400, 100);
 for (float factor : new float[] {0.01, 0.05, 0.1, 4}) {
   for (int x = 0; x < 100; x++) {
@@ -306,7 +347,7 @@ Create your own drawing agent using the sketch `agentstarter`. This code has the
 
 A simple drawing rule is to move to a random position nearby. Try adding the code below to `Agent.update()`:
 
-```java
+```js
   void update() {
     // save last position
     px = x;
@@ -329,19 +370,19 @@ For example, add a global parameter for the opacity of the stroke.
 
 Create a global variable like:
 
-```java
+```js
 float opacity = 20;
 ```
 
 Add code to create a Gui slider in `setup` (the string must be exactly the same as the variable name for the Gui to automatically change the value):
 
-```java
+```js
   gui.addSlider("opacity", 0, 255);
 ```
 
 Then use the variable in your agent code. In this case, in `draw`:
 
-```java
+```js
   void draw() {
     // draw a line between last position
     // and current position
@@ -355,7 +396,7 @@ Then use the variable in your agent code. In this case, in `draw`:
 
 For example, add a local variable to the Agent class to store the agent's shade (grey value):
 
-```java 
+```js 
 class Agent {
 
   float shade; 
@@ -365,14 +406,14 @@ class Agent {
 
  In the Agent constructor, pick a shade randomly. For example, this picks black or white:
 
-```java 
+```js 
     // pick a random grey shade
     shade = 255 * int(random(0, 2));
 ```
 
 Then use this shade when you draw the agent:
 
-```java
+```js
   void draw() {
     // draw a line between last position
     // and current position
@@ -393,14 +434,14 @@ Add a variable called `weight` to the Agent class, so each agent can keep track 
 
 Now assign a random stroke weight in the Agent constructor like this:
 
-```java
+```js
     // pick random stroke weight
     weight = random(1, maxWeight);
 ```
 
 Add code to use the chosen weight when you draw:
 
-```java
+```js
   void draw() {
     // draw a line between last position
     // and current position
@@ -417,7 +458,7 @@ So far, all agents start in the centre, the pattern of starting positions can ha
 
 For example, the starting position could be decided randomly by each Agent like this:
 
-```java
+```js
   Agent() {
     // random starting position
     int m = 100; // margin
@@ -428,7 +469,7 @@ For example, the starting position could be decided randomly by each Agent like 
 
 Or by using the `Agent(x, y)` constructor, agents could be initialized in a grid by changing the `createAgents` function like this:
 
-```java
+```js
 void createAgents() {
   background(255);
   // create Agents in a centred starting grid
@@ -443,7 +484,7 @@ void createAgents() {
 
 Or you could even spawn new agents as you draw a line, like this:
 
-```java
+```js
 void mouseDragged() {
   Agent a = new Agent(mouseX, mouseY);
   agents.add(a);
@@ -493,7 +534,7 @@ See GD **M.6.1**, p. 436, and these code examples:
 
 [Shiffman _Nature of Code_: Particle Systems](http://natureofcode.com/book/chapter-4-particle-systems/)
 
-> You may need to add the line `import java.util.Iterator;` to the top of some sketches from this book since they were written for an older version of Processing.
+> You may need to add the line `import`js.util.Iterator;` to the top of some sketches from this book since they were written for an older version of Processing.
 
 ### Genetic Algorithms
 

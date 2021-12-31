@@ -5,13 +5,13 @@ Create an interactive portrait of yourself.
 ## Goals
 
 * GitLab setup
-* Processing install with libraries
+* p5.js setup 
 * Test camera capture
 * Make something creative to warm up your coding
 
 # Workshop Set Up
 
-## Processing
+## p5.js
 
 1. Download the latest Processing https://www.processing.org/
     * Test your installation by running an example using menu `File/Examples...`
@@ -29,23 +29,21 @@ Create an interactive portrait of yourself.
     * https://git.uwaterloo.ca/csfine383/workshops
 
 3. Setup git on your local machine
-    * We created a [**guide for using git in 383**](https://git.uwaterloo.ca/csfine383/HowTosAndOtherThings/blob/master/Manuals/GitManual.md).
+    * We created a [**guide for using git in 383**](https://git.uwaterloo.ca/csfine383/resources/blob/master/manuals/git-setup.md).
 
 ## Get the Workshop Code
 
-1. It's easiest if you clone the workshop code into your Processing folder. 
-    * Open Processing Preferences to find out where your "Processing Sketchbook" lives (you can change the location too).
+It's easiest if you clone all the CS/FINE 383 workshop code onto your local machine. 
 
-2. Create a directory for all the workshop code, like `/workshops` 
+1. Create a directory like `/Documents/CSFINE383/workshops`.
 
-3. Clone the workshop repository to pull the code into this directory.
-    * In a terminal or command line, change to the workshop code directory you created in step 2.
-    * Clone the gitlab workshop repo with a command like this (replace username with your Quest login name, e.g. jdoe):
+2. Use Git to "clone" the workshop repo with this command:
+        ```shell
+        $ git clone https://username@git.uwaterloo.ca/csfine383/workshops.git .
         ```
-        git clone https://username@git.uwaterloo.ca/csfine383/workshops.git
-        ```
+        (replace username with your Quest login name, e.g. jdoe)
 
-<!-- > NOTE: Please don't push changes from your copy of the course code back to the repo. We need to fix permissions and show you how to create your own repos. The best way to handle this is to treat your local copy of the couse workshop code as "readonly" and then create a different place to put your own code. -->
+Now you have a local copy of all the workshop code. As we update the code, you can use `git pull` to get the updated files. If you edit or change code in your local workshops repo directory, then your changes may be lost when you `git pull` a new copy. To avoid this, you can make a copy of the demo code you want to edit somewhere else.
 
 > NOTE: **If you get stuck with using git,** you can also grab the code using the "Download Code" button near the upper right of the project page. But ask us how to get git working, it makes it much easier to get updates and you'll be using git to submit your assignments.
 
@@ -58,7 +56,7 @@ If you want to view rendered version of `md` files on your own computer, try [_M
 
 # Workshop
 
-You'll find all the code for Workshop 0 in the `w0_portrait/` directory. If you `git clone`d all the workshop code in the "Processing Sketchbook" directory, then you can open it using the `File/Sketchbook...` menu. Otherwise navigate the folder and double click the `.pde` file.
+You'll find all the code for Workshop 0 in the `w0_portrait/` directory. 
 
 ## Recorder
 
@@ -69,28 +67,16 @@ The `recorder` sketch is used for recording a sequence of frames to use in your 
 * Pressing space saves a single frame, hold it down to capture a sequence.
 * By default, it only saves up to 30 frames.
 
-> NOTE: If you're using a recent version of macOS (Catalina or newer) and get an error similar to `terminating with uncaught exception of type NSException Could not run the sketch`, make sure you have the latest version of Processing and the video library. If it still doesn't work, contact us and we can debug the problem together.
 
 ## Portrait
 
 The `portrait*` sketches are what you'll use as a starting point. Each loads the frames saved with recorder and then presents the frames in some varied way based on mouse position.
-
-## Gif Animation
-
-The `portrait1` sketch shows how to generate a GIF animation from Processing. You can integrate this code into the other portrait sketches if you use them as a starting point.
-
-It uses the [GifAnimation library](https://github.com/extrapixel/gif-animation/tree/3.0): you have to install this manually (do not install it using the Processing IDE). 
-1. Locate your "Processing Sketchbook" location. On a Mac, this is in the dialog opened by the "Processing/Preferences". On Windows, this is under "File/Preferences".
-1. Go to that folder and open the `libraries` subfolder. 
-1. Download the `GifAnimation.zip` and unzip it. 
-1. Drag the `gifanimation` subfolder of extracted zip to the Sketchbook `libraries` subfolder. 
-1. **Restart Processing.** (Processing will not be able to detect the manually-added library until it is restarted.)
 
 
 # Exercise
 
 * Modify one of the `portrait` sketches to load and display the frames in a new way. The sketch should use simple mouse movement to make it interactive (just `mouseX` and `mouseY`). 
 
-* Create your own UWaterloo Gitlab project and push your code.
+* Create your own UWaterloo Gitlab project and push your w0 code.
 
-* Generate a GIF animation and share it in the Public-Sketchbook channel in Teams. Describe the results of your exercise, including a brief description of what you changed and how your code works.
+* Generate a GIF animation and share it in the #general channel on the course Teams group. Describe the results of your exercise, including a brief description of what you changed and how your code works.
