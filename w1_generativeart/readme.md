@@ -1,16 +1,16 @@
 # Workshop 1: Generative Output
 
-We'll explore different algorithms and techniques to generate visual output. The content for this workshop is based on the book [Generative Design](http://www.generative-gestaltung.de/1/) (and the book's example [code](https://github.com/generative-design/Code-Package-Processing-3.x/releases/tag/latest)) by Hartmut Bohnacker, Benedikt Groß, Julia Laub, and Claudius Lazzeroni. 
+We'll explore different algorithms and techniques to generate visual output. Some content in this workshop is inspired by the excellent book [**Generative Design: Visualize, Program, and Create with JavaScript in p5.js**](http://www.generative-gestaltung.de/2/) by Benedikt Groß, Hartmut Bohnacker, Julia Laub, and Claudius Lazzeroni. 
 
-> In these workshop notes, the acronym "GD" refers to the Generative Design book. Related sections and code examples given using the format used in the book (e.g. **P.2.1.2** for sections, `P_2_1_2_01` for code).
+> In these notes, the acronym "GD" refers to the Generative Design book. Related book sections and [code examples from the book](http://www.generative-gestaltung.de/2/) are referenced using the same format used in the book (e.g. **P.2.1.2** for sections, `P_2_1_2_01` for code).
 
-## Goals
+## Workshop Goals
 
 * Learn different generative rules to transform compositions and images 
 * Experiment with autonomous agents to generate emergent patterns
 * Use physical systems like attraction and repulsion to generate visual form
 
-###$ Required Reading and Viewing
+### Required Reading and Viewing
 
 Read the first chapter from Matt Pearson's book, _Generative Art_, **Generative Art: In Theory and Practice (1st edition)** [available through the school library online](https://learning-oreilly-com.proxy.lib.uwaterloo.ca/library/view/generative-art/9781935182627/kindle_split_013.html) and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
 
@@ -21,7 +21,7 @@ Read the first chapter from Matt Pearson's book, _Generative Art_, **Generative 
 (If you liked that video, you should watch more from the _Creators Project_ series.)
 
 
-# Set-Up
+<!-- # Set-Up
 
 Several libraries and code need to be downloaded in preparation for the workshop.
 
@@ -37,7 +37,7 @@ Several libraries and code need to be downloaded in preparation for the workshop
 
 * [Generative Design Code Package for Processing 3.x](https://github.com/generative-design/Code-Package-Processing-3.x/releases/tag/latest)
 
-> Post to Teams if you have trouble with setup. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error) 
+> Post to Teams if you have trouble with setup. Please provide details so we can diagnose (e.g. operating system, error messages, steps to reproduce the error)  -->
 
 
 # Agents and Rules
@@ -60,7 +60,7 @@ Have a look at the `Agent` class in `agent.js`. It's made up of:
 - `update()`: called each frame (in this particular sketch – it can be called elsewhere if desired), and can be used to update the agent's properties (e.g. position, speed, colour)
 - `draw()`: using the current properties of the agent, draws the agent using Processing drawing commands
 
-The code can easily switch between testing window and **full screen presentation**: comment out the `size()` line and uncomment the `fullScreen()` line. The tile number is chosen based on _size_ of tile, not _number_ of tiles across.
+> The agent is using transformation functions `translate()` and `rotate()` to position and orient itself. We have a short review about this in the [course resources repo](). 
 
 
 ### Settings GUI
@@ -119,51 +119,10 @@ function paramChanged(name) {
 }
 ```
 
+### Full Screen Mode
 
-### Review of Transformations in Processing
+The code can easily switch between a smaller testing window and **full screen mode** for presentation. Just enter full screen mode on your browser like normal (e.g. CTRL-COMMAND-F on MacOS Chrome) and click on 'fillScreen' in the GUI. The code uses the p5.js  `windowResized()` event callback function to do any resetting of the Agents when this happens. 
 
-The agent is using transformation functions `translate()` and `rotate()` to position and orient itself.
-
-Drawing code can be individually transformed by wrapping it in `push(); [...] pop();`. Otherwise, transformations will accumulate. For example, in the left image, the two translations are stacked on top of each other (the second square is at `(30, 30)`):
-```js
-translate(10, 10);
-rect(0, 0, 50, 50);
-
-translate(20, 20);
-rect(0, 0, 50, 50);
-```
-whereas in the right image, the transformations are applied to the squares independently.
-```js
-push();
-translate(50, 10);
-rect(0, 0, 50, 50);
-pop();
-
-push();
-translate(50, 20);
-rect(0, 0, 50, 50);
-pop();
-```
-
-![stacking](img/leftnomatrix.png)
-
-
-The order of transformation is also important. The image on the left translates, then rotates the square (about its top left-corner):
-```js
-translate(50, 0);
-rotate(1);
-rect(0, 0, 50, 50);
-```
-whereas the image on the right rotates, then translates (the coordinate frame of the square is rotated too, so the square is translated along a direction in this coordinate frame):
-```js
-rotate(1);
-translate(50, 0);
-rect(0, 0, 50, 50);
-```
-
-![ordering](img/leftrotsecond.png)
-
-For more information about transformations in p5.js, see [Allison Parrish's tutorial](https://creative-coding.decontextualize.com/transformations-and-functions/).
 
 ### Experiments
 
@@ -220,8 +179,8 @@ Another grid of Agents, this time each is a small SVG image that turns towards t
 
 SVG files are images loaded using  `loadImage()`:
 ```js
-  // load the SVG shape 
-  shape = loadImage("data/module_" + p.shapeNum + ".svg");
+// load the SVG shape 
+shape = loadImage("data/module_" + p.shapeNum + ".svg");
 ```
 
 and each agent draws it in `Agent.draw()` using the `image()` function:
@@ -262,9 +221,9 @@ Use an online tool like [Method Draw](http://editor.method.ac/) or your favourit
 
 #### Related
 
-See also GD **P.2.1.1**, p. 206, and these code examples:
-* `P_2_1_1_01` changing strokeweight and strokecaps on diagonals in a grid
-* `P_2_1_1_04`: shapes in a grid, that are always facing the mouse
+See also GD **P.2.1.1**, and these code examples:
+* [`P_2_1_1_01`](http://www.generative-gestaltung.de/2/sketches/?01_P/P_2_1_1_01) changing strokeweight and strokecaps on diagonals in a grid
+* [`P_2_1_1_04`](http://www.generative-gestaltung.de/2/sketches/?01_P/P_2_1_1_04): shapes in a grid, that are always facing the mouse
 
 
 ## Sketch: **`gridmove`** 
@@ -275,28 +234,22 @@ This sketch calls `Agent.update()` from an event functions other than `draw()`: 
 
 This sketch uses `randomSeed()` to seed the random number generator; this means that each time the code is run, the results of the `random()` calls (and the resulting compositions) will be the same.
 
-See also GD **P.2.1.2**, p. 210, and these code examples:
-* `P_2_1_2_01`: changing size and position of circles in a grid
+See also GD **P.2.1.2**, and these code examples:
+* [`P_2_1_2_01`](http://www.generative-gestaltung.de/2/sketches/?01_P/P_2_1_2_01): changing size and position of circles in a grid
 
-
-### Pixels in a grid
-
-#### Sketch: **`gridpixels`** 
+## Sketch: **`gridpixels`** 
 
 Demonstrates how agent rules can come from pixel information. Here, each agent's colour is chosen as a pixel colour of an underlying image.  
 
 
-Compare to GD sketch `P_4_3_1_01` which doesn't separate behaviours into agents and uses mouse input to vary parameters.
-
-See also GD **P.4.3.1**, p. 302, and these code examples:
-* `P_4_3_1_01`: pixel mapping; each pixel is translated into a new element
 
 
-## Drawing with Agents
+See also GD **P.4.3.1**, and these code examples:
+* Compare to GD sketch [`P_4_3_1_01`](http://www.generative-gestaltung.de/2/sketches/?01_P/P_4_3_1_01) which doesn't separate behaviours into agents and uses mouse input to vary parameters.
+* [`P_4_3_1_02`](http://www.generative-gestaltung.de/2/sketches/?01_P/P_4_3_1_02): pixel mapping; each pixel is translated into a new element
 
-### Using kinematic rules
 
-#### Sketch: **`drawlines`** 
+## Sketch: **`drawlines`** 
 
 Agents move around the canvas leaving a trail.
 
@@ -306,37 +259,7 @@ Setting `p.interact = true` turns on additional inter-agent behaviour. If the ag
 
 > **Question:** One problem with this agent is that eventually they go too fast and it's hard to slow them down again: what code could you add to keep the speed in check?
 
-### Using noise
 
-#### Sketch: **`drawnoise`** 
-
-Agents move around the canvas leaving a trail based on noise.
-
-##### Perlin noise
-
-This sketch uses Perlin noise (`noise()`), which enables generation of "smooth" pseudo-random sequences at various spatial or temporal frequencies.
-
-These are examples of what Perlin noise looks like at different scales:
-
-![perlinnoise](img/perlinnoise.png)
-
-This is the code that was used to generate the above image:
-```js
-size(400, 100);
-for (float factor : new float[] {0.01, 0.05, 0.1, 4}) {
-  for (int x = 0; x < 100; x++) {
-    for (int y = 0; y < 100; y++) {
-      stroke((int)(255 * noise(x*factor, y*factor)));
-      point(x, y);
-    }
-  }
-  translate(100, 0);
-}
-```
-
-(Run GD `M_1_4_01` to visualize noise function.) See also GD **M.1.5**, p. 335, and these code examples:
-* `M_1_4_01`: creates a terrain like mesh based on noise values.
-* `M_1_5_02_TOOL`:  noise values (noise 2d) are used to animate a bunch of agents
 
 
 ### Exercise: Make your own drawing agent
@@ -391,12 +314,12 @@ draw() {
 For example, add a field to the Agent class to store the agent's shade (grey value). In the Agent constructor, pick a shade randomly between black or white:
 
 ```js 
-  constructor() {
-      ...
+constructor() {
+    ...
 
-      // pick a random grey shade
-      this.shade = random(255)
-  }
+    // pick a random grey shade
+    this.shade = random(255)
+}
 ```
 
 Then use this shade when you draw the agent:
@@ -419,8 +342,8 @@ Create another GUI parameter called `maxWeight`. Think about a reasonable range 
 In the Agent constructor, initialize a new field called `weight` and assign a random stroke weight like this:
 
 ```js
-    // pick random stroke weight 
-    this.weight = random(1, p.maxWeight);
+// pick random stroke weight 
+this.weight = random(1, p.maxWeight);
 ```
 Now each Agent can keep track of its own stroke weight, and use the chosen weight in draw():
 
@@ -440,35 +363,34 @@ So far, all agents start in the centre, the pattern of starting positions can ha
 For example, the starting position could be decided randomly in the Agent constructor like this:
 
 ```js
-  constructor() {
-    // random starting position
-    let m = 100; // margin
-    this.x = random(m, width - m);
-    this.y = random(m, height - m);
-  }
+constructor() {
+  // random starting position
+  let m = 100; // margin
+  this.x = random(m, width - m);
+  this.y = random(m, height - m);
+}
 ```
 
 Or by using an `Agent(x, y)` constructor like in the grid agent demos we saw earlier, agents could be initialized in a grid by changing the `createAgents` function. First change the Agent constructor to:
 ```js
-  constructor(x, y) {
-      this.x = x; // width / 2;
-      this.y = y; //height / 2;
-      ...
+constructor(x, y) {
+    this.x = x; // width / 2;
+    this.y = y; //height / 2;
+    ...
 ```
 Then in the createAgents function, change the main loop to:
 ```js
-  // create Agents
-  for (x = 100; x < width - 100; x += 5)
-    for (y = 100; y < height - 100; y += 5) {
-      let a = new Agent(x, y);
-      agents.push(a);
-  }
+// create Agents
+for (x = 100; x < width - 100; x += 5)
+  for (y = 100; y < height - 100; y += 5) {
+    let a = new Agent(x, y);
+    agents.push(a);
+}
 ```
 
 Or you could even spawn new agents as you draw a line. Comment out the main loop that creates Agents in `createAgents` and create a p5.js mouse dragged event function, like this:
 
 ```js
-
 function mouseDragged() {
   agents.push(new Agent(mouseX, mouseY));
 }
@@ -494,43 +416,63 @@ Some ideas:
 
 # Extras 
 
+## Sketch: **`drawnoise`** 
+
+Agents move around the canvas leaving a trail based on a noise generation function.
+
+### Perlin noise
+
+This sketch uses Perlin noise (`noise()`), which enables generation of "smooth" pseudo-random sequences at various spatial or temporal frequencies.
+
+These are examples of what Perlin noise looks like at different scales:
+
+![perlinnoise](img/perlinnoise.png)
+
+This is the code used to generate the image above:
+```js
+// perlin noise samples
+function setup() {
+  createCanvas(400, 100);
+
+  for (f of [0.01, 0.05, 0.1, 4]) {
+    for (x = 0; x < 100; x++) {
+      for (y = 0; y < 100; y++) {
+        stroke(255 * noise(x * f, y * f));
+        point(x, y);
+      }
+    }
+    translate(100, 0);
+  }
+}
+```
+
+GD [`M_1_3_03`](http://www.generative-gestaltung.de/2/sketches/?02_M/M_1_3_03) is a simple demo to help visualize the noise function and see how it transforms. 
+
 ## Using Agents in Physical Simulations
 
 The general idea of agent behaviour can be extended well beyond random or noise based decisions. 
 
-### Attractors
+
+### Springs and Force-Directed Layout
 
 * nodes and attractors
 * forces
 * tuning
 
-See GD **M.4.0**, p. 392, and these code examples:
-* `M_4_3_01_TOOL` a drawing tool using attractors
-* `M_4_2_01` simple attractors
-
-### Springs and Force-Directed Layout
-
 See GD **M.6.1**, p. 436, and these code examples:
-* `M_6_1_01` 200 nodes repel each other
-* `M_6_1_03` nodes connected by springs
+* [`M_6_1_01`](http://www.generative-gestaltung.de/2/sketches/?02_M/M_6_1_01) 200 nodes repel each other
+* [`M_6_1_03`](http://www.generative-gestaltung.de/2/sketches/?02_M/M_6_1_03) nodes connected by springs
 
 
-### Particle Systems
+### Other Generative Methods
 
-[Shiffman _Nature of Code_: Particle Systems](http://natureofcode.com/book/chapter-4-particle-systems/)
+Daniel Shiffman's excellent [Nature of Code Book](https://natureofcode.com/) explains in detail other generative methods like [particle systems](http://natureofcode.com/book/chapter-4-particle-systems/) and [genetic algorithms](http://natureofcode.com/book/chapter-9-the-evolution-of-code/). Unfortunately, the book is from 2012 so all code examples use Java Processing (the precursor to p5.js). 
 
-> You may need to add the line `import`js.util.Iterator;` to the top of some sketches from this book since they were written for an older version of Processing.
+> **Update:** Shiffman is working on an [updated version of the book](https://github.com/nature-of-code/noc-book-2) and [many of the demos are already translated into p5.js](https://github.com/nature-of-code/noc-examples-p5.js)! You can also watch videos demoing demo code from the book on his [Coding Train YouTube channel](https://youtu.be/70MQ-FugwbI).
 
-### Genetic Algorithms
 
-[Shiffman _Nature of Code_: The Evolution of Code](http://natureofcode.com/book/chapter-9-the-evolution-of-code/)
 
-## Generative Output in 3D 
 
-See GD **M.3.0**, p. 370, and these code examples:
-* `M_3_2_04` generating different 3D meshes from formulas
-* `M_3_3_0*` Mesh class demos
-* `M_3_4_01_TOOL` interactive control of 3D mesh parameters 
 
 
 # Exercise for Public Sketchbook
