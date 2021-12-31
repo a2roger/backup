@@ -267,13 +267,11 @@ See also GD **P.2.1.1**, p. 206, and these code examples:
 * `P_2_1_1_04`: shapes in a grid, that are always facing the mouse
 
 
-### Movement in a grid 
+## Sketch: **`gridmove`** 
 
-#### Sketch: **`gridmove`** 
+Animates the change in position of circle Agents in a grid using controlled random generators.
 
-Animating the change in position of circles in a grid using controlled random generators.
-
-This sketch calls `Agent.update()` from event functions other than `draw()`: `draw()` is called each frame to enable the circles to animate, but `Agent.update()` is called when SPACE is pressed, updating the positions for the agents to animate towards
+This sketch calls `Agent.update()` from an event functions other than `draw()`: `draw()` is called each frame to enable the circles to animate, but `Agent.update()` is called when SPACE is pressed, updating the positions for the agents to animate to using GreenSock animation library.
 
 This sketch uses `randomSeed()` to seed the random number generator; this means that each time the code is run, the results of the `random()` calls (and the resulting compositions) will be the same.
 
