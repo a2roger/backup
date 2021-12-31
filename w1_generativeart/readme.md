@@ -302,7 +302,7 @@ Agents move around the canvas leaving a trail.
 
 The agents follow a semi-random direction and step size: `maxStep` controls how far the agent can travel each step, and `probTurn` controls how much the agent rotates each step.
 
-Setting `interact = true` turns on additional inter-agent behaviour. If the agents move within a close distance of each other, one agent gets deleted and the other accumulates its stroke weight.
+Setting `p.interact = true` turns on additional inter-agent behaviour. If the agents move within a close distance of each other, one agent gets reset and the other accumulates its stroke weight.
 
 > **Question:** One problem with this agent is that eventually they go too fast and it's hard to slow them down again: what code could you add to keep the speed in check?
 
