@@ -174,8 +174,7 @@ The [ease property](https://greensock.com/docs/v3/Eases) configures the timing a
 
 Another grid of Agents, this time each is a small SVG image that turns towards the mouse and scales based on the distance from the mouse.
 
-
-SVG files are images loaded using  `loadImage()`:
+SVG files are images loaded using  `loadImage()`, here's how the first shape is loaded in setup():
 ```js
 // load the SVG shape 
 shape = loadImage("data/module_" + p.shapeNum + ".svg");
@@ -185,6 +184,19 @@ and each agent draws it in `Agent.draw()` using the `image()` function:
 ```js
 image(shape, 0, 0);
 ```
+
+### Loading an image with a "callback"
+
+Here's how a new shape is loaded in paramChanged() (i.e. when a param is changed using the GUI):
+
+```js
+if (name == "shapeNum") {
+  shape = loadImage("data/module_" + p.shapeNum + ".svg", 
+    function () { createAgents(); });
+}
+```
+
+The loadImage function has a second optional parameter for a "callback function". This is a function that's called after the image is completely loaded. In the code above, I create an "anonymous" function (note is has no name) as my callback, and the anonymous function only does one simple thing: call createAgents(). This means that createAgents is only called *after* the new shape is loaded and ready to be used.
 
 ### What's `atan2`?
 

@@ -129,14 +129,15 @@ tick.pan(p)
 > **Note:** You may need to listen with stereo headphones to really hear the effect. 
 
 
-### Explore
+### Explore: Add More Sounds and/or Variation
 
-Add one or more sounds to add more variation:
-* You could vary the volume of the tick based on Agent position or some pseudo random element.
+* You could vary the volume of the tick based on Agent position or some pseudo random choice.
+* You could experiment with the [rate() method](https://p5js.org/reference/#/p5.SoundFile/rate) to play the tick more slowly (or even backwards) depending on where the Agent is or some pseudo random choice.
 * You could play a different sound depending on the flip direction. 
 * You could choose to play one of a few different sounds at each flip. 
 * Every agent could have its own sound, or maybe there are N type of agents that all share the same sound. 
-* For the additional sounds, could download a new sound on [**Freesound**](https://freesound.org/), create another variation of the tick wav using audio processing software, or record your own sound using your mic.
+  
+For the additional sounds, could download a new sound on [**Freesound**](https://freesound.org/), create another variation of the tick wav using audio processing software, or record your own sound using your mic.
 
 
 # Visualization

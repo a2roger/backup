@@ -35,7 +35,7 @@ let p = {
   // shape offset
   shapeOffset: 0,
   shapeOffsetMin: -100,
-  shapeOffsetMax: 100,  
+  shapeOffsetMax: 100,
 
 }
 
@@ -125,7 +125,7 @@ function paramChanged(name) {
   }
 
   if (name == "shapeNum") {
-    shape = loadImage("data/module_" + p.shapeNum + ".svg");
-    createAgents();
+    shape = loadImage("data/module_" + p.shapeNum + ".svg", 
+       function () { createAgents(); });
   }
 }
