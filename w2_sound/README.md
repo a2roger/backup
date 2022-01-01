@@ -73,9 +73,6 @@ In digital artwork, sound can function in three primary ways:
 
 In this workshop we demonstrate techniques for each of these.
 
-
-
-
 # Augmentation
 
 Perhaps the simplest way to use sound is to extend or enhance a visual artwork. 
@@ -140,19 +137,15 @@ tick.pan(p)
 For the additional sounds, could download a new sound on [**Freesound**](https://freesound.org/), create another variation of the tick wav using audio processing software, or record your own sound using your mic.
 
 
-# Visualization
+# Analysis
 
-Audio can be visualized in several different ways. Two basic visualization techniques are to take the amplitude at moments in time, or use a fast Fourier transform (FFT). Both offer different analysis on what the underlying audio is doing. 
+Two basic analysis techniques are to calculate the amplitude at a moments in time, or use a fast Fourier transform (FFT) to examine different frequencies at a moment in time. 
 
-For visualization, there are three parameters to interpret: `amplitude`, `frequency`, and `time`. 
+> **Awesome Resource:** You need to check out the [The Pudding](https://pudding.cool/) interactive data visualization essay ["Let's Learn about Waveforms"](https://pudding.cool/2018/02/waveforms/). Note only is it an excellent technical explanation of sound highly relevant to this workshop, but the design of this essay (and many others on this site) is incredible. 
 
+## amplitude
 
-
-The sketches in the `visualize` subdirectory explore these approaches using the Processing sound library.
-
-## visualize/FFTBasic sketch
-
-Shows a simple spectrum analyzer visualization for a playing audio file. Start with this sketch to understand how to analyze frequency spectrums using the Processing sound library.
+This sketch is a simple demo for how to use _amplitude_ rather than _frequency_ information from audio files using the Processing sound library. It shows an animated sphere that scales based on the current amplitude of the sound.
 
 The sketch plays the audio file on loop with:
 
@@ -160,49 +153,6 @@ The sketch plays the audio file on loop with:
 sample = new SoundFile(this, "Mecha_Action.aiff");
 sample.loop();
 ```
-
-To set up the FFT, the sketch does:
-
-```java
-fft = new FFT(this, bands);
-fft.input(sample);
-```
-
-where `sample` is the `SoundFile` loaded before, and `bands` is the number of frequency bands to bin the frequencies into. This works like a histogram. The image on the left shows what 2 bands look like. The lighter blue bar represents lower (bass) frequencies, whereas the the darker blue bar represents higher (treble frequencies). With the image on the right, there are 32 bands, and so it's easier to pinpoint the more common frequencies. To update the number of "bands" set with the menu slider, press SPACE.
-
-<img src="img/2bands.png" alt="2 bands" width="40%">
-<img src="img/32bands.png" alt="32 bands" width="40%">
-
-Finally, to get the frequency information, the sketch calls:
-
-```java
-fft.analyze();
-```
-
-and the result of the FFT is stored in the `fft.spectrum` array.
-
-### Exponential Smoothing
-
-You will see the following code in several of the provided sketches:
-
-```java
-// Low pass filter
-float rms = rmsPrev * (1 - smooth_factor) + raw * smooth_factor;  
-```
-
-This is a very useful piece of code, that you can even apply in contexts apart from sound. For example, this kind of filter can also be used to smooth the x-y motion of objects on-screen. It's called an [_exponential smoothing filter_](https://en.wikipedia.org/wiki/Exponential_smoothing). `smoothing_factor` can range between 0 and 1. A value of 0 means the raw value is entirely smoothed, ignoring changes in amplitude. A value of 1 applies no smoothing at all, taking in the raw value as-is. As `smoothing_factor` is set closer to 0, the new raw value (`raw`) contributes less to the resulting value (`rms`), effectively averaging out the bumps in the amplitude, and making it appear smoother.
-
-
-## visualize/FFTSpectral
-
-This sketch builds off the previous one, showing a spectrogram-like visualization of the audio file over time.
-
-As with the previous sketch, to update the number of "bands" set with the menu slider, press SPACE. You can also press "p" then SPACE to change the visualization to a polar (radial) visualization.
-
-
-## visualize/RMS
-
-This sketch is a simple demo for how to use _amplitude_ rather than _frequency_ information from audio files using the Processing sound library. It shows an animated sphere that scales based on the current amplitude of the sound.
 
 The audio file is loaded the same way as before, but an `Amplitude` object is made rather than an `FFT` object:
 
@@ -220,6 +170,38 @@ float raw = rms.analyze();
 ```
 
 to get the amplitude of the sound at the current moment in time. This is a floating point (decimal) number between 0 and 1.
+
+
+## frequency
+
+Demonstrates a variety of frequency-related analysis of a sound file, all based on the Fast Fourier Transform (FFT). Start with this sketch to understand how to analyze frequency spectrums using the [p5.FFT](https://p5js.org/reference/#/p5.FFT) object.
+
+
+To set up FFT analysis, the demo creates a p5.FFT object like this:
+
+```js
+soundFFT = new p5.FFT(p.smoothing, 2 ** p.bins);
+soundFFT.setInput(sound);
+```
+
+Setting the amount of smoothing and the number of bins is optional, but this demo controls them with the GUI. If you don't call `setInput` with a p5.Sound object, then the FFT analysis will be on all sound produced by the sketch. 
+
+The [p5.FFT](https://p5js.org/reference/#/p5.FFT) methods used:
+* `soundFFT.analyze()` performs the FFT analysis on the current sound sample
+* `soundFFT.waveform()`
+* `soundFFT.getCentroid()` 
+* `soundFFT.getEnergy`
+
+
+
+## visualize/FFTSpectral
+
+This sketch builds off the previous one, showing a spectrogram-like visualization of the audio file over time.
+
+As with the previous sketch, to update the number of "bands" set with the menu slider, press SPACE. You can also press "p" then SPACE to change the visualization to a polar (radial) visualization.
+
+
+
 
 ## visualize/RMSBuffer and visualize/RMSLines
 
