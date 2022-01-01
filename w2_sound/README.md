@@ -1,6 +1,6 @@
 # Sound Workshop
 
-We'll explore different approaches and techniques for integrating sound into generative art.
+We'll  explore different approaches and techniques for using sound in generative art.
 
 
 ## Goals
@@ -9,69 +9,147 @@ We'll explore different approaches and techniques for integrating sound into gen
 - Learn different ways that sound can be used to drive visualizations, e.g., via amplitude tracking, frequency analysis
 - Experiment with autonomous agents to generate emergent sounds
 
+## Setup
 
-### Good Resources
+You'll need to include the p5.sound library in the `index.html` file that runs your script. The workshop demos load it as a local resource:
 
-- [Vanilla Sound](https://processing.org/reference/libraries/sound/index.html)
-- [Sound Github Repo](https://github.com/processing/processing-sound)
-- [Minim Github Repo](https://github.com/ddf/Minim/tree/master/examples)
-- [Minim Resource](http://code.compartmental.net/minim/audioplayer_class_audioplayer.html)
-- [Sounds Analysis Tutorial](https://www.youtube.com/watch?v=2O3nm0Nvbi4)
+```html
+<script src="libraries/p5.sound.min.js"></script> 
+```
 
-### Sounds Sources
+But you can also load it as a remote resource using CDN:
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+```
 
-- [Free Sound](https://freesound.org/)
-- [Free Music Archive](freemusicarchive.org/)
+## Resources
+
+### p5.js Sound Resources and Tutorials
+
+- [p5.sound library reference](https://p5js.org/reference/#/libraries/p5.sound)
+- [Daniel Shiffman's p5.js Sound Tutorials](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6aFcVjlDAkkGIixw70s7jpW)
+
+### Media Assets
+
+- [**Freesound**](https://freesound.org/): "Freesound aims to create a huge collaborative database of audio snippets, samples, recordings, bleeps, ... released under Creative Commons licenses that allow their reuse."
+- [**Free Music Archive**](https://freemusicarchive.org/): "Free Music Archive is known for free to download music licensed under Creative Commons."
+<!-- - [ClassicalArchives](https://www.classicalarchives.com/midi.html) -->
 
 ### Tools
 
-- [Audio Spectrum Analysis](http://friture.org/download.html)
-
-## Preliminaries
-
-Download the `Sound` library and the `Minim` library from Processing's built-in library manager. 
+- [**Friture**](http://friture.org/download.html): a tool for audio spectrum analysis
 
 
-## What is sound?
+# Introduction
 
 How does sound as a medium differ from the visual? What makes it unique? 
 
 Sound is intrinsically physical and temporal. Unlike light waves, sound waves need a physical material to propagate through, as well as an energy source (generator). When building compositions, we need to consider how these sound waves are temporally spaced, the shape of the wave, and how they change over time. There are other properties of course, such as tone, timbre, richness, tempo, and rhythm, that also need to be considered; but the entire domain of sound can be compacted into dimensions of time, shape, and change.
 
-### The canvas
+## The sound "canvas"
+
+The human ear has a hearing range that falls between roughly 20Hz to 20kHz. For music, we think of as "notes" that fall into the 60Hz to 6400Hz range, where middle "A" is 440Hz. 
 
 ![https://www.audioreputation.com/audio-frequency-spectrum-explained/](img/Audio-Frequency-Spectrum-Explained.jpg "https://www.audioreputation.com/audio-frequency-spectrum-explained/") 
 
-
-The human ear has a hearing range that falls between roughly 20Hz to 20kHz. Though, what we think of as "notes" will fall into the 60Hz to 6400Hz range, where middle "A" is 440Hz. 
+Another way to visualize the sound spectrum is through analysis. The image above shows how audio changes over time (x-axis) and over the frequency range (y-axis). Colour indicates volume (amplitude). 
 
 ![https://music.stackexchange.com/questions/10472/sound-spectrum-to-notes-software](img/spectrum.jpg "https://music.stackexchange.com/questions/10472/sound-spectrum-to-notes-software")
 
-Another way to visualize the sound spectrum is through analysis. The image above shows how audio changes over time (x-axis) and over the frequency range (y-axis). Colour indicates volume (amplitude). 
 
-
-## Sound and Generative Art
+## Generative Sound in Generative Art
 
 Sound, by itself, can be used as generative art. Philippe Pasquier and Arne Eigenfeldt explore this in their research into [Metacreation](http://metacreation.net/). 
 
-For your assignments, sound could offer five different utilities:
-
-1. Input generation: seed values as a source of pseudo-randomness. 
-2. Output generation: use additive and/or subtractive synthesis as a means of sound output.
-3. Visualization: use music information retrieval (MIR) to analysis and produce visualization based on intrinsic properties. 
-4. Monitoring: use external devices (e.g. microphones) to record or monitor the environment. 
-5. Sampling: using pre-recorded audio and manipulation techniques (e.g. effects) to create soundscapes. 
+In digital artwork, sound can function in three primary ways:
 
 
-## Visualization
+1. **Augmentation**: use sound to embellish or extend a visual artwork.
+1. **Analysis:** generate an artwork by analyzing properties of sound.
+2. **Synthesis:** use additive or subtractive synthesis to generate sound art.
+<!-- 3. **Sampling:** using pre-recorded audio and manipulation techniques (e.g. effects) to generate sound are. 
+4. **Monitoring:** use external devices (e.g. microphones) to record or monitor the environment. 
+5. **Input generation:** seed values as a source of pseudo-randomness.  -->
+
+In this workshop we demonstrate techniques for each of these.
+
+
+
+
+# Augmentation
+
+Perhaps the simplest way to use sound is to extend or enhance a visual artwork. 
+
+## Sketch: **`gridfliptick`**
+
+Extends an animated version of the `gridflip` demo from the previous workshop with added sound effects. 
+
+### Loading Sound
+
+Like images, sounds are loaded "asynchronously" which means the variable you use for the created sound may not be ready to be used right away. The easiest way to handle this is to load sound files in `preload`:
+
+```js
+// my sound file
+let tick;
+
+function preload() {
+  tick = loadSound("data/254316__jagadamba__clock-tick.wav")
+}
+```
+
+Preload is called before setup and it guarantees that `tick` will be loaded with the wav file and ready to use before setup, draw, mousePressed, etc. are run.
+
+### Playing Sound
+
+Playing sound is slightly more complicated on modern browsers. They all have restrictions like Chrome's [autoplay policy](https://developer.chrome.com/blog/autoplay/#webaudio) that prevents web pages from playing sounds without some user interaction like clicking on typing anywhere on the page first.  There used to be [some ways to hack around this](https://olafwempe.com/how-to-enable-audio-and-video-autoplay-with-sound-in-chrome-and-other-browsers-in-2019/), but things have been tightened up.
+
+> **If you don't hear any sound, just click somewhere on the webpage and the sound should start.** You'll see warnings in the console if your sound is being ignored due to a browser policy. 
+
+
+### Adjusting Playback
+
+A [sound file has many more methods](https://p5js.org/reference/#/p5.SoundFile) than `play()`. In this demo, we adjust the volume since the wav file I used it really loud. I do this in `setup()` since:
+
+```js
+// turn down the sound
+tick.setVolume(0.1);
+```
+
+### Exercise: Make a Stereo Tick
+
+You can change "where" the sound plays in the left or right stereo channel using the [`pan()` method](https://p5js.org/reference/#/p5.SoundFile/pan). A value of -1 means play in the left channel, 1 means play in the right channel, and anything in between is a mix of both channels (i.e. the default value of 0 plays in both channels equally).
+
+Let's pan the tick sound to match the horizontal canvas position of the Agent that's flipping. Add this code to `Agent.update()` just before the `tick.play()` line:
+
+```js
+// map agent x canvas position to a [-1, 1] stereo pan
+let p = map(this.x, 0, width, -1, 1)
+tick.pan(p)
+```
+> **Note:** You may need to listen with stereo headphones to really hear the effect. 
+
+
+### Explore
+
+Add one or more sounds to add more variation:
+* You could vary the volume of the tick based on Agent position or some pseudo random element.
+* You could play a different sound depending on the flip direction. 
+* You could choose to play one of a few different sounds at each flip. 
+* Every agent could have its own sound, or maybe there are N type of agents that all share the same sound. 
+* For the additional sounds, could download a new sound on [**Freesound**](https://freesound.org/), create another variation of the tick wav using audio processing software, or record your own sound using your mic.
+
+
+# Visualization
 
 Audio can be visualized in several different ways. Two basic visualization techniques are to take the amplitude at moments in time, or use a fast Fourier transform (FFT). Both offer different analysis on what the underlying audio is doing. 
 
 For visualization, there are three parameters to interpret: `amplitude`, `frequency`, and `time`. 
 
+
+
 The sketches in the `visualize` subdirectory explore these approaches using the Processing sound library.
 
-### visualize/FFTBasic sketch
+## visualize/FFTBasic sketch
 
 Shows a simple spectrum analyzer visualization for a playing audio file. Start with this sketch to understand how to analyze frequency spectrums using the Processing sound library.
 
@@ -102,7 +180,7 @@ fft.analyze();
 
 and the result of the FFT is stored in the `fft.spectrum` array.
 
-#### Exponential Smoothing
+### Exponential Smoothing
 
 You will see the following code in several of the provided sketches:
 
@@ -114,14 +192,14 @@ float rms = rmsPrev * (1 - smooth_factor) + raw * smooth_factor;
 This is a very useful piece of code, that you can even apply in contexts apart from sound. For example, this kind of filter can also be used to smooth the x-y motion of objects on-screen. It's called an [_exponential smoothing filter_](https://en.wikipedia.org/wiki/Exponential_smoothing). `smoothing_factor` can range between 0 and 1. A value of 0 means the raw value is entirely smoothed, ignoring changes in amplitude. A value of 1 applies no smoothing at all, taking in the raw value as-is. As `smoothing_factor` is set closer to 0, the new raw value (`raw`) contributes less to the resulting value (`rms`), effectively averaging out the bumps in the amplitude, and making it appear smoother.
 
 
-### visualize/FFTSpectral
+## visualize/FFTSpectral
 
 This sketch builds off the previous one, showing a spectrogram-like visualization of the audio file over time.
 
 As with the previous sketch, to update the number of "bands" set with the menu slider, press SPACE. You can also press "p" then SPACE to change the visualization to a polar (radial) visualization.
 
 
-### visualize/RMS
+## visualize/RMS
 
 This sketch is a simple demo for how to use _amplitude_ rather than _frequency_ information from audio files using the Processing sound library. It shows an animated sphere that scales based on the current amplitude of the sound.
 
@@ -142,30 +220,29 @@ float raw = rms.analyze();
 
 to get the amplitude of the sound at the current moment in time. This is a floating point (decimal) number between 0 and 1.
 
-### visualize/RMSBuffer and visualize/RMSLines
+## visualize/RMSBuffer and visualize/RMSLines
 
 These two sketches are more complex versions of the RMS sketch. They both buffer (keep track of) the volume to show how it has changed over time. Explore both of these sketches to understand how they work.
 
 
-#### Exercise 1
+## Exercise 1
 
 Take one of the visualization sketches and modify it with your own interpretation. Create a short (5–15 second) video demonstrating your resulting composition.
 
 
-## Samplers
+# Synthesis
 
 These sketches demonstrate a variety of ways to get audio file playback.
 
 #### Good Resources
-- Sound samples: [FreeSound](https://freesound.org/)
-- MIDI files: [ClassicalArchives](https://www.classicalarchives.com/midi.html)
+
 - Algorithmic theory of [music 12-tone system](https://en.wikipedia.org/wiki/Twelve-tone_technique)
 
 ### Simple Sound Effects – Samplers/VariableDelay
 
 This simple sketch shows how to use the `Delay` effect in the Processing sound library. Pressing SPACE will play a sound, with parameters of the `Delay` effect controlled by the mouse position. This effect allows you to make a sound echo.
 
-### Synthesizing Sounds – Samplers/SoundsCluster
+## Synthesizing Sounds – Samplers/SoundsCluster
 
 This sketch shows how to use the `SinOsc` functionality of the Processing sound library to play multiple notes at different frequencies.
 
@@ -198,11 +275,12 @@ This sketch demonstrates how Processing can be used to make a simple drum machin
 Unlike the other sketches so far, this sketch uses the _Minim_ library, an alternative sound library for Processing that supports more complex features.
 
 
-### Sampling Sound Files – Samplers/MidiViz
+## MIDI Sound Generation
 
 This sketch shows how to play a MIDI file using the `javax.sound.midi` library. It also visualizes the notes using 3D graphics – more on that coming in the 3D graphics workshop later in the term!
 
 MIDI stands for _Musical Instrument Digital Interface_, and refers to a number of specifications, including a music file format. MIDI files only store the notes and instruments of a piece of music, like sheet music. This means that the file sizes are very small in comparison to normal audio files like MP3 and WAV. However, it also means that the computer playing the MIDI file needs to have a _sound bank_ with the sounds of different instruments, so it knows how to play it. Due to the compactness of the file format, many early computer music compositions were stored in MIDI or similar (e.g., MOD, XM) formats.
+
 
 
 ### Using MIDI Notes as Data – Samplers/SamplerMidi
@@ -236,7 +314,7 @@ An interesting way to create generative music is by introducing random or refere
 Take the SoundAgent sketch as a starting point. Try loading in your own sound files. Use one or more of the visualization techniques and/or sampling approaches described above to create a new form of interesting algorithmic playback. Create a short (5–15 second) video demonstrating your resulting composition.
 
 
-## Entry for Public Digital Sketchbook
+# Entry for Public Digital Sketchbook
 
 Provide a brief (approx. 250 word) description of the visualization and sampling techniques you used in the three exercises above. Attach or link to the three short videos you made in these exercises.
 

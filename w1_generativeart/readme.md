@@ -1,16 +1,16 @@
-# Workshop 1: Generative Output
+# Generative Art
 
-We'll explore different algorithms and techniques to generate visual output. Some content in this workshop is inspired by the excellent book [**Generative Design: Visualize, Program, and Create with JavaScript in p5.js**](http://www.generative-gestaltung.de/2/) by Benedikt Groß, Hartmut Bohnacker, Julia Laub, and Claudius Lazzeroni. 
+In this workshop, we'll explore different algorithms and techniques to generate visual output. Some content in this workshop is inspired by the excellent book [**Generative Design: Visualize, Program, and Create with JavaScript in p5.js**](http://www.generative-gestaltung.de/2/) by Benedikt Groß, Hartmut Bohnacker, Julia Laub, and Claudius Lazzeroni. 
 
 > In these notes, the acronym "GD" refers to the Generative Design book. Related book sections and [code examples from the book](http://www.generative-gestaltung.de/2/) are referenced using the same format used in the book (e.g. **P.2.1.2** for sections, `P_2_1_2_01` for code).
 
-## Workshop Goals
+## Goals
 
 * Learn different generative rules to transform compositions and images 
 * Experiment with autonomous agents to generate emergent patterns
 * Use physical systems like attraction and repulsion to generate visual form
 
-### Required Reading and Viewing
+## Required Reading and Viewing
 
 Read the first chapter from Matt Pearson's book, _Generative Art_, **Generative Art: In Theory and Practice (1st edition)** [available through the school library online](https://learning-oreilly-com.proxy.lib.uwaterloo.ca/library/view/generative-art/9781935182627/kindle_split_013.html) and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
 
@@ -41,8 +41,6 @@ Several libraries and code need to be downloaded in preparation for the workshop
 
 
 # Agents and Rules
-
-In this workshop, we'll review different Processing code examples and do small exercises.
 
 A flexible way to create generative output is to encode drawing behaviour in an _Agent_. An Agent is simply an encapsulation class that maintains and updates its own state based on some rules, and then draws part of an image. The usual approach is to create many Agents so they work collectively to generate semi-autonomous output. 
 
