@@ -34,7 +34,10 @@ function setup() {
   // add params to a GUI
   createParamGui(p, paramChanged);
 
-  sound.play()
+  // sound.play()
+  // sound.setLoop(true)
+  sound = new p5.AudioIn()
+  sound.start()
 
   initalizeAnalysis();
 }

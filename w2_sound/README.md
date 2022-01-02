@@ -27,7 +27,8 @@ But you can also load it as a remote resource using CDN:
 ### p5.js Sound Resources and Tutorials
 
 - [p5.sound library reference](https://p5js.org/reference/#/libraries/p5.sound)
-- [Daniel Shiffman's p5.js Sound Tutorials](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6aFcVjlDAkkGIixw70s7jpW)
+- [Daniel Shiffman's Sound Tutorials](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6aFcVjlDAkkGIixw70s7jpW)
+-  [Allison Parrish's Sound Tutorial](https://creative-coding.decontextualize.com/synthesizing-analyzing-sound/)
 
 ### Media Assets
 
@@ -143,7 +144,7 @@ Two basic analysis techniques are to calculate the amplitude of a sound at a mom
 
 > **Awesome Resource:** You need to check out this [The Pudding](https://pudding.cool/) interactive data visualization essay ["Let's Learn about Waveforms"](https://pudding.cool/2018/02/waveforms/). Not only is it an excellent technical explanation of sound that's highly relevant to this workshop, but the design of this "essay" (and many others on that site) is incredible. 
 
-## amplitude
+## Sketch: **`amplitudeviz`**
 
 This sketch demonstrates how to analyze amplitude information from audio files. It visualizes amplitude as an animated disk that scales based on the current amplitude of the sound. The highest peak amplitude is visualized as a circle.
 
@@ -203,7 +204,7 @@ gsap.to(peak, {
 ```
 
 
-## frequency
+## Sketch: **`frequencyviz`**
 
 Demonstrates a variety of frequency-related analysis of a sound file, all based on the Fast Fourier Transform (FFT). The key difference between is that `Amplitude` represents the total "amount" of output at a given point in time, whereas `FFT` represents output across the frequency domain, essentially breaking apart the waveform into separate components. 
 
@@ -223,42 +224,81 @@ The [p5.FFT](https://p5js.org/reference/#/p5.FFT) methods used:
 * `soundFFT.analyze()` performs the FFT analysis on the current sound sample
 * `soundFFT.waveform()`
 * `soundFFT.getCentroid()` 
-* `soundFFT.getEnergy`
+* `soundFFT.getEnergy()`
+
+> **The FFT spectrum is often visualized as a "spectrogram",** essentially all the spectrum samples are visualized smeared over time. You can see a demo of this in p5.js on [Allison Parish's sound tutorial](https://creative-coding.decontextualize.com/synthesizing-analyzing-sound/) (search for "smearing").
 
 
+## Experiment: Analyze Live Audio
 
-## visualize/FFTSpectral
+It's quite easy to capture and analyze live audio from your microphone. In the `setup` function in the **frequencyviz** demo, comment out `sound.play()` and add code to capture sound from the microphone instead:
 
-This sketch builds off the previous one, showing a spectrogram-like visualization of the audio file over time.
+```js 
+// sound.play()
+// sound.setLoop(true)
+sound = new p5.AudioIn()
+sound.start()
+```
 
-As with the previous sketch, to update the number of "bands" set with the menu slider, press SPACE. You can also press "p" then SPACE to change the visualization to a polar (radial) visualization.
-
-
-
-
-## visualize/RMSBuffer and visualize/RMSLines
-
-These two sketches are more complex versions of the RMS sketch. They both buffer (keep track of) the volume to show how it has changed over time. Explore both of these sketches to understand how they work.
-
-
-## Exercise 1
-
-Take one of the visualization sketches and modify it with your own interpretation. Create a short (5–15 second) video demonstrating your resulting composition.
+1. See how well you can control the sound with your voice or making noises with found objects. 
+2. Think about how you could use your voice as an input for the generative art works from workshop 1. For example, **flipgrid** could use some part of sound frequency analysis instead of a random number to decide when (and maybe how) to flip lines. 
 
 
 # Synthesis
 
 These sketches demonstrate a variety of ways to get audio file playback.
 
-#### Good Resources
+## Sketch: **`effects`**
 
-- Algorithmic theory of [music 12-tone system](https://en.wikipedia.org/wiki/Twelve-tone_technique)
+Sounds can be processed by audio effects using [p5.Effect](https://p5js.org/reference/#/p5.Effect) classes. This demo lets you process short clips from your mic with different effects.
 
-### Simple Sound Effects – Samplers/VariableDelay
+Try switching the effect and the effect parameters in the `paramChanged` function. For example, this turns on a [p5.Delay](https://p5js.org/reference/#/p5.Delay) effect to create something like an echo:
 
-This simple sketch shows how to use the `Delay` effect in the Processing sound library. Pressing SPACE will play a sound, with parameters of the `Delay` effect controlled by the mouse position. This effect allows you to make a sound echo.
+```js
+effect = new p5.Delay();
+effect.process(clip, 0.12, .7, 2300);
+```
 
-## Synthesizing Sounds – Samplers/SoundsCluster
+Effects are connected or disconnected to a sound: think of it like something the sound is passed through when its played. 
+
+### Recording
+
+This sketch shows how to make a recording of a sound (in this case the mic) and then play it back. 
+
+You need three objects:
+
+```js 
+let mic;      // p5.AudioIn object to capture the mic
+let clip;     // p5.SoundFile we record to
+let recorder; // p5.SoundRecorder that does the recording
+```
+
+Create and connect everything (usually in `setup`):
+
+```js
+// setup mic capture
+mic = new p5.AudioIn();
+mic.start();
+
+// create a sound recorder
+recorder = new p5.SoundRecorder();
+recorder.setInput(mic);
+
+// create an empty sound file to record to
+clip = new p5.SoundFile();  
+ ```
+
+This demo records for a set amount of time from the GUI and the `recordingDone` callback function is called when the recording is finished. 
+
+```js
+recorder.record(clip, p.clipLength, recordingDone)
+```
+
+You could also use `recorder.record(clip)` to start and `recorder.stop()` to end the recording manually.
+
+> Due to browser media playback policies, you may need to call  `userStartAudio()` on a key or mouse event. This demo does this in `keyPressed()`.
+
+## Sketch: **`oscillator`**
 
 This sketch shows how to use the `SinOsc` functionality of the Processing sound library to play multiple notes at different frequencies.
 
@@ -272,26 +312,10 @@ Rather than loading audio from a file, this sketch generates the sound itself us
 These images show what the waveform produced by each oscillator looks like. The sine wave is a smooth-sounding tone. The square wave sounds reminiscent of wind instruments. The sawtooth wave sounds sharp, and is reminiscent of sounds from vintage video games. More complex sounds can be generated by playing multiple sounds at the same time, or by manually constructing a waveform using the `AudioSample` class.
 
 
-### Sampling Sound Files – Samplers/SamplerKeyboard
-
-This sketch loads multiple sounds samples and allows them to be played using the computer keyboard like an instrument. It also demonstrates the `Reverb` effect in the Processing sound library, which can make it seem like the sound is playing in a particular kind of space, for example, a large hall.
 
 
-### Sampling Sound Files – Samplers/SamplerRandom
 
-This sketch is similar to the previous one, but it randomly plays sounds over time, rather than playing sounds in response to keyboard input.
-
-
-### Sampling Sound Files – Samplers/DrumMachine
-
-This sketch demonstrates how Processing can be used to make a simple drum machine. The output shows a grid of boxes. The columns represent different points in time. The top, middle, and bottom rows correspond to a hi-hat, snare drum, and kick drum sound, respectively. Clicking on a red box will change it to green, and play the corresponding sound at that point in time, on loop.
-
-![simple drum pattern](img/simpledrumpattern.png)
-
-Unlike the other sketches so far, this sketch uses the _Minim_ library, an alternative sound library for Processing that supports more complex features.
-
-
-## MIDI Sound Generation
+## Sketch: **`midi`**
 
 This sketch shows how to play a MIDI file using the `javax.sound.midi` library. It also visualizes the notes using 3D graphics – more on that coming in the 3D graphics workshop later in the term!
 
@@ -311,9 +335,6 @@ The image below shows a visualization of how the four parameters affect the soun
 
 
 
-### Complex Example – Samplers/Synth
-
-This sketch demonstrates how a synthesizer can be made using Minim, supporting several common synthesizer features.
 
 
 #### Exercise 2
@@ -321,9 +342,6 @@ This sketch demonstrates how a synthesizer can be made using Minim, supporting s
 Take one of the "Samplers" sketches as a starting point. Try loading in your own sound files and changing the way the sound is visualized or played. Create a short (5–15 second) video demonstrating your resulting composition.
 
 
-## Agents – SoundAgents/AgentSound
-
-An interesting way to create generative music is by introducing random or referential behaviour into the system. One way is to use multiple interacting agents (a kind of [Metacreation](http://metacreation.net/)). This sketch builds off the `agentstarter` code in the previous workshop, to also introduce sound when agents interact.
 
 #### Exercise 3
 
