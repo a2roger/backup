@@ -139,42 +139,75 @@ For the additional sounds, could download a new sound on [**Freesound**](https:/
 
 # Analysis
 
-Two basic analysis techniques are to calculate the amplitude at a moments in time, or use a fast Fourier transform (FFT) to examine different frequencies at a moment in time. 
+Two basic analysis techniques are to calculate the amplitude of a sound at a moment in time, or use a fast Fourier transform (FFT) to examine different frequencies of sound at a moment in time. 
 
-> **Awesome Resource:** You need to check out the [The Pudding](https://pudding.cool/) interactive data visualization essay ["Let's Learn about Waveforms"](https://pudding.cool/2018/02/waveforms/). Note only is it an excellent technical explanation of sound highly relevant to this workshop, but the design of this essay (and many others on this site) is incredible. 
+> **Awesome Resource:** You need to check out this [The Pudding](https://pudding.cool/) interactive data visualization essay ["Let's Learn about Waveforms"](https://pudding.cool/2018/02/waveforms/). Not only is it an excellent technical explanation of sound that's highly relevant to this workshop, but the design of this "essay" (and many others on that site) is incredible. 
 
 ## amplitude
 
-This sketch is a simple demo for how to use _amplitude_ rather than _frequency_ information from audio files using the Processing sound library. It shows an animated sphere that scales based on the current amplitude of the sound.
+This sketch demonstrates how to analyze amplitude information from audio files. It visualizes amplitude as an animated disk that scales based on the current amplitude of the sound. The highest peak amplitude is visualized as a circle.
 
-The sketch plays the audio file on loop with:
+The sketch plays the audio file that loops:
 
-```java
-sample = new SoundFile(this, "Mecha_Action.aiff");
-sample.loop();
+```js
+sound.play()
+sound.setLoop(true)
 ```
 
-The audio file is loaded the same way as before, but an `Amplitude` object is made rather than an `FFT` object:
+The audio file is loaded the same way as before, but an `Amplitude` object is created and associated with the sound file. 
 
-```java
-rms = new Amplitude(this);
-rms.input(sample);
+```js
+amplitude = new p5.Amplitude(p.smoothing);
+amplitude.setInput(sound);
+```
+Then, the sketch runs the current amplitude level is computed:
+
+```js
+  let level = amplitude.getLevel();
+
+```
+This is a floating point (decimal) number between 0 and 1. You may find that audio never reaches 1 due to how the sound file was recorded. You can "normalize" the amplitude level to be 0 to 1 for the current sound file with [`.toggleNormalize(true)`](https://p5js.org/reference/#/p5.Amplitude/toggleNormalize). Try adding this to the end of the `initalizeAnalysis()` function:
+
+```js
+// normalization
+amplitude.toggleNormalize(true);
 ```
 
-The key difference between the two is that `Amplitude` represents the total "amount" of output at a given point in time, whereas `FFT` represents output across the frequency domain, essentially breaking apart the waveform into its separate components. 
+### Animation Technique Extra
 
-Then, the sketch runs:
+The peak value is rendered using a GreenSock animation with some more advanced usage. The peak level and opacity are all stored in a `peak` object. 
 
-```java
-float raw = rms.analyze();
+```js
+// peak object 
+let peak = {
+  level: 0,
+  opacity: 0,
+}
 ```
 
-to get the amplitude of the sound at the current moment in time. This is a floating point (decimal) number between 0 and 1.
+The gsap tween has a callback to reset the peak level after the animation finishes, but a new tween "overwrites" any previous ones (i.e. the callback is only triggered when the animation fully completes). 
+
+```js 
+// start new animation with callback function on completion
+// animated value "opacity" is a member of the object "peak"    
+// overwrite: true kills any animation already running
+gsap.to(peak, {
+    opacity: 0, 
+    duration: 1.0, 
+    overwrite: true,
+    onComplete: function () {
+    print(`peak ${peak.level} completed`);
+    peak.level = 0;
+    }
+})
+```
 
 
 ## frequency
 
-Demonstrates a variety of frequency-related analysis of a sound file, all based on the Fast Fourier Transform (FFT). Start with this sketch to understand how to analyze frequency spectrums using the [p5.FFT](https://p5js.org/reference/#/p5.FFT) object.
+Demonstrates a variety of frequency-related analysis of a sound file, all based on the Fast Fourier Transform (FFT). The key difference between is that `Amplitude` represents the total "amount" of output at a given point in time, whereas `FFT` represents output across the frequency domain, essentially breaking apart the waveform into separate components. 
+
+Start with this sketch to understand how to analyze frequency spectrums using the [p5.FFT](https://p5js.org/reference/#/p5.FFT) object.
 
 
 To set up FFT analysis, the demo creates a p5.FFT object like this:
