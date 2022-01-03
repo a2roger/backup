@@ -7,7 +7,7 @@ We'll  explore different approaches and techniques for using sound in generative
 
 - Learn different ways that sounds can be played, e.g., via sampling, synthesis using oscillators
 - Learn different ways that sound can be used to drive visualizations, e.g., via amplitude tracking, frequency analysis
-- Experiment with autonomous agents to generate emergent sounds
+<!-- - Experiment with autonomous agents to generate emergent sounds -->
 
 ## Setup
 
@@ -18,6 +18,7 @@ You'll need to include the p5.sound library in the `index.html` file that runs y
 ```
 
 But you can also load it as a remote resource using CDN:
+
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
 ```
