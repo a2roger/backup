@@ -9,3 +9,4 @@ The following workshops are in repo directories:
 * [`w4_data/` Workshop 4: Data Input ](https://git.uwaterloo.ca/csfine383/workshops/tree/master/w4_data)
 * [`w5_distributed/` Workshop 5: Distributed Systems ](https://git.uwaterloo.ca/csfine383/workshops/tree/master/w5_distributed)
 * [`w6_3d/` Workshop 6: 3D Graphics ](https://git.uwaterloo.ca/csfine383/workshops/tree/master/w6_3d)
+  
