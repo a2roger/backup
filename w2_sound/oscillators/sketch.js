@@ -13,7 +13,7 @@ let p = {
 
   freq: 440,
   freqMin: 65,
-  freqMax: 2093,
+  freqMax: 4186,
 }
 
 // our oscillator
@@ -34,10 +34,7 @@ function setup() {
 function draw() {
   background(250);
   textAlign(CENTER, CENTER)
-  text("SPACE to Play/Pause", width/2, height/2)
-
-  // if (isPlaying)
-  //   osc.freq(p.freq, 0.1)
+  text("SPACE to Play/Pause", width / 2, height / 2)
 }
 
 let isPlaying = false;
@@ -51,11 +48,6 @@ function keyPressed() {
       osc.stop()
     isPlaying = !isPlaying
   }
-}
-
-function mousePressed() {
-
-
 }
 
 // global callback from the settings GUI
@@ -72,7 +64,7 @@ function paramChanged(name) {
 
     // create new oscillator
     osc = new p5.Oscillator(p.oscillator)
-    osc.amp(0.5)
+    osc.amp(p.amp)
 
     // start it if already playing
     if (isPlaying)

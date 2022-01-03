@@ -338,6 +338,12 @@ if (key == " ") {
 
 The first call to `amp` sets the amplitude (volume) to the value you chose in the GUI. The second call to `amp` will "ramp down" the amplitude to 0 over 0.8 seconds. This produces a single note, like an instrument. Experiment with different times, or even better, add this ramp down time to your GUI.
 
+You'll also want to comment out where the amp is set in the paramChanged GUI callback, or else you'll hear a continuous tone when you adjust the amplitude:
+
+```js
+    // osc.amp(p.amp)
+```
+
 To play different notes, we'll use the horizontal mouse position in the canvas.  Insert this code right after `osc.start()` in `keyPressed`:
 
 ```js
@@ -355,48 +361,37 @@ A simple fix is to create a new oscillator object for every note by inserting th
   osc = new p5.Oscillator(p.oscillator)
 ```
 
-### Experiment: Tremelo and Vibrato
+### Experiment 1: Tremelo and Vibrato
 
-Read the "Controlling oscillators with oscillators" section of [Allison Parish's "Synthesizing and analyzing sound" tutorial](https://creative-coding.decontextualize.com/synthesizing-analyzing-sound/). 
+Read the "Controlling oscillators with oscillators" section of [Allison Parish's "Synthesizing and analyzing sound" tutorial](https://creative-coding.decontextualize.com/synthesizing-analyzing-sound/). Try adding tremelo and vibrator effects to your oscillator instrument.
 
-* Try adding tremelo and vibrator effects to your oscillator instrument
-* Use GUI parameters to control tremelo and vibrato, so you have something like a music synthesizer
+### Experiment 2: ADSR Envelope
 
-
-## Sketch: **`midi`**
-
-This sketch shows how to play a MIDI file using the `javax.sound.midi` library. It also visualizes the notes using 3D graphics – more on that coming in the 3D graphics workshop later in the term!
-
-MIDI stands for _Musical Instrument Digital Interface_, and refers to a number of specifications, including a music file format. MIDI files only store the notes and instruments of a piece of music, like sheet music. This means that the file sizes are very small in comparison to normal audio files like MP3 and WAV. However, it also means that the computer playing the MIDI file needs to have a _sound bank_ with the sounds of different instruments, so it knows how to play it. Due to the compactness of the file format, many early computer music compositions were stored in MIDI or similar (e.g., MOD, XM) formats.
-
-
-
-### Using MIDI Notes as Data – Samplers/SamplerMidi
-
-Like the previous sketch, this sketch uses a MIDI file as a data source. But rather than playing the file directly, it plays the notes back manually using a triangle oscillator (see "Synthesizing Sounds" above for more info on oscillators). It also visualizes the note that's being played, similar to "piano roll" editors in many modern music creation software applications. This is an example of how you could use sound information to drive visuals in your assignments.
-
-You'll also notice the variables `attackTime`, `sustainTime`, `sustainLevel`, `releaseTime` in this sketch. These refer to the "attack", "decay", "sustain", "release" (ADSR) envelope, which is ubiquitous in sound synthesis. Adding short fade-ins (attack) and fade-outs (release) can make synthesized sounds seem more natural. By carefully choosing parameter values, you can simulate phenomena like the piano hammer striking the strings in the piano, or plucking strings on a double bass.
+The simple "ramp down" of amplitude we used above is only one way to change the sound of single "note". One standard method to change the sound of a note is my dividing the amplitude into four parts: "attack", "decay", "sustain", "release", which are collectively called the ADSR envelope.  Adding short fade-ins (attack) and fade-outs (release) can make synthesized sounds seem more natural. By carefully choosing parameter values, you can simulate phenomena like the piano hammer striking the strings in the piano, or plucking strings on a double bass.
 
 The image below shows a visualization of how the four parameters affect the sound. The x-axis represents time; the y-axis represents the amplitude of the generated sound.
-
 ![http://cmp.music.illinois.edu/beaucham/software/m4c/M4C_introHTML/M4C_intro.html](img/adsr.png)
 
+The [p5.Envelope](https://p5js.org/reference/#/p5.Envelope) class lets you control an oscillation tone with an ADSR envelope. Look at the demo code on the reference page, and add add code to play your oscillator through an ADSR envelope. 
+
+*Hints:*
+
+* You'll need to add code to `keyPressed` to `play` your `osc` oscillator with the p5.Envelope object you create. 
+* You'll need to comment out the amp "ramp down" code too, or else the envelope won't have complete control over how the oscillator is played.
+
+Try adding GUI parameters to control the four ADSR parameters, this will make your program like a music synthesizer.
+
+You could also use [`triggerAttack`](https://p5js.org/reference/#/p5.Envelope/triggerAttack) and `triggerRelease`. Instead of playing the envelope all at once with `play`, these let you play the attack and decay part when a key is pressed and then play the release part when SPACE is released. 
+
+You can also try the [p5.PolySynth](https://p5js.org/reference/#/p5.PolySynth) class which provides even more control over playing sound.  
 
 
+<!-- ## Sketch: **`midi`**
 
+MIDI stands for _Musical Instrument Digital Interface_, and refers to a number of specifications, including a music file format. MIDI files only store the notes and instruments of a piece of music, like sheet music. This means that the file sizes are very small in comparison to normal audio files like MP3 and WAV. However, it also means that the computer playing the MIDI file needs to have a _sound bank_ with the sounds of different instruments, so it knows how to play it. Due to the compactness of the file format, many early computer music compositions were stored in MIDI or similar (e.g., MOD, XM) formats. -->
 
-#### Exercise 2
+# Sketchbook Entry
 
-Take one of the "Samplers" sketches as a starting point. Try loading in your own sound files and changing the way the sound is visualized or played. Create a short (5–15 second) video demonstrating your resulting composition.
+Extend one of the exercises or experiments above into a small demo of your own. Attach or link to your creation: this could be screen capture recording or live code (e.g. hosted in the p5 online editor). Include a brief description (about 250 words) to explain what you did and how it works.
 
-
-
-#### Exercise 3
-
-Take the SoundAgent sketch as a starting point. Try loading in your own sound files. Use one or more of the visualization techniques and/or sampling approaches described above to create a new form of interesting algorithmic playback. Create a short (5–15 second) video demonstrating your resulting composition.
-
-
-# Entry for Public Digital Sketchbook
-
-Provide a brief (approx. 250 word) description of the visualization and sampling techniques you used in the three exercises above. Attach or link to the three short videos you made in these exercises.
-
+Be prepared to share your creation next class.

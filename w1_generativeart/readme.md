@@ -489,27 +489,11 @@ See GD **M.6.1**, p. 436, and these code examples:
 
 Daniel Shiffman's excellent [Nature of Code Book](https://natureofcode.com/) explains in detail other generative methods like [particle systems](http://natureofcode.com/book/chapter-4-particle-systems/) and [genetic algorithms](http://natureofcode.com/book/chapter-9-the-evolution-of-code/). Unfortunately, the book is from 2012 so all code examples use Java Processing (the precursor to p5.js). 
 
-> **Update:** Shiffman is working on an [updated version of the book](https://github.com/nature-of-code/noc-book-2) and [many of the demos are already translated into p5.js](https://github.com/nature-of-code/noc-examples-p5.js)! You can also watch videos demoing demo code from the book on his [Coding Train YouTube channel](https://youtu.be/70MQ-FugwbI).
+> **Update:** Shiffman is working on a [new version of the book](https://github.com/nature-of-code/noc-book-2) and [many of the demos are already translated into p5.js](https://github.com/nature-of-code/noc-examples-p5.js)! You can also watch videos demoing demo code from the book on his [Coding Train YouTube channel](https://youtu.be/70MQ-FugwbI).
 
 
+# Sketchbook Entry
 
+Continue to iterate the drawing agent you started in the exercise above, and post three generated images (just static PNG images is fine) that demonstrate the range of forms possible using your rules and parameter settings. Describe the parameters and drawing rules that you added.
 
-
-
-# Exercise for Public Sketchbook
-
-Continue to iterate the drawing agent you started in the exercise above ("Exercise: Make your own agent"), and post three generated images (just static PNG images is fine) that demonstrate the range of forms possible using your rules and parameter settings. Describe the parameters and drawing rules that you added.
-
-
-<!-- # References and Resources
-
-* [Generative Design Book](http://www.generative-gestaltung.de/)
-*  -->
-
-
-
- 
-
-
-
-
+Be prepared to share your creation next class.
