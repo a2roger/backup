@@ -64,8 +64,8 @@ function createAgents() {
   let length = sqrt(step * step + step * step);
 
   // create an Agent object and place it at centre of each tile
-  for (x = step / 2; x < width; x += step)
-    for (y = step / 2; y < height; y += step) {
+  for (let x = step / 2; x < width; x += step)
+    for (let y = step / 2; y < height; y += step) {
       let a = new Agent(x, y, length);
       agents.push(a);
     }

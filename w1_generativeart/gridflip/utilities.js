@@ -23,7 +23,7 @@ function createParamGui(params, callback) {
   // settingsGui.prototype.addRange('size', 1, 64, 32, 1, function(v) { print("size changed", v) } )
 
 
-  _paramGui.setPosition(10, 10);
+  _paramGui.setPosition(width + 10, 10);
   // the 'S' key hides or shows the GUI
   _paramGui.prototype.setKey("s");
 
