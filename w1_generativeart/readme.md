@@ -10,7 +10,7 @@ In this workshop, we'll explore different algorithms and techniques to generate 
 * Experiment with autonomous agents to generate emergent patterns
 * Use physical systems like attraction and repulsion to generate visual form
 
-## Required Reading and Viewing
+## Recommended Reading and Viewing
 
 Read the first chapter from Matt Pearson's book, _Generative Art_, **Generative Art: In Theory and Practice (1st edition)** [available through the school library online](https://learning-oreilly-com.proxy.lib.uwaterloo.ca/library/view/generative-art/9781935182627/kindle_split_013.html) and then watch [this 6-minute video about Casey Reas](https://www.youtube.com/embed/_8DMEHxOLQE) (Reas is pronounced like "Reese").
 
