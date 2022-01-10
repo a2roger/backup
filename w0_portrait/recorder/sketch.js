@@ -7,7 +7,6 @@ let scaleXY = 1.0;
 // (frame per second, 1 to 60)
 let fps = 20
 
-
 let cam;
 
 function setup() {
@@ -15,10 +14,10 @@ function setup() {
   
   // opens your camera
   cam = createCapture(VIDEO);
-  cam.hide();
+  // cam.hide();
 
   // slow down so you don't capture too many frames
-  frameRate(15);
+  frameRate(fps);
 }
 
 // start in recording mode
@@ -33,7 +32,7 @@ function draw() {
 
   if (isRecording) {
     push();
-    translate(offsetX, offsetX);
+    translate(offsetX, offsetY);
     scale(scaleXY, scaleXY);
     image(cam, 0, 0);
     pop();
@@ -48,7 +47,7 @@ function draw() {
   } else {
     // playback
     if (frame < images.length) {
-      image(images[frame], 0, 0);rr 
+      image(images[frame], 0, 0);
       printFrameNum(`${frame + 1}/${images.length}`); 
     }
 
