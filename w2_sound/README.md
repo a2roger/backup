@@ -5,8 +5,8 @@ We'll  explore different approaches and techniques for using sound in generative
 
 ## Goals
 
-- Learn different ways that sounds can be played, e.g., via sampling, synthesis using oscillators
-- Learn different ways that sound can be used to drive visualizations, e.g., via amplitude tracking, frequency analysis
+- Learn different ways that sounds can be played: sampling, synthesis using oscillators
+- Learn different ways that sound can be used to drive visualizations: amplitude tracking, frequency analysis
 <!-- - Experiment with autonomous agents to generate emergent sounds -->
 
 ## Setup
@@ -39,22 +39,22 @@ But you can also load it as a remote resource using CDN:
 
 ### Tools
 
-- [**Friture**](http://friture.org/download.html): a tool for audio spectrum analysis
+- [**Friture**](http://friture.org/download.html): a tool for audio spectrum analysis *([broken on recent MacOS releases?](https://github.com/tlecomte/friture/issues/154))*
 
 
 # Introduction
 
-How does sound as a medium differ from the visual? What makes it unique? 
+How does sound as a medium differ from a visual medium? What makes it unique? 
 
 Sound is intrinsically physical and temporal. Unlike light waves, sound waves need a physical material to propagate through, as well as an energy source (generator). When building compositions, we need to consider how these sound waves are temporally spaced, the shape of the wave, and how they change over time. There are other properties of course, such as tone, timbre, richness, tempo, and rhythm, that also need to be considered; but the entire domain of sound can be compacted into dimensions of time, shape, and change.
 
 ## The sound "canvas"
 
-The human ear has a hearing range that falls between roughly 20Hz to 20kHz. For music, we think of as "notes" that fall into the 60Hz to 6400Hz range, where middle "A" is 440Hz. 
+The human ear has a hearing range that falls between roughly 20Hz to 20kHz. For music, what we think of as "notes" fall into the 60Hz to 6400Hz range, where middle "A" is 440Hz. 
 
 ![https://www.audioreputation.com/audio-frequency-spectrum-explained/](img/Audio-Frequency-Spectrum-Explained.jpg "https://www.audioreputation.com/audio-frequency-spectrum-explained/") 
 
-Another way to visualize the sound spectrum is through analysis. The image above shows how audio changes over time (x-axis) and over the frequency range (y-axis). Colour indicates volume (amplitude). 
+Another way to visualize the sound spectrum is through analysis. The image below shows how audio changes over time (x-axis) and over the frequency range (y-axis). Colour indicates volume (amplitude). 
 
 ![https://music.stackexchange.com/questions/10472/sound-spectrum-to-notes-software](img/spectrum.jpg "https://music.stackexchange.com/questions/10472/sound-spectrum-to-notes-software")
 
@@ -62,6 +62,8 @@ Another way to visualize the sound spectrum is through analysis. The image above
 ## Generative Sound in Generative Art
 
 Sound, by itself, can be used as generative art. Philippe Pasquier and Arne Eigenfeldt explore this in their research into [Metacreation](http://metacreation.net/). 
+
+> The [Metacreation](http://metacreation.net/) group spans much more than sound: it's definitely worth looking through their portfolio of works. 
 
 In digital artwork, sound can function in three primary ways:
 
@@ -96,7 +98,7 @@ function preload() {
 }
 ```
 
-Preload is called before setup and it guarantees that `tick` will be loaded with the wav file and ready to use before setup, draw, mousePressed, etc. are run.
+Preload is called before setup and the code above guarantees that `tick` will be loaded with the wav file and ready to use before setup, draw, mousePressed, etc. are called.
 
 ### Playing Sound
 
@@ -107,7 +109,7 @@ Playing sound is slightly more complicated on modern browsers. They all have res
 
 ### Adjusting Playback
 
-A [sound file has many more methods](https://p5js.org/reference/#/p5.SoundFile) than `play()`. In this demo, we adjust the volume since the wav file I used it really loud. I do this in `setup()` since:
+A [sound file has many more methods](https://p5js.org/reference/#/p5.SoundFile) than `.play()`. In this demo, we adjust the volume since the wav file I used seems to be really loud. I do this in `setup()`:
 
 ```js
 // turn down the sound
@@ -116,9 +118,9 @@ tick.setVolume(0.1);
 
 ### Exercise: Make a Stereo Tick
 
-You can change "where" the sound plays in the left or right stereo channel using the [`pan()` method](https://p5js.org/reference/#/p5.SoundFile/pan). A value of -1 means play in the left channel, 1 means play in the right channel, and anything in between is a mix of both channels (i.e. the default value of 0 plays in both channels equally).
+You can change "where" the sound plays in the left or right stereo channel using the [`.pan()` method](https://p5js.org/reference/#/p5.SoundFile/pan). A value of -1 means play in the left channel, 1 means play in the right channel, and anything in between is a mix of both channels (i.e. the default value of 0 plays in both channels equally).
 
-Let's pan the tick sound to match the horizontal canvas position of the Agent that's flipping. Add this code to `Agent.update()` just before the `tick.play()` line:
+Let's pan the tick sound to match the horizontal canvas position of the Agent that's making the flip. Add this code to `Agent.update()` just before the `tick.play()` line:
 
 ```js
 // map agent x canvas position to a [-1, 1] stereo pan
@@ -131,17 +133,17 @@ tick.pan(p)
 ### Explore: Add More Sounds and/or Variation
 
 * You could vary the volume of the tick based on Agent position or some pseudo random choice.
-* You could experiment with the [rate() method](https://p5js.org/reference/#/p5.SoundFile/rate) to play the tick more slowly (or even backwards) depending on where the Agent is or some pseudo random choice.
+* You could experiment with the [.rate() method](https://p5js.org/reference/#/p5.SoundFile/rate) to play the tick more slowly (or even backwards) depending on where the Agent is or some pseudo random choice.
 * You could play a different sound depending on the flip direction. 
 * You could choose to play one of a few different sounds at each flip. 
 * Every agent could have its own sound, or maybe there are N type of agents that all share the same sound. 
   
-For the additional sounds, could download a new sound on [**Freesound**](https://freesound.org/), create another variation of the tick wav using audio processing software, or record your own sound using your mic.
+For the additional sounds, you could download a new sound on [**Freesound**](https://freesound.org/), create another variation of the tick wav using audio processing software, or record your own sound using your mic.
 
 
 # Analysis
 
-Two basic analysis techniques are to calculate the amplitude of a sound at a moment in time, or use a fast Fourier transform (FFT) to examine different frequencies of sound at a moment in time. 
+Two basic analysis techniques are to calculate the amplitude of a sound at a moment in time, or use a *fast Fourier transform* (FFT) to examine different frequencies of sound at a moment in time. 
 
 > **Awesome Resource:** You need to check out this [The Pudding](https://pudding.cool/) interactive data visualization essay ["Let's Learn about Waveforms"](https://pudding.cool/2018/02/waveforms/). Not only is it an excellent technical explanation of sound that's highly relevant to this workshop, but the design of this "essay" (and many others on that site) is incredible. 
 
@@ -149,30 +151,38 @@ Two basic analysis techniques are to calculate the amplitude of a sound at a mom
 
 This sketch demonstrates how to analyze amplitude information from audio files. It visualizes amplitude as an animated disk that scales based on the current amplitude of the sound. The highest peak amplitude is visualized as a circle.
 
-The sketch plays the audio file that loops:
+The sketch plays the audio file in a "loop" (it repeats again and again):
 
 ```js
 sound.play()
 sound.setLoop(true)
 ```
 
-The audio file is loaded the same way as before, but an `Amplitude` object is created and associated with the sound file. 
+The audio file is loaded the same way as before, but an `Amplitude` analysis object is created and associated with the sound file. 
 
 ```js
 amplitude = new p5.Amplitude(p.smoothing);
 amplitude.setInput(sound);
 ```
-Then, the sketch runs the current amplitude level is computed:
+Then, the sketch analyzes the current amplitude level in draw:
 
 ```js
   let level = amplitude.getLevel();
 
 ```
-This is a floating point (decimal) number between 0 and 1. You may find that audio never reaches 1 due to how the sound file was recorded. You can "normalize" the amplitude level to be 0 to 1 for the current sound file with [`.toggleNormalize(true)`](https://p5js.org/reference/#/p5.Amplitude/toggleNormalize). Try adding this to the end of the `initalizeAnalysis()` function:
+This is a floating point (decimal) number between 0 and 1. You may find that audio never reaches 1 due to how the sound file was recorded. You can "normalize" the amplitude level to be 0 to 1 for the current sound file with [`.toggleNormalize(true)`](https://p5js.org/reference/#/p5.Amplitude/toggleNormalize). 
+
+Try adding this to the end of the `initalizeAnalysis()` function:
 
 ```js
 // normalization
 amplitude.toggleNormalize(true);
+```
+
+Remember that sound occurs over time, so that means that amplitude analysis works over time as well. You can essentially tell the amplitude object how much prior sound history it should consider when calculating the current amplitude by changing the `.smooth` method:
+
+```js
+amplitude.smooth(p.smoothing);
 ```
 
 ### Animation Technique Extra
@@ -198,8 +208,8 @@ gsap.to(peak, {
     duration: 1.0, 
     overwrite: true,
     onComplete: function () {
-    print(`peak ${peak.level} completed`);
-    peak.level = 0;
+        print(`peak ${peak.level} completed`);
+        peak.level = 0;
     }
 })
 ```
@@ -207,7 +217,7 @@ gsap.to(peak, {
 
 ## Sketch: **`frequencyviz`**
 
-Demonstrates a variety of frequency-related analysis of a sound file, all based on the Fast Fourier Transform (FFT). The key difference between is that `Amplitude` represents the total "amount" of output at a given point in time, whereas `FFT` represents output across the frequency domain, essentially breaking apart the waveform into separate components. 
+Demonstrates a variety of frequency-related analysis of a sound file, all based on the Fast Fourier Transform (FFT). The key difference is that `Amplitude` represents the total "amount" of output at a given point in time, whereas `FFT` represents output across the frequency domain, essentially breaking apart the waveform into separate components. 
 
 Start with this sketch to understand how to analyze frequency spectrums using the [p5.FFT](https://p5js.org/reference/#/p5.FFT) object.
 
@@ -219,7 +229,9 @@ soundFFT = new p5.FFT(p.smoothing, 2 ** p.bins);
 soundFFT.setInput(sound);
 ```
 
-Setting the amount of smoothing and the number of bins is optional, but this demo controls them with the GUI. If you don't call `setInput` with a p5.Sound object, then the FFT analysis will be on all sound produced by the sketch. 
+Setting the amount of smoothing and the number of bins is optional, but this demo controls them with the GUI.  If you don't call `setInput` with a p5.Sound object, then the FFT analysis will be on all sound produced by the sketch. 
+
+> The number of FFT bins must be a power of 2 with minimum of 16 and maximum of 1024. That's why the code has `2 ** p.bins`.
 
 The [p5.FFT](https://p5js.org/reference/#/p5.FFT) methods used:
 * `soundFFT.analyze()` performs the FFT analysis on the current sound sample
@@ -247,24 +259,24 @@ sound.start()
 
 # Synthesis
 
-These sketches demonstrate a variety of ways to get audio file playback.
+These sketches demonstrate a variety of ways to manipulate audio in real time during playback.
 
 ## Sketch: **`effects`**
 
 Sounds can be processed by audio effects using [p5.Effect](https://p5js.org/reference/#/p5.Effect) classes. This demo lets you process short clips from your mic with different effects.
 
-Try switching the effect and the effect parameters in the `paramChanged` function. For example, this turns on a [p5.Delay](https://p5js.org/reference/#/p5.Delay) effect to create something like an echo:
+Comment and uncomment parts of the code in the `paramChanged` function to switch the effect and change the code to tune the effect parameters. For example, this turns on a [p5.Delay](https://p5js.org/reference/#/p5.Delay) effect to create something like an echo:
 
 ```js
 effect = new p5.Delay();
 effect.process(clip, 0.12, .7, 2300);
 ```
 
-Effects are connected or disconnected to a sound: think of it like something the sound is passed through when its played. 
+Effects are connected or disconnected to a sound: think of an effect as something a sound is passed through when it's played. 
 
 ### Recording
 
-This sketch shows how to make a recording of a sound (in this case the mic) and then play it back. 
+This sketch also shows how to make a recording of a sound (in this case the mic) and then play it back. 
 
 You need three objects:
 
@@ -390,6 +402,13 @@ You can also try the [p5.PolySynth](https://p5js.org/reference/#/p5.PolySynth) c
 <!-- ## Sketch: **`midi`**
 
 MIDI stands for _Musical Instrument Digital Interface_, and refers to a number of specifications, including a music file format. MIDI files only store the notes and instruments of a piece of music, like sheet music. This means that the file sizes are very small in comparison to normal audio files like MP3 and WAV. However, it also means that the computer playing the MIDI file needs to have a _sound bank_ with the sounds of different instruments, so it knows how to play it. Due to the compactness of the file format, many early computer music compositions were stored in MIDI or similar (e.g., MOD, XM) formats. -->
+
+## (Future TODO) Sketch: **`generativesound`**
+
+This workshop really should also have a demo showing how to use the agent.js class to generate sound.
+
+**Discussion**: how could we do that?
+
 
 # Sketchbook Entry
 

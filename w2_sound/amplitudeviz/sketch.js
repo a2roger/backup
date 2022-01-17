@@ -37,9 +37,11 @@ function initalizeAnalysis() {
 
   print(`amplitude with ${p.smoothing}`)
   if (amplitude == null) {
+    // create a new amplitude analysis object
     amplitude = new p5.Amplitude(p.smoothing);
     amplitude.setInput(sound);
   }
+  // parameters to tweak amplitude analysis
   amplitude.smooth(p.smoothing);
   // normalization
   amplitude.toggleNormalize(false);
