@@ -1,142 +1,116 @@
 # Workshop 3: Computer Vision Input
 
-Learn the basics of interactive computer vision using the [OpenCV for Processing library](https://github.com/atduskgreg/opencv-processing). We'll focus on using it to enable different types of body tracking which can be used as input for many kinds of interactive art installations.
+Learn the basics of interactive computer vision and applied machine learning. We'll primarily focus on different types of body tracking which can be used as input for many kinds of interactive art installations.
+
+> **Make sure you have the latest 383 Workshop code from Gitlab** You should have cloned the course workshop GitLab project to your computer already, so updating is as easy as typing `git pull` in the terminal or selecting "Pull" from the "Source Control" sidebar in VS Code.
 
 ## Goals
 
-* Set up the "OpenCV for Processing" computer vision library.
-* Learn basics of computer vision and OpenCV (in Processing) for body tracking:
+1. Learn about the [ml5.js](https://learn.ml5js.org/#/) library for computer vision tracking:
+	* tracking faces using different ML models
+	* tracking hands
+	* tracking a whole body pose
+	* background segmentation
+
+2. Learn about the [p5.js-cv](https://github.com/orgicus/p5.js-cv) wrapper for opencv.js 
 	* tracking movement with optical flow
-	* tracking faces
 	* image processing, thresholding
 	* finding "blob" contours using background subtraction and HSB colour tracking, and processing contour data
-* Complete small OpenCV programming experiments with the demo code
-* Create a small computational artwork that uses the body as input
 
-#### Recommended Reading
+3. Learn about other p5.js techniques and other JavaScript libraries for image processing and tracking:
+   * AR marker tracking
+
+4. Complete small programming experiments with the demo code
+  
+5. Create a small coding exercise that uses the body as input
+
+## Recommended Viewing and Reading 
+
+**Daniel Shiffman's video ["A Beginner's Guide to Machine Learning with ml5.js"](https://youtu.be/jmznx0Q1fP0).** He introduces the ml5 library and explains key concepts behind behind machine learning.
+
+* This is the first video in a [series about machine learning and ml5](https://thecodingtrain.com/learning/ml5/).
 
 **Golan Levin, [Computer Vision for Artists and Designers: Pedagogic Tools and Techniques for Novice Programmers](https://link-springer-com.proxy.lib.uwaterloo.ca/article/10.1007/s00146-006-0049-2)** (UW Library link, alternatively [an archived version available through the Internet Archive](https://web.archive.org/web/20120330064719/http://www.flong.com/texts/essays/essay_cvad/))
 
 * Don't let the "novice programmers" part dissuade you, this is a short but very informative article that relates directly to what we're talking about in this workshop.
-* The technical references are a little out of date.
+* The code examples use Java Processing and the technical references are out of date.
 
-# Set Up
+## Resources
 
-Make sure to complete the following steps before working with the Workshop code.
+* [ml5.js - Friendly Machine Learning for the Web](https://ml5js.org/): a multi-purpose JavaScript library that packages up many different machine learning models and methods. Has built-in support for p5.js.
 
-#### 1. Install the "OpenCV for Processing" library
+* [p5.js-cv](https://github.com/orgicus/p5.js-cv): a p5.js port of Kyle McDonald's ofxCv library using opencv.js.
+  
+* [Kyle McDonald's cv-examples](https://kylemcdonald.github.io/cv-examples/): various computer vision demos using both built-in p5.js image processing and different machine learning libraries.
 
-Using `Sketch/Import Library.../Add Library...`, search for the library name and click "Install".
+* [An Introduction to Computer Vision in JavaScript using OpenCV.js](https://www.digitalocean.com/community/tutorials/introduction-to-computer-vision-in-javascript-using-opencvjs): a lower level introduction to using opencv.js with standard JavaScript
 
-> **Note that OpenCV is a large library, so install it where you have a fast connection** (e.g. avoid eduroam at peak times.)
+# General Advice
 
-#### 2. Verify your OpenCV installation works
+In most cases, the algorithms will not perform perfectly due to variations in the environment and your hardware. 
 
-Do this by trying different OpenCV sketch examples using the `File/Examples...` menu. In the window that opens, navigate to the `Contributed Libraries/OpenCV for Processing` folder. You'll see a list of sketches demonstrating different OpenCV features.
+**Environment:** The framing of the subject, the brightness and consistency of lighting, and background colours and textures can  all affect tracking quality. This can be minimized by carefully controlling the environment, but your code should still handle tracking errors (i.e. lost tracking) and noisy input. 
 
-Here are some sketches you should try before proceeding (we'll be using these OpenCV features):
+**Technical:**  Some methods are affected by the quality of your camera and the processing speed of your computer. Camera quality can be improved by improving your environment (see above). We'll look at ways to reduce the size of the captured image frames to compensate for computer speed. 
 
-* `LoadAndDisplayImage` is the simplest sketch to make sure the library is installed: it just converts a saved image to greyscale using OpenCV.
-* `FilterImages` tests filtering using a still image.
-* `MorphologyOperations` tests morphological operators using a still image.
-* `FindContours` tests find contours on a still image.
-* `BackgroundSubtraction` tests the background subtraction module on a video file.
-	- If this sketch fails with an error, try replacing line 20 (`opencv.loadImage(video);`) with:
-		```java
-		if (video.width > 0 && video.height > 0) opencv.loadImage(video);
-		```
-* `HSVColorTracking` tests your camera with colour tracking (click on something in your video frame that has a bright colour)
-	- If this sketch only shows a grey/black/white window, try removing "`, P2D`" in the `size()` call on line 31.
-* `FaceDetection` tests the face detection module on a still image.
-* `LiveCamTest` tests your camera with face detection (also try `WhichFace`)
-* `MarkerDetection` tests the marker detection module. This also shows how to use lower level OpenCV methods and classes.
+For this course, the best approach is to assume input will be imperfect, and find a way to harness that in your projects.
 
-Note some of the included OpenCV examples use other libraries, for example "ImageFiltering" also uses the "ControlP5" library to create the user interface. Install any extra libraries as needed.
+# ml5 Tracking
 
-> **If everything above works, then you're all set!**
+Computer vision techniques to track different types of body input. 
 
-> **If something didn't work, please post to Teams.** Provide details like what operating system you're using (e.g. MacOSX 10.14.6), what sketch caused the error, what happened when you ran it, and what errors you saw in the console.
+## Face Tracking 
 
-#### 3. Get the latest "Workshop" code from Gitlab
+Sketch: **`face1`**
 
-If you have Git installed on your computer, and you already cloned the course workshop gitlab project (see Workshop 0), this could be as easy as typing `git pull` in the terminal.
+This sketch shows a live feed of your computer's webcam, and draws a box around any faces that are detected in the view. It uses the [Facemesh machine learning model](https://learn.ml5js.org/#/reference/facemesh), ml4 describes it as:
 
-# Workshop
+> "Facemesh is a machine-learning model that allows for facial landmark detection in the browser. It can detect multiple faces at once and provides 486 3D facial landmarks that describe the geometry of each face. Facemesh works best when the faces in view take up a large percentage of the image or video frame and it may struggle with small/distant faces."
 
-In this workshop, we'll review the Processing code in this directory. Each sketch serves to demonstrate computer vision techniques that could be used to track types of body input.
+### Initializing the model
 
-> In most cases, the algorithms will not perform perfectly due to variations in lighting, optics, and colours in the environment. This variation can be minimized by carefully controlling the environment, but your code should still handle tracking errors and noisy input. For this course, the best approach is to assume input will be imperfect, and find a way to harness that in your projects.
+In draw, create a p5.js video capture object as usual, then initialize the ml5 model to process video from that object and save a reference to the model in a global variable:
 
-
-## Face Tracking
-
-Sketch: **`face`**
-
-This sketch shows a live feed of your computer's webcam, and draws a box around any faces that are detected in the view.
-
-The import line for Processing's OpenCV library is: `import gab.opencv.*;`. This allows us to use the `OpenCV` object, the primary object we'll be using to do computer vision input. To instantiate the OpenCV object, this sketch makes a global variable called `opencv`, and then in `setup()`, runs:
-```java
-opencv = new OpenCV(this, cam.width, cam.height);
+```js  
+facemesh = ml5.facemesh(video, modelReady);
 ```
-The first parameter is typically `this`. The next two parameters control the width and height of the images that OpenCV should expect to process.
 
-In the case of this sketch, we're using OpenCV to process the video feed from the computer's webcam. We're using Processing's video library to capture this input, the same as the Workshop 0 Portrait exercise.
+`modelReady` is an optional callback function that is executed when the model was loaded. Also in draw, add a callback function to the facemesh model:
 
-We can load the current video feed frame into OpenCV with:
-```java
-opencv.loadImage(cam);
+```js
+  facemesh.on("predict", results => {
+    predictions = results;
+  });
 ```
-Typically, this `loadImage()` method will be called in `draw()`, with an updated image frame each time. (The `Capture` class exported by the video library is a subclass of `PImage`. When passed as a `PImage` in this way, it represents the image data of the current frame of the `Capture`.) The sketch calls `opencv.flip(1)` after loading the image frame. This mirrors the image horizontally, making interaction more intuitive (e.g. raising your right hand causes your right hand in the image to raise as well).
 
-To see what image data OpenCV is dealing with, you can call `opencv.getSnapshot()`. This can be useful for debugging if many image filters have been applied. In the case of this sketch, the webcam image rendered in the output window is that returned by `opencv.getSnapshot()`. If `cam` had been passed to `image()` rather than `output`, the rendered image wouldn't be flipped.
+This means that each time a "predict" event is triggered inside the model, it should update the global variable with all the predictions for that frame. The predictions will be all the information for faces the model found in the scene, such as eye position, bounding box of each face, etc. 
 
-The way this sketch can detect faces is through *cascades*. These are files that describe features associated with certain images like faces. In `setup()`, we run:
-```java
-opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);
+There are also various options you can set when initialization the model. 
+
+## Accessing the Predictions
+
+The predictions are stored in a somewhat complicated data structure. I saved an example of it in `predictions.json`.  
+
+It's an array of faces that were detected. For each face, it provides five types of data:
+
+* `faceInViewConfidence`
+* `boundingBox`
+* `mesh`
+* `scaledMesh`
+* `annotations`
+
+A description and example of these are in the [Facemesh reference page](https://learn.ml5js.org/#/reference/facemesh), but the example isn't quite right. It seems some of these types of data are enclosed in a single element array for some reason.  For example, this means accessing the top left corner of `boundingbox` requires  this:
+
+```js
+let x = predictions[0].boundingBox.topLeft[0][0]
+let y = predictions[0].boundingBox.topLeft[0][1]
 ```
-to load the cascade for faces (tell OpenCV to look for faces). We then use:
-```java
-faces = opencv.detect();
-```
-in `draw()` to detect the matches for the current cascade (find all the faces). `opencv.detect()` returns a Java AWT `Rectangle` object that stores the `x`, `y` position and width and height of a bounding box for each detected face.
 
-OpenCV supports tracking of other features beyond faces.
-Face detection with OpenCV (`CASCADE_FRONTALFACE`) tends to be rather stable. On the other hand, other cascade files like `CASCADE_EYE` and `CASCADE_MOUTH` more frequently don't detect properly or detect things that aren't eyes or mouths as if they are. Try replacing `CASCADE_FRONTALFACE` with [some other cascades in the documentation](http://atduskgreg.github.io/opencv-processing/reference/gab/opencv/OpenCV.html) (or try code completion on `OpenCV.CASCADE_`), to see how it works.
+### Performance Considerations
 
-> Note: Cascade files are just (very) large XML files describing features. For example, the `CASCADE_FRONTALFACE` cascade starts with:
-> ```xml
-> <opencv_storage>
-> <haarcascade_frontalface_default type_id="opencv-haar-classifier">
->   <size>24 24</size>
->   <stages>
->     <_>
->       <!-- stage 0 -->
->       <trees>
->         <_>
->           <!-- tree 0 -->
->           <_>
->             <!-- root node -->
->             <feature>
->               <rects>
->                 <_>6 4 12 9 -1.</_>
->                 <_>6 7 12 3 3.</_></rects>
->               <tilted>0</tilted></feature>
->             <threshold>-0.0315119996666908</threshold>
->             <left_val>2.0875380039215088</left_val>
->             <right_val>-2.2172100543975830</right_val></_></_>
->         <_>
->         ...
-> ```
+This sketch shows its performance in frames per second (FPS) in the top left of the output window (using the `frameRate` built-in variable). Ideally, this number should be about 60 FPS, but when doing computationally intensive computer vision, this number might reduce drastically. Below around 20 FPS, this latency will start to become readily apparent and could detract from a composition.
 
-
-#### **Tip: Performance Considerations**
-
-You'll notice this sketch has a `scale` variable, which scales down the video resolution passed into `Capture` and `OpenCV`. OpenCV is able to operate more quickly on smaller images. You may find it beneficial to reduce the scale to improve the performance of your art pieces. However, reducing the scale *too* much might cause the computer vision algorithms to fail. For example, if the scale is changed from its default of `0.5` to a smaller value of `0.1`, OpenCV fails to detect any faces with Matthew's webcam.
-
-This sketch shows its performance in frames per second (FPS) in red in the top left of the output window (using the `frameRate` built-in variable). Ideally, this number should be about 60 FPS, but when doing computationally intensive computer vision, this number might reduce drastically. Below around 20 FPS, this latency will start to become readily apparent and could detract from a composition.
-
-
-#### Experiments
+### Experiment
 
 * Face swap by loading an image and displaying it on top of the tracked face (use a `PImage` and display a scaled version using `image()`). There's an emoji image you can use in the `/data` directory.
 
