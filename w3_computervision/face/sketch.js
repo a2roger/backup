@@ -1,5 +1,8 @@
 // parameters
 let p = {
+  boundBox: true,
+  annotations: false,
+  landmarks: false
 }
 
 // the model
@@ -44,9 +47,9 @@ function draw() {
   image(video, 0, 0, width, height);
 
   // different visualizations
-  // drawKeypoints()
-  // drawBoundingBoxes()
-  drawAllAnnotations()
+  if (p.boundBox) drawBoundingBoxes()
+  if (p.landmarks) drawLandmarks()
+  if (p.annotations) drawAllAnnotations()
 
     // if (predictions.length > 0) {
   //   drawAnnotation(predictions[0], "silhouette")
@@ -155,7 +158,7 @@ function drawAllAnnotations() {
 
 
 // Draw dots for all detected keypoints
-function drawKeypoints() {
+function drawLandmarks() {
 
   for (let p of predictions) {
 
@@ -172,8 +175,6 @@ function drawKeypoints() {
     }
   }
 }
-
-
 
 function keyPressed() {
   if (key == "?") {
@@ -193,7 +194,6 @@ function windowResized() {
 // global callback from the settings GUI
 function paramChanged(name) {
 }
-
 
 fps = 0
 

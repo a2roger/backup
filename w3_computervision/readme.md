@@ -114,6 +114,18 @@ This sketch shows its performance in frames per second (FPS) in the top left of 
 
 * Face swap by loading an image and displaying it on top of the tracked face (use a `p5.Image` and display a scaled version using `image()`). There's an emoji image you can use in the `/data` directory.
 
+## Hand Tracking
+
+Sketch: **`hand`**
+
+Tracks a single hand using a very similar structure to face.
+
+
+## Body Tracking
+
+Sketch: **`body`**
+
+
 # Other Tracking
 
 ## Optical Flow
