@@ -91,6 +91,8 @@ There are also various options you can set when initialization the model.
 
 The predictions are stored in a somewhat complicated data structure. I saved an example of it in `predictions.json`.  
 
+> **[JavaScript Object Notation (JSON)](https://www.json.org/json-en.html)** is a standard text-based format for representing structured data based on JavaScript object syntax. 
+
 It's an array of faces that were detected. For each face, it provides five types of data:
 
 * `faceInViewConfidence`
@@ -124,6 +126,10 @@ Tracks a single hand using a very similar structure to face.
 ## Body Tracking
 
 Sketch: **`body`**
+
+Tracks multiple bodies using a very similar structure to face.
+
+The predictions format uses a somewhat a different format.
 
 
 # Other Tracking
