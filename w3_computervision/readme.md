@@ -101,26 +101,189 @@ It's an array of faces that were detected. For each face, it provides five types
 * `scaledMesh`
 * `annotations`
 
-A description and example of these are in the [Facemesh reference page](https://learn.ml5js.org/#/reference/facemesh), but the example isn't quite right. It seems some of these types of data are enclosed in a single element array for some reason.  For example, this means accessing the top left corner of `boundingbox` requires  this:
+A description and example of these are in the [Facemesh reference page](https://learn.ml5js.org/#/reference/facemesh), but the example isn't quite right. **It seems some of the data are enclosed in a single element array.**  Below is a reduced version of the predictions json returned by the model. You can see the nested square brackets right after `leftCheek`, for example. 
+
+```json
+[
+    {
+		"annotations": {
+			"rightCheek": [
+				[
+					268.2108154296875,
+					306.60540771484375,
+					4.016082286834717
+				]
+			],
+			"leftCheek": [
+				[
+					360.81134033203125,
+					301.05767822265625,
+					-1.433227777481079
+				]
+			]
+		}
+	}
+],
+```
+
+This code extracts the x, y, and z coordinates of the `leftCheek` annotation of the first face):
 
 ```js
-let x = predictions[0].boundingBox.topLeft[0][0]
-let y = predictions[0].boundingBox.topLeft[0][1]
+let pts = predictions[0].annotations['leftCheek'][0]
+```
+
+The x and y coordinates are first and second element in the `pts` array:
+
+```js
+let x = pts[0]
+let y = pts[1]
+```
+
+There's a coding convention in JavaScript to assign array element values to multiple variables like this:
+
+```js
+let [x, y] = pts
+```
+> **JavaScript TIP:** In the code, you might see variables defined with `let`, `const`, and even `var` or nothing. Defining a variable with `const` means make a variable constant: meaning the code will not change it later. `let` means make the variable "mutatable": meaning the code can change it later. Defining with `var` or nothing at all is generally considered bad practice.
+
+Since we have an array of faces in the predictions json, we usually *iterate* through each face prediction in a loop:
+
+```js
+// p will each face in the array
+for (let p of predictions) {
+	// now we can get the x and y coordinates in one step
+	let [x, y] = p.annotations['leftCheek'][0]
+	// using those x and y coordinates, we can do something
+	...
+}
 ```
 
 ### Performance Considerations
 
 This sketch shows its performance in frames per second (FPS) in the top left of the output window (using the `frameRate` built-in variable). Ideally, this number should be about 60 FPS, but when doing computationally intensive computer vision, this number might reduce drastically. Below around 20 FPS, this latency will start to become readily apparent and could detract from a composition.
 
-### Experiment
+With ml5, the prediction rate isn't directly tied to the framerate. This means your video frames may "get ahead" of the prediction, since a few video frames will be rendered before the next prediction arrives. 
 
-* Face swap by loading an image and displaying it on top of the tracked face (use a `p5.Image` and display a scaled version using `image()`). There's an emoji image you can use in the `/data` directory.
+### Exercise
+
+Let's write some code to do a simple "face swap" with an emoji.
+
+1. Load the emoji image in the data folder:
+
+   ```js
+   let emoji;
+
+   function preload() {
+      emoji = loadImage('data/emoji.png')
+   }
+   ```
+
+2. Create a function called `faceSwap` and call it from `draw`.
+
+3. In your faceSwap function, iterate through all predictions: 
+
+	```js
+	for (let p of predictions) {
+		
+	}
+	```
+
+4. In each loop iteration, get the value of the `leftCheek` and `rightCheek` annotated points:
+   
+	```js
+	const [lx, ly] = p.annotations['leftCheek'][0]
+	const [rx, ry] = p.annotations['rightCheek'][0]
+	```
+
+5. Draw a line between those points to make sure everything is working:
+
+	```js
+    stroke('#ff0000')
+    strokeWeight(10)
+    line(lx, ly, rx, ry)
+	```
+
+	You should see a thick red like that looks a bit like a "mustache".
+
+
+6. Find the midpoint between those two points:
+
+	```js
+	const x = (lx + rx) / 2
+	const y = (ly + ry) / 2
+	```
+
+7. Draw the emojii image at those points:
+   
+   ```js
+   image(emoji, x, y)
+   ```
+
+   This won't look quite right, by default p5 displays images using the top left corner position. 
+
+8. We could do some math and move the image up, but p5 also has a way of changing what part of the image is used for positioning. Change your code to this:
+
+	```js
+    imageMode(CENTER)
+    image(emoji, x, y)
+    imageMode(CORNER)
+	```
+
+	It's important to change the imageMode back to CORNER after, or else your video frame will also be displayed from the center.
+
+	This looks ok, but the 200 by 200 emoji size doesn't change when you move farther or close to the camera. 
+
+9. Let's use the distance between the left and right cheek points to change the scale of the emoji. We need to calculate the distance, then multiply that by something to make the emoji big enough to cover your real face. I found a factor of 2.8 works  well for me, but you can adjust that.
+
+	```js
+	let d = dist(lx, ly, rx, ry) * 2.8
+	```
+
+	Then use d when you draw the emoji image:
+
+	```js
+    image(emoji, x, y, d, d)
+	```
+
+	This looks better, but we could make the emoji rotate a bit to match the angle of your face too.
+
+10. Use `atan2` to find the angle of the left to right cheek line relative to the x-axis:
+
+	```js
+	let a = atan2(ly - ry, lx - rx) 
+	```
+
+	Remember that atan2 arguments are `y` then `x`!
+
+11. We can use that angle to *transform* the emoji image. We want to rotate around 0,0, not around the x,y position of the emoji image in the scene, so we also need to move the x,y position to a translate that is applied after rotate. Like this:
+
+	```js
+	push()
+	translate(x, y) // this will be applied second
+	rotate(a) // this will be applied first
+	image(emoji, 0, 0, d, d) // draw image at 0,0
+	pop()
+	```
+
+	> **RESOURCE:** You may want to review translations, see the csfine383 resources repo. 
+ 
+12. This is looking better, but the emoji still sits a bit low. We can easily tweak the position using our translate transformation. I found moving it up by one quarter of the distance between left and right cheek worked well for me. 
+
+	Edit the translate function call to be this:
+
+	```js
+	translate(x, y - d/4)
+	```
+
+**More tweaks are possible.** For example, we could use a third feature to get the perspective of the face. Then we could scale the width and height of the emoji differently to make the emoji look like its more 3D.
 
 ## Hand Tracking
 
 Sketch: **`hand`**
 
-Tracks a single hand using a very similar structure to face.
+Tracks a **single** hand using a very similar structure to face.
+
+The predictions use a json format very similar to face.
 
 
 ## Body Tracking
@@ -129,7 +292,7 @@ Sketch: **`body`**
 
 Tracks multiple bodies using a very similar structure to face.
 
-The predictions format uses a somewhat a different format.
+The predictions use a json format that's somewhat different than face.
 
 
 # Other Tracking

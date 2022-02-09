@@ -2,6 +2,7 @@
 let p = {
   boundBox: true,
   annotations: false,
+  labels: false,
   landmarks: false
 }
 
@@ -13,6 +14,7 @@ let predictions = [];
 let video;
 
 function preload() {
+
 }
 
 function setup() {
@@ -25,8 +27,12 @@ function setup() {
   createParamGui(p, paramChanged);
 
   // initialize the model
-  facemesh = ml5.facemesh(video,
-    modelReady);
+  const options = {
+    // flipHorizontal: true, // seems to be a bug?
+    maxFaces: 1,
+    detectionConfidence: 0.5,
+  }
+  facemesh = ml5.facemesh(video, options, modelReady);
 
   // This sets up an event that fills the global variable "predictions"
   // with an array every time new predictions are made
@@ -35,7 +41,7 @@ function setup() {
   });
 
   // Hide the video element, and just show the canvas
-  video.hide();
+  // video.hide();
 }
 
 function modelReady() {
@@ -51,13 +57,14 @@ function draw() {
   if (p.landmarks) drawLandmarks()
   if (p.annotations) drawAllAnnotations()
 
-    // if (predictions.length > 0) {
+  // if (predictions.length > 0) {
   //   drawAnnotation(predictions[0], "silhouette")
   // }
 
   // debug info
   drawFps()
 }
+
 
 // draw the bounding box for first face
 function drawBoundingBoxes() {
@@ -120,7 +127,7 @@ rightCheek
 leftCheek
 */
 
-function drawAnnotation(prediction, name, color = "#0000ff") {
+function drawAnnotation(prediction, name, color = "#0000ff", addLabel = p.labels) {
   let pts = prediction.annotations[name]
   if (pts.length == 1) {
     const [x, y] = pts[0]
@@ -139,6 +146,16 @@ function drawAnnotation(prediction, name, color = "#0000ff") {
       py = y
     }
   }
+
+  if (addLabel) {
+    const [x, y] = pts[0]
+    noStroke()
+    fill(color)
+    textSize(10)
+    textAlign(LEFT, BOTTOM)
+    text(name, x + 8, y - 8)
+  }
+
 }
 
 function drawAllAnnotations() {
