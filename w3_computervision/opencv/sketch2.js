@@ -1,5 +1,10 @@
 /**
- * OpenCV 4 in p5.js: Blur example
+ * Based on p5.js-cv demo
+ * https://github.com/orgicus/p5.js-cv
+ *  
+ * Based on ofxCv's contours-color example
+ * by Kyle McDonald.
+ *
  */
 
 // p5.js Video capture
@@ -27,9 +32,6 @@ function setup() {
   p5.cv.onComplete = onOpenCVComplete;
 }
 
-let classifier;
-let faces;
-
 function onOpenCVComplete() {
   // create a CV capture helper
   myCVCapture = p5.cv.getCvVideoCapture(myCapture);
@@ -39,33 +41,10 @@ function onOpenCVComplete() {
   gray = new cv.Mat();
   // create a CV mat for thersholding
   myMatThresh = new cv.Mat();
-
-  classifier = new cv.CascadeClassifier();
-  classifier.load('data/haarcascade_frontalface_default.xml');  
-
-  faces = new cv.RectVector();
-
   print("done onOpenCVComplete")
 }
 
 function draw() {
-  if (p5.cv.isReady) {
-    // read from CV Capture into myMat
-    myCVCapture.read(rgba);
-    // convert Mat to grayscale
-    // p5.cv.copyGray(rgba, gray);
-    cv.cvtColor(rgba, gray, cv.COLOR_RGBA2GRAY, 0)
-    // if (frameCount > 180) {
-      // classifier.detectMultiScale(gray, faces, 1.1, 3, 0);    
-      // display Mat
-      p5.cv.drawMat(gray, 0, 0);
-    // }
-  } else {
-    image(myCapture, 0, 0);
-  }
-}
-
-function draw2() {
   if (p5.cv.isReady) {
     // read from CV Capture into myMat
     myCVCapture.read(rgba);

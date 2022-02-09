@@ -154,6 +154,15 @@ Try setting the `makeDrawing` global variable to true. This uses the average opt
 
 In `draw()`, we draw a line from a previous position to a new position moved in the direction of the optical flow. Rather than drawing this line directly on the screen, we use a `p5.Graphics` object stored in the global variable `viz` as a buffer. This buffer is then drawn to the output window each frame. `p5.Graphics` are transparent graphics buffers that have the same drawing functions as the output window, like `stroke()` and `line()`. By having a separate buffer for the pixels drawn by these lines, we don't have to manually maintain a list of previously drawn points. **Using a `p5.Graphics` buffer for drawing is a very useful concept that can be applied in many projects.**
 
+
+## Fiducial Marker Tracking
+
+Sketch: **`marker`**
+
+Using [JSARToolKit](https://github.com/kig/JSARToolKit)
+
+
+<!-- 
 # OpenCV
 
 ## Image Processing Pipeline
@@ -187,7 +196,7 @@ This sketch uses the mouse x and y position to tweak two separate filter paramet
 
 ### Experiments
 
-Use `adjustX` and `adjustY` to change different parameters of the pipeline to create abstract video effects.
+Use `adjustX` and `adjustY` to change different parameters of the pipeline to create abstract video effects. -->
 
 
 # Tracking Blobs and Contours
@@ -196,7 +205,9 @@ Use `adjustX` and `adjustY` to change different parameters of the pipeline to cr
 
 Sketch: **`contours`**
 
-This sketch outlines different contours identified in a live feed of your computer's webcam. Contours are curves along regions with similar colours and lightness. With proper thresholding, you can use contour finding to track the outline of your arms or fingers as in works like *Text Rain* (Camille Utterbak and Romy Achituv, 1999) and *Hand From Above* (Chris O'Shea, 2009).
+Uses p5.cv.js, an opencv.js wrapper.
+
+<!-- This sketch outlines different contours identified in a live feed of your computer's webcam. Contours are curves along regions with similar colours and lightness. With proper thresholding, you can use contour finding to track the outline of your arms or fingers as in works like *Text Rain* (Camille Utterbak and Romy Achituv, 1999) and *Hand From Above* (Chris O'Shea, 2009).
 
 To find the contours, this sketch calls the `opencv.findContours()` method. It takes two boolean parameters: the first controls whether to find nested contours (holes in other contours), the second controls whether to sort the resulting contours by size in descending order. The method returns all the identified Contours as an `ArrayList` of `Countour`s (a type built into the Processing OpenCV library).
 
@@ -207,14 +218,14 @@ In `draw()`, we iterate through each of the contours and draw them in yellow. To
 
 The area of a contour can be obtained with `Contour.area()`. We use this method in this sketch to ignore contours below a certain size.
 
-Like the previous `pipeline` sketch, this sketch also uses the mouse to tweak filter parameters. `adjustX()` controls morphological closing, `adjustY()` controls binary threshold.
+This sketch uses the mouse to tweak filter parameters. `adjustX()` controls morphological closing, `adjustY()` controls binary threshold. -->
 
 ### Experiments
 
 Adjust the lighting, the background in your camera frame, and the pipeline so your body is recognized as a single contour.
 
 
-## Colour Tracking
+<!-- ## Colour Tracking
 
 Sketch: **`colour`**
 
@@ -239,7 +250,7 @@ Improve the drawing program so the size of the contour changes the strokeWidth.
 
 > Hint: Use `map()` with the area of the contour.
 
-(See [*Picasso Draws With Light*](http://time.com/3746330/behind-the-picture-picasso-draws-with-light/).)
+(See [*Picasso Draws With Light*](http://time.com/3746330/behind-the-picture-picasso-draws-with-light/).) -->
 
 # Sketchbook Exercise
 
