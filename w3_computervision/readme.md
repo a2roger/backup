@@ -112,7 +112,9 @@ This sketch shows its performance in frames per second (FPS) in the top left of 
 
 ### Experiment
 
-* Face swap by loading an image and displaying it on top of the tracked face (use a `PImage` and display a scaled version using `image()`). There's an emoji image you can use in the `/data` directory.
+* Face swap by loading an image and displaying it on top of the tracked face (use a `p5.Image` and display a scaled version using `image()`). There's an emoji image you can use in the `/data` directory.
+
+# Other Tracking
 
 ## Optical Flow
 
@@ -120,31 +122,21 @@ Sketch: **`opticalflow`**
 
 This sketch shows a visual representation of the optical flow over a live feed of your computer's webcam. Optical flow represents an estimate of relative motion between multiple image frames over time. Because it depends on changes in image frames, unlike face detection, it doesn't work on individual images. *Optical flow is super useful because it lets you use motion in video input as a way of controlling a composition.* However, it can be rather CPU-intensive (slow).
 
-After setting up OpenCV similarly to the `face` sketch above, this sketch calls the `opencv.calculateOpticalFlow()` method, which computes the optical flow in each cell of the image after it's divided into a grid. We then run
-```java
-direction = opencv.getAverageFlow();
-```
-to get the average flow (direction of motion) over the whole image, as a `PVector`. The strength of the motion is encoded as the magnitude of this vector. This vector is visualized as a yellow line in the middle of the output window. We also use `opencv.drawOpticalFlow()` to showcase how the optical flow looks across the different parts of the image. This functionality can be used for debugging purposes.
 
-> *About `PVector`s*: `PVector`s are a useful object representing 2D (or 3D) vectors, built into Processing. The components of the vector are stored in the `x` and `y` fields (e.g. `direction.x` and `direction.y`, in this case). `PVector`s also define a number of helpful methods like `.add()` and `.mult()` for doing operations with multiple vectors.
+> `p5.Vector` is a useful object representing 2D (or 3D) vectors, built into p5.js. The components of the vector are stored in the `x` and `y` fields (e.g. `direction.x` and `direction.y`, in this case). A `p5.Vector`  also defines a number of helpful methods like `.add()` and `.mult()` for doing linear algebra operations.
 
-If you want to get the flow in a specific area of the video feed, you can use can use `getAverageFlowInRegion(x, y, w, h)`. This would enable you to, for example, separate out the motion made by your left hand and by your right hand, by splitting the image down the centre.
+<!-- If you want to get the flow in a specific area of the video feed, you can use can use `getAverageFlowInRegion(x, y, w, h)`. This would enable you to, for example, separate out the motion made by your left hand and by your right hand, by splitting the image down the centre. -->
 
-If the motion is very small, `opencv.getAverageFlow()` may return a vector with a NaN (invalid) `x` or `y` value. This sketch uses `Float.isNaN()` as follows to make sure this doesn't happen:
-```java
-if (Float.isNaN(direction.x) || Float.isNaN(direction.y)) {
-  direction = new PVector();
-}
-```
 
 > Note: This sketch draws the camera image semi-transparently above the background. It uses the `tint(grey_value, alpha_transparency)` built-in function to set the transparency, and `noTint()` to restore it.
 
-#### Drawing with Optical Flow
+### Drawing with Optical Flow
 
 Try setting the `makeDrawing` global variable to true. This uses the average optical flow (`direction`) to enable a line to be drawn following the direction of motion. Try writing on the output window by moving your hand around in the view of the camera.
 
-In `draw()`, we draw a line from a previous position to a new position moved in the direction of the optical flow. Rather than drawing this line directly on the screen, we use a `PGraphics` object stored in the global variable `vis` as a buffer. This buffer is then drawn to the output window each frame. `PGraphics` are transparent graphics buffers that have the same drawing functions as the output window, like `stroke()` and `line()`. By having a separate buffer for the pixels drawn by these lines, we don't have to manually maintain a list of previously drawn points. *`PGraphics` are a very useful concept that can be applied in many projects.*
+In `draw()`, we draw a line from a previous position to a new position moved in the direction of the optical flow. Rather than drawing this line directly on the screen, we use a `p5.Graphics` object stored in the global variable `viz` as a buffer. This buffer is then drawn to the output window each frame. `p5.Graphics` are transparent graphics buffers that have the same drawing functions as the output window, like `stroke()` and `line()`. By having a separate buffer for the pixels drawn by these lines, we don't have to manually maintain a list of previously drawn points. **Using a `p5.Graphics` buffer for drawing is a very useful concept that can be applied in many projects.**
 
+# OpenCV
 
 ## Image Processing Pipeline
 
@@ -175,14 +167,14 @@ This sketch uses the mouse x and y position to tweak two separate filter paramet
 
 > Hint: As mentioned above, `opencv.getSnapshot()` can be used to grab an image at different parts of pipeline. This is helpful for debugging. Try moving the `debug = opencv.getSnapshot();` line before the `Imgproc.medianBlur()` line to see how the output changes.
 
-#### Experiments
+### Experiments
 
 Use `adjustX` and `adjustY` to change different parameters of the pipeline to create abstract video effects.
 
 
-## Tracking Blobs and Contours
+# Tracking Blobs and Contours
 
-### Contours
+## Contours
 
 Sketch: **`contours`**
 
@@ -199,12 +191,12 @@ The area of a contour can be obtained with `Contour.area()`. We use this method 
 
 Like the previous `pipeline` sketch, this sketch also uses the mouse to tweak filter parameters. `adjustX()` controls morphological closing, `adjustY()` controls binary threshold.
 
-#### Experiments
+### Experiments
 
 Adjust the lighting, the background in your camera frame, and the pipeline so your body is recognized as a single contour.
 
 
-### Colour Isolation
+## Colour Tracking
 
 Sketch: **`colour`**
 
@@ -223,7 +215,7 @@ From this, we can filter out values we don't want by masking the channels with `
 Finally, like the `contours` sketch above, this sketch finds the contours in the mask. It calculates the centroid of the largest contour using the `calcCentroid()` function near the bottom of the sketch code. This function returns the average position of a list of points.
 
 
-#### Experiments
+### Experiments
 
 Improve the drawing program so the size of the contour changes the strokeWidth.
 
@@ -231,64 +223,7 @@ Improve the drawing program so the size of the contour changes the strokeWidth.
 
 (See [*Picasso Draws With Light*](http://time.com/3746330/behind-the-picture-picasso-draws-with-light/).)
 
-# Exercise for Public Sketchbook
+# Sketchbook Exercise
 
 Create a body drawing program by extending one of the demos in this workshop. It's OK if it's hard to control, the important thing is that a participant would feel like their body movements are somehow making the drawing. Capture and include a short video your program's output, and provide a brief (approx. 250 word) description of how you use input and what computer vision approaches you apply.
 
-# Extras
-
-These are extra code demos not covered in the workshop, but worth looking at on your own.
-
-## Background Subtraction
-
-Sketch: **`background1`**
-
-* Frame differencing (press a key to set the background frame)
-
-> Note: The demo is using `opencv.diff` but what's really needed is native OpenCV `absdiff`, but this isn't wrapped in the OpenCV for Processing and we aren't able to get the native calls working.
-
-Sketch: **`background2`**
-
-* Mixture of Gaussian (MOG) background model
-
-> Note: OpenCV for Processing seems to have a bug with how MOG is wrapped (or there's a bug in OpenCV 2.4). There's no way to adjust the rate that the background model is updated.
-
-[OpenCV reference](https://docs.opencv.org/2.4/modules/video/doc/motion_analysis_and_object_tracking.html?highlight=backgroundsubtractormog#backgroundsubtractormog)
-
-## OpenCV and TensorFlow in P5.js
-
-This site shows how to use OpenCV with P5.js, a JavaScript framework modelled after Processing. It shows examples of more advanced face tracking, object recognition, and body tracking, and more. Many examples use deep learning models via TensorFlow or similar frameworks.
-[https://kylemcdonald.github.io/cv-examples/](https://kylemcdonald.github.io/cv-examples/)
-
-## Kinect Depth Camera
-
-There are several Processing libraries that interface with the [Microsoft Kinect Depth Camera](https://en.wikipedia.org/wiki/Kinect) (v1 and v2). Some features will only work on a Windows machine.
-
-# References and Resources
-
-* [OpenCV for Processing Github](https://github.com/atduskgreg/opencv-processing)
-* [OpenCV for Processing reference](http://atduskgreg.github.io/opencv-processing/reference/)
-
-## OpenCV 2.4 C++/Python API
-
-The "native" API docs are useful for understanding the Processing wrapper and when making direct calls to the native API by importing `org.opencv.imgproc.Imgproc` and calling `Imgproc.*`
-
-* [Documentation](https://docs.opencv.org/2.4/index.html)
-
-* [Thresholding explanation](https://docs.opencv.org/2.4/doc/tutorials/imgproc/threshold/threshold.html)
-
-* [Adaptive thresholding explanation](https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html?highlight=adaptive#cv2.adaptiveThreshold)
-
-You can access many of the native OpenCV types with these imports:
-
-```java
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.core.CvType;
-import org.opencv.imgproc.Imgproc;
-```
-
-See the `HistogramSkinDetection` example sketch included with the OpenCV for Processing library for examples of how to use native commands.
