@@ -13,7 +13,7 @@ let p = {
 }
 
 // place all text here
-let text = ''
+let all = ''
 
 function preload() {
   // you can also load from the web by giving a URL
@@ -29,7 +29,7 @@ function preload() {
     // loadStrings returns an array containing each line of the text file
     // if you want to whole file as one big string (with new line chars too),
     // join the lines back into one big string (with new lines inserted)
-    text = lines.join('\n');
+    all = lines.join('\n');
   });
 }
 
@@ -37,22 +37,25 @@ function setup() {
   createCanvas(500, 100)
   
   // add params to a GUI
-  createParamGui(p, paramChanged);
-  _paramGui.hide()
+  // createParamGui(p, paramChanged);
+  // _paramGui.hide()
 
   // can print everything to the console
-  print(text);
+  print(all);
 
-  // but often nice to display in HTML textarea
-  let ta = createElement('textarea')
-  ta.style('min-width: 700px; height: 400px; padding: 20px; margin: 20px;')
-  ta.html(text);
+  // simple HTML textarea debug window
+  createDebugWindow();
+  debug(all)
 
+  // just so you don't think this is broken
+  background(240)
+  fill(0)
+  textAlign(CENTER, CENTER);  
+  text('nothing in canvas', width/2, height/2)
  }
 
 function draw() {
-  background(240)
- 
+
 }
 
 function keyPressed() {

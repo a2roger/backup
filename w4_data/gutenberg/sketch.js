@@ -56,11 +56,10 @@ function setup() {
   createParamGui(p, paramChanged);
   _paramGui.hide()
 
-  // but often nice to display in HTML textarea
-  let ta = createElement('textarea')
-  ta.style('min-width: 700px; height: 400px; padding: 20px; margin: 20px;')
-  
-  ta.html(words.join('\n'));
+  // simple HTML textarea debug window
+  createDebugWindow();
+
+  debug(words.join('\n'));
 
   background(0);  
  }
