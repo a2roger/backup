@@ -230,7 +230,7 @@ This sketch loads a [weather feed](https://weather.gc.ca/rss/city/on-82_e.xml) f
 
 As with the `rss` sketch, we have to understand the structure of the feed and can do this by opening the XML in a web browser. In this case, we see that the weather information is in `title` tags that start with "Current Conditions", contained in `entry` tags.
 
-The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99 using a try-catch block. If it fails, it repeats with a new random number until it finds one that corresponds to a real region.
+The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99. If it fails, it repeats with a new random number until it finds one that corresponds to a real region.
 
 
 <!-- #### Sketch: **`transit`**
@@ -254,7 +254,7 @@ Let's extract a block of html with various readings from a real ocean buoy. Try 
 
 To experiment further:
 
-* Use [`match` and a regular expression](https://processing.org/reference/match_.html) to extract a specific value, like "Significant Wave Height"
+* Use [`match` and a regular expression](https://p5js.org/reference/#/p5/match) to extract a specific value, like "Significant Wave Height"
 * Translate the buoy information into a visualization (what could you do?)
 * Query many buoys at regular intervals to create a combined visualization (see a list at [National Data Buoy Center](http://www.ndbc.noaa.gov/)).
 
