@@ -421,5 +421,5 @@ Improve the drawing program so the size of the contour changes the strokeWidth.
 
 # Sketchbook Exercise
 
-Create a body drawing program by extending one of the demos in this workshop. It's OK if it's hard to control, the important thing is that a participant would feel like their body movements are somehow making the drawing. Capture and include a short video your program's output, and provide a brief (approx. 250 word) description of how you use input and what computer vision approaches you apply.
+Create a body drawing program by extending one of the demos or exercises in this workshop. It's OK if it's hard to control, the important thing is that a participant would feel like their body movements are somehow making the drawing. Capture and include an image of your artwork (or series of images or even a short video) and provide a brief (approx. 250 word) description of how you use input and what computer vision approaches you apply.
 
