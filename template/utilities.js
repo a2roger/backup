@@ -43,4 +43,26 @@ function drawFps() {
   text(this.fps.toFixed(1), 10, 10)
 }
 
+/*
+ * Simple debugging to HTML textarea
+ */
+let _debugTextArea
+
+function debug(s) {
+  if (typeof _debugTextArea !== 'undefined')
+    _debugTextArea.html(s + '\n', true); 
+}
+
+function debugClear() {
+  if (typeof _debugTextArea !== 'undefined')  
+    _debugTextArea.html('')
+}
+
+function createDebugWindow() {
+  _debugTextArea = createElement('textarea')
+  _debugTextArea.style('min-width: 700px; height: 400px; padding: 20px; margin: 20px;')
+  debug('** debug window created **')
+}
+
+
 
