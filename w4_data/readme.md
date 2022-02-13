@@ -160,13 +160,13 @@ Sketch: **`csv`**
 
 This is a minimal sketch showing how to load a csv into a `Table`, display some meta information, and iterate through the data. The output is printed to the Processing console (there is no graphical output).
 
-Processing has built-in functions and classes enabling loading of csv ("comma-separated values") files. These are plain text files in which each line of text represents a row of a table, and columns of the table are delimited using commas (",") in each line of text in the file. The csv file included with this sketch is a table of Canadian postal codes and their corresponding place names, provinces, and coordinates.
+p5.js has built-in functions and classes enabling loading of csv ("comma-separated values") files. These are plain text files in which each line of text represents a row of a table, and columns of the table are delimited using commas (",") in each line of text in the file. The csv file included with this sketch is a table of Canadian postal codes and their corresponding place names, provinces, and coordinates.
 
-To load a csv file, we use the `loadTable()` function. Just like the `loadStrings()` function, this function can take in either a local filename or a URL pointing to a remote file (see the next sketch, `temperature`, for an example of using a remote file). `loadTable()` returns a `Table` object, a class built into Processing.
+To load a csv file, we use the `loadTable()` function. Just like  `loadStrings()`, this can take in either a local filename or a URL pointing to a remote file. `loadTable()` returns a `p5.Table` object, a class built into p5.
 
-The `Table` class ([reference](https://processing.org/reference/Table.html), [javadoc](http://processing.github.io/processing-javadocs/core/processing/data/Table.html)) has various methods to read and manipulate the table. For example, `.getRowCount()` and `.getColumnCount()` can be used to figure out the size of the table. Table columns can be indexed either using their number (int) or their title (string). To get all the column titles, use the `.getColumnTitles()` method.
+The `Table` class ([reference](https://p5js.org/reference/#/p5.Table)) has various methods to read and manipulate the table. For example, `.getRowCount()` and `.getColumnCount()` can be used to figure out the size of the table. Table columns can be indexed either using their number (int) or their title (string). To get all the column titles, use the `.columns` property.
 
-In this sketch, we iterate through the rows of the table. In each iteration, we obtain the row using `table.getRow(i)` where `i` is the row number. Each table row is represented using the `TableRow` class. We use the `TableRow.getString()` method to get the place name as a string for each row. `TableRow` has other typed methods like `.getInt()` and `.getFloat()` to extract different types out from table cells.
+In this sketch, we iterate through the rows of the table. In each iteration, we obtain the row using `table.getRow(i)` where `i` is the row number. Each table row is represented using the `TableRow` class. We use the `TableRow.getString()` method to get the place name as a string for each row. `TableRow` has `.getNum()` to extract a numerical types from table cells.
 
 ## Processing a CSV
 
@@ -188,18 +188,21 @@ which gives us a hue range of 0–360, and saturation, brightness, and opacity r
 
 Let's start from the `csv` sketch to try and make a visualization similar to the `temperature` sketch. Try following these steps:
 
-1. Plot the latitude and longitude of each postal code as a point.
-    * You need to `map` longitude values to the x-coordinate and latitude values to y-coordinate. 
-        - Longitudes range from -139.4351 (West Coast) to -52.6961 (East Coast)
-        - Latitudes range from 70.4643 (North) to 42.0377 (Southern border)  
-        - (I left out postal code H0H, see the csv file!)
-    * Access the longitude and latitude using the `TableRow.getFloat()` method (like in the temperature demo).
-2. To make it more dynamic, plot one point each frame in `draw()`. This means you need to keep track of a row index for the table, and increase it each frame.
+1. Extract the longitude and latitude of each postal code using the `TableRow.getNum()` method (like in the temperature demo).
+   
+2. Plot the latitude and longitude as a point. You need to `map` longitude values to the x-coordinate and latitude values to y-coordinate. 
+   * Longitudes range from -139.4351 (West Coast) to -52.6961 (East Coast)
+   * Latitudes range from 70.4643 (North) to 42.0377 (Southern border)  
+   * (I left out postal code H0H, see the csv file!)
+   
+3. To make it more dynamic, plot one point each frame in `draw()`. This means you need to keep track of a row index for the table, and increase it each frame.
 
 To experiment further:
 
 * Experiment with different size points (using `strokeWeight()`) and different colours and transparency (using `stroke()`).
-* You also try connecting the postal code points by lines, and try different sort orders on the table to see the effect (see the `Table.sort()` and `Table.sortReverse()` methods).
+  
+* You also try connecting the postal code points by lines.
+   <!-- and try different sort orders on the table to see the effect (see the `Table.sort()` and `Table.sortReverse()` methods). -->
 
 # RSS Feeds in XML
 
