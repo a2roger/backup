@@ -320,17 +320,21 @@ You need a [Google Streetview API Key](https://developers.google.com/maps/docume
 uX83P2JVh0z49wJroBu9yAVdejmhFUoFAIzaS7F
 ```
 
-To get one, you need to have a Google account and you need to provide billing information (i.e. a credit card). The cost to use this API is very low, about 0.8 cents per image with a credit of US$200 each month. So you'd have to retrieve about 25,000 streetview images in a month before you start paying. That's like retrieving one streetview image every second for more than two weeks, or creating a sketch that retrieves a streetview images every frame (at 60 FPS) and running your sketch for 7 hours. 
+To get one, you need to have a Google account and you do need to provide billing information to Google (i.e. a credit card). You may already have this setup if you buy apps on the Android Play Store.
 
-We also highly recommend that, for the course, you enable the "Allow Unsigned Usage" option of your Streetview API key, to avoid having to cryptographically sign every request to the API. To do this, navigate to:
+> The cost to use this API is very low, about 0.8 cents per image with a credit of US$200 each month. So you'd have to retrieve about 25,000 streetview images in a month before you start paying. That's like retrieving one streetview image every second for more than two weeks, or creating a sketch that retrieves a streetview images every frame (at 60 FPS) and running your sketch for 7 hours. 
+
+We also recommend that, for the course, you enable the "Allow Unsigned Usage" option of your Streetview API key, to avoid having to cryptographically sign every request to the API. To do this, navigate to:
 https://console.cloud.google.com/google/maps-apis/credentials
 Select "Street View Static API" from the drop-down, and then select "ALLOW UNSIGNED USAGE".
 
 ### API Key Security
 
-You don't want to include your API key in your repo. One way to keep it out of the repo is to create a `_private/` folder and add it to `.gitignore`, then store your auth there in a json file that you load when your sketch runs. There's a sample `auth.json` in the directory and the code is setup to load from a file like that in a `_private/` subfolder.
+You don't want to include your API key in your repo. One way to keep it out is to create a `_private/` folder to your sketch folder, and add an ignore `_private/` rule to `.gitignore`, then store your auth there in a json file that you load when your sketch runs. There's a sample `auth.json` in the directory and the sketch is set up to load from a file like that in a `_private/` subfolder.
 
-However, it's impossible to hide an API key when it's used directly by a JavaScript program running in a webpage like this code demo. If you host your sketch with an API key in a `_private` folder on a public website, people can get your key. The only secure way to use API keys in a public website is to handle all API accesses on your own server. This way your API key never leaves your server, and it just forwards the results of the API access to your webpage application. 
+However, it's impossible to hide an API key when it's used directly by a JavaScript program running in a webpage. Even if you keep you API key in a `_private` folder on a public website, people can get your key. The only secure way to use API keys in a public website is to handle all API accesses on your own server. This way your API key never leaves your server, and it just forwards the results of the API access to your webpage application. 
+
+> For this course, we are most likely creating artworks that are not hosted on a public server, so it should be fine to use the non-server approach used in this demo sketch.
 
 ## Processing
 
@@ -342,7 +346,10 @@ This sketch grabs images of random postal code locations.
 
 This sketch uses a csv table of Canadian postal codes and latitude-longitude coordinates as the source of locations. It picks a random postal code, and passes the corresponding coordinates to the Streetview API. This is an example of how an artwork might combine multiple data sources in one piece.
 
-To see if a location exists before grabbing an image, the sketch includes an `isStreetViewImage()` function, which uses the `metadata` Streetview endpoint. This endpoint returns a JSON object. Like XML, JSON is a format commonly used to store hierarchical data. Processing has a built-in `JSONObject` type to process JSON data. In the case of Streetview, if the `metadata` response for a given location has a `status` of `"OK"`, then the location should have a corresponding image.
+Note in some cases, there is no streeview image, so you'll see a defaut grey image not found image. 
+
+> There is some unfinished code for a `isStreetViewImage()` function to check if there's a streetview image at the specified lat and long location.
+It uses the `metadata` Streetview "endpoint" which returns a JSON object describing the image. For instance, there's a `status` that will be `"OK"` if  the location has a corresponding image. 
 
 ## Try and Experiment
 

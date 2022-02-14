@@ -22,7 +22,7 @@ function preload() {
   });
 
   // postal code csv is from http://www.geonames.org/
-  postalCodes = loadTable("ca_postal_codes.csv", "header");
+  postalCodes = loadTable('data/ca_postal_codes.csv', 'header');
 }
 
 function setup() {
@@ -31,55 +31,52 @@ function setup() {
   getRandomPlace();
 }
 
+let img;
+let pcode = "gdfgd";
+
 function draw() {
-  if (img != null) {
+  background(0)
+  if (typeof img !== undefined) {
     image(img, 0, 0);
 
     textSize(60);
     textAlign(CENTER, CENTER);
-    background(0);
-    text(pcode, width / 2, height / 2);
-  }
-}
+    fill(255);
+    text(pcode, width / 2, height / 2);  
 
-let img;
-let pcode = "";
+  }
+
+}
 
 function getRandomPlace() {
 
   let n = postalCodes.getRowCount();
 
-  let found = false;
-  while (!found) {
+  let i = int(random(0, n));
 
-    let i = int(random(0, n));
+  let latitude = postalCodes.getRow(i).getNum("Latitude");
+  let longitude = postalCodes.getRow(i).getNum("Longitude");
 
-    let latitude = postalCodes.getRow(i).getFloat("Latitude");
-    let longitude = postalCodes.getRow(i).getFloat("Longitude");
+  let loc = latitude + "," + longitude;
 
-    let loc = latitude + "," + longitude;
+  pcode = postalCodes.getRow(i).getString("Postal Code");
 
-    pcode = postalCodes.getRow(i).getString("Postal Code");
+  print(pcode, loc);
 
-    print(pcode, loc);
+  let url = makeStreetViewURL(loc, width, height, 90, 0, 0);
 
-    if (isStreetViewImage(loc)) {
-      img = getStreetViewImage(loc, width, height, 90, 0, 0);
-      found = true;
-      print(" found");
-    } else {
-      print(" no image");
-    }
-  }
+  // get the image and display it
+  img = loadImage(url, img => {
+    // image(img, 0, 0);
+  });
 }
 
 function keyPressed() {
   if (key == ' ') {
+    getRandomPlace()
   }
 }
 
-function mousePressed() {
-}
 
 // location can be lat,long or address
 function makeStreetViewURL(location, w, h, fov, head, pitch) {
@@ -95,20 +92,20 @@ function makeStreetViewURL(location, w, h, fov, head, pitch) {
   return url
 }
 
-function isStreetViewImage(location) {
+// function isStreetViewImage(location) {
 
-  let url = "https://maps.googleapis.com/maps/api/streetview/metadata" +
-    "?location=" + location + 
-    "&key=" + API_KEY;
+//   let url = "https://maps.googleapis.com/maps/api/streetview/metadata" +
+//     "?location=" + location + 
+//     "&key=" + API_KEY;
 
-  let response = loadJSON(url);
-  println(response);
+//   let response = loadJSON(url);
+//   println(response);
 
-  let status = response.getString("status");
-  print(status);
+//   let status = response.getString("status");
+//   print(status);
 
-  return (status.compareTo("OK") == 0);
-}
+//   return (status.compareTo("OK") == 0);
+// }
 
 
 
