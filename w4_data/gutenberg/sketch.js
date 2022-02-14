@@ -25,8 +25,11 @@ let index = 0
 
 function preload() {
   // you can also load from the web by giving a URL
-   // let fn = "https://www.gutenberg.org/files/1342/1342-0.txt";
+   // let src = "https://www.gutenberg.org/files/1342/1342-0.txt";
   let src = "data/1342-0.txt";
+  // IMPORTANT! loading from remote files will cause "CORS" error 
+  // until you allow it in your browser
+
 
   // useful to print some messages to the console to track down bugs and 
   // problems with data sources
