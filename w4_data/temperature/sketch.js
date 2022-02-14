@@ -15,11 +15,11 @@ function preload() {
   // run a sketch if you access by URL.
   // Note: 2015 and prior URLs are formatted "http://weather.uwaterloo.ca/download/2014_weather_station_data.csv"
   //       2020 data seems to have changed data format
-  // let fn = "http://weather.uwaterloo.ca/download/Hobo_15minutedata_2016.csv";
-  let fn = "data/Hobo_15minutedata_2018.csv";
+  // let src = "http://weather.uwaterloo.ca/download/Hobo_15minutedata_2016.csv";
+  let src = "data/Hobo_15minutedata_2018.csv";
 
-  print(`Loading '${fn}'...`);
-  table = loadTable(fn, "header");
+  print(`Loading '${src}'...`);
+  table = loadTable(src, "header");
   print(`  loaded ${table.getRowCount()} rows ` +
             `in ${table.getColumnCount()} columns`);
 }

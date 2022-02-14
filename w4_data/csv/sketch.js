@@ -20,11 +20,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(500, 100)
   
-  // add params to a GUI
-  // createParamGui(p, paramChanged);
-
   // simple HTML textarea debug window
   createDebugWindow();
 
@@ -47,7 +43,7 @@ function setup() {
   background(240)
   fill(0)
   textAlign(CENTER, CENTER);  
-  text('nothing in canvas', width/2, height/2)
+  text('empty\ncanvas', width/2, height/2)
  }
 
 function draw() {
