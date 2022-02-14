@@ -178,11 +178,11 @@ Like the previous sketch, this sketch uses `loadTable()` to load a csv file, but
 
 The visualization works by representing the temperature at a given time as the colour of a pixel. The width of the canvas represents the time span of one day, and each different y value along the height of the canvas represents a different day during the year. The hotter or colder the temperature, the brighter the pixel colour. Positive temperatures are visualized in red, whereas negative temperatures are visualized in blue.
 
-Similar to the OpenCV examples from *Workshop 3: Computer Vision*, we use the `HSB` colour model to adjust the brightness and hue of the colours to visualize with. To put Processing into `HSB` mode, we use:
-```java
+We use the `HSB` colour model to adjust the brightness and hue of the colours to visualize with. To put your sketch into `HSB` mode, we use:
+```js
 colorMode(HSB, 360, 100, 100, 100);
 ```
-which gives us a hue range of 0–360, and saturation, brightness, and opacity range of 0–100.
+which gives us a hue range of 0 to 360, and saturation, brightness, and opacity range of 0 to 100.
 
 ## Try and Experiment
 
@@ -216,11 +216,13 @@ Sketch: **`rss`**
 
 This sketch loads an RSS feed of [curling news](http://www.cbc.ca/cmlink/rss-sports-curling) and shows how to do some XML processing by printing the title of each news story. The output is printed to the Processing console (there is no graphical output).
 
-RSS data is just a specific format of feed data stored as XML, and is usually hosted on a webserver. To load in the XML feed, we use the `loadXML()` function. As you might expect at this point, this function can take in either a local filename or a URL pointing to a remote file, just like `loadStrings()` and `loadTable()`. `loadXML()` returns an instance of the built-in `XML` class.
+RSS data is just a specific format of feed data stored as XML, and is usually hosted on a webserver. To load in the XML feed, we use the `loadXML()` function. This function can takes either a local filename or a URL pointing to a remote file, just like `loadStrings()` and `loadTable()`. `loadXML()` returns an instance of the p5.js `XML` class.
 
 To figure out where the data is within the XML RSS feed, you can inspect it using a web browser, or download it and use a text editor. Try opening the [feed XML in the sketch](http://www.cbc.ca/cmlink/rss-sports-curling) to see what it looks like. The `<![CDATA[ ... ]]>` tags you see around text are special tags indicating that the contained text is *character data*, and should not be interpreted as XML itself.
 
-In the case of this curling news, there is one `channel` tag that contains a bunch of `item` tags. Each of these `item` tags represents a single news story, and contains a `title` tag with the title of the news story. The title of each item is ach news item is stored in an `item` tag. We use `.getChild("channel")` to get the channel item, and then `.getChildren("item")` to get an array of `XML` objects representing each of the items. Iterating through each item, we get the title text with `.getChild("title").getContent()`.
+In the case of this curling news, there is one `channel` tag (called an xml "element") that contains several `item` tags. Each `item` a single news story with a `title` tag for the title as well as other elements for things the publication date, story description, etc. 
+
+To access constent in a specific xml element, we use `.getChild("channel")` to get the channel tag, and then `.getChildren("item")` to get an array of `XML` objects representing each of the item elements. Iterating through each item element, we get the title text with `.getChild("title").getContent()`.
 
 ## Weather XML
 
@@ -228,7 +230,9 @@ Sketch: **`forecast`**
 
 This sketch loads a [weather feed](https://weather.gc.ca/rss/city/on-82_e.xml) from the Government of Canada, and displays current weather conditions for Canadian cities. Press a key to get the weather for a new random city.
 
-As with the `rss` sketch, we have to understand the structure of the feed and can do this by opening the XML in a web browser. In this case, we see that the weather information is in `title` tags that start with "Current Conditions", contained in `entry` tags.
+As with the `rss` sketch, we have to understand the structure of the feed and can do this by opening the XML in a web browser. 
+* Near the top is a `title` tag with the name of the weather location. 
+* Farther down are a series of `entry` tags, each one has a `title` tag that describes what is in the entry. For example "Current Conditions" or a day and time period for a forecast.
 
 The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99. If it fails, it repeats with a new random number until it finds one that corresponds to a real region.
 
