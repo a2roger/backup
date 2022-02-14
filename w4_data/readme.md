@@ -331,6 +331,11 @@ Set up your own Google API key, and run the streetview1 and streetview2 code.
 
 Sketch: **`twitter`**
 
+https://editor.p5js.org/brysonian/sketches/rJZ1BCd1f 
+
+
+https://github.com/jublo/codebird-js
+
 This sketch grabs a set of 100 tweets matching a given keyword ("#poem" by default).
 
 It uses the [**Simple Tweet** Processing library](https://github.com/gohai/processing-simpletweet), which in turn depends on the [**twitter4j** Java library](http://twitter4j.org/en/). See the `readme.md` file in the twitter code folder for instructions on setting up OAuth on Twitter.
@@ -345,6 +350,10 @@ ArrayList<Status> tweets = (ArrayList)result.getTweets();
 where `simpletweet` is our `SimpleTweet` instance. `QueryResult` is a class specific to twitter4j, from which we extract an `ArrayList` of tweets (`Status`). For each tweet, we can get the text using `Status.getText()` and the username with `Status.getUser().getScreenName()`.
 
 There is much more to [Twitter Developer APIs](https://developer.twitter.com/en.html) and Search Tweet functionality in the twitter4j Java library. Note that not all of the Twitter API calls are wrapped in the Processing Library, but you can access them directly with "native" Java calls.
+
+### OAuth Setup
+
+
 
 # Sketchbook Exercise 
 
