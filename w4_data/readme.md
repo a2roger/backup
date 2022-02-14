@@ -278,15 +278,11 @@ This sketch shows how to grab Google streetview images using the Google Streetvi
 > You should see a webpage similar to the one in the image below.
 >
 > Select "Street View Static API" from the drop-down (indicated with "**A**"), and then select "ALLOW UNSIGNED USAGE" (indicated with "**B**").
-> ![streetview1](img/disabling_streetview_secret.png)
-
-
-![streetview1](img/streetview1.png)
 
 Google Streetview uses a *querystring* API, meaning that adding parameters to a special API URL performs actions using the API. To get an image from Streetview, the URL *endpoint* is: https://maps.googleapis.com/maps/api/streetview. The parameters `size` (how big the image should be), `location` (a string representing a location, e.g., "48.8742,2.2948", "Kitchener,ON"), `fov`, `heading`, and `pitch` (these three represent the camera field-of-view and direction at the given `location`), and `key` (the API key you generated).
 
 The start of the parameter list is indicated with "`?`" in the URL. Each parameter is included in the format `parameter=value`; for example, `size=500x500`. Multiple parameters are separated with "`&`". The sketch concatenates strings together to form a complete querystring:
-```java
+```js
 String url = "https://maps.googleapis.com/maps/api/streetview" + 
   "?size=" + w + "x" + h + 
   "&location=" + location + 
@@ -301,8 +297,6 @@ Sketch: **`streetview2`**
 This sketch grabs images of random postal code locations.
 
 > Note: You need a Google Streetview API Key to run this code.
-
-![streetview2](img/streetview2.png)
 
 This sketch uses a csv table of Canadian postal codes and latitude-longitude coordinates as the source of locations. It picks a random postal code, and passes the corresponding coordinates to the Streetview API. This is an example of how an artwork might combine multiple data sources in one piece.
 
@@ -323,8 +317,6 @@ Set up a Google API key, and run the streetview1 and streetview2 code. Don't run
 Sketch: **`twitter`**
 
 This sketch grabs a set of 100 tweets matching a given keyword ("#poem" by default).
-
-![streetview2](img/twitter.png)
 
 It uses the [**Simple Tweet** Processing library](https://github.com/gohai/processing-simpletweet), which in turn depends on the [**twitter4j** Java library](http://twitter4j.org/en/). See the `readme.md` file in the twitter code folder for instructions on setting up OAuth on Twitter.
 
