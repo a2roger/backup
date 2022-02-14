@@ -7,6 +7,8 @@
 
 let city;
 let current;
+let provinces = ["ab", "bc", "mb", "nb", "nl", "nt", "ns", "nu", "on", "pe", "qc", "sk", "yt"];
+
 
 // parameters
 let p = {
@@ -21,7 +23,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(500, 500)
+  createCanvas(600, 300)
   
   // add params to a GUI
   // createParamGui(p, paramChanged);
@@ -33,9 +35,12 @@ function setup() {
 
  // local weather forecast
 function getWeather(prov, cityCode) {
-  // let url = "https://weather.gc.ca/rss/city/" + prov + "-" + cityCode + "_e.xml";
-  // print(url);
-  let url = "data/on-82_e.xml"
+  let url = "https://weather.gc.ca/rss/city/" + prov + "-" + cityCode + "_e.xml";
+  // IMPORTANT! loading from remote files will cause "CORS" error 
+  // until you allow it in your browser
+
+  // local file for testing
+  // let url = "data/on-82_e.xml"
 
 // try to get the RSS feed for the city, if not found return false
 // try { 
@@ -49,7 +54,8 @@ function getWeather(prov, cityCode) {
 //   println("invalid city code " + cityCode);
 //   return false;
 // }  
-  
+  // let result
+
   let xml = loadXML(url, 
   function() { 
     print('success') 
@@ -73,10 +79,24 @@ function getWeather(prov, cityCode) {
         current = t[1];
       }  
     }
-    return true;
+    // result = true
   }, 
-  function(e) { print(`error '${e}'`); return false;}
-  );
+  function(e) { 
+    print(`error '${e}'`); 
+    print(`invalid city code? ${cityCode}`)
+    // result = false;
+  });
+
+  // function sleep(ms) {
+  //   return new Promise(resolve => setTimeout(resolve, ms));
+  // }
+
+  // // wait for the result
+  // while (typeof result == undefined ) {
+  //   print(result)
+  // }
+  // return result
+
 }
 
 function draw() {
@@ -92,18 +112,14 @@ function draw() {
 }
 
 function keyPressed() {
-  let success = false;
-  while (!success) {
+  if (key = ' ') {
+  // let success = false;
+  // while (!success) {
     let cityCode = int(random(1, 100)); // I have no idea how many are in each province
     let prov = provinces[int(random(0, provinces.length))];
-    success = getWeather(prov, cityCode);
+    getWeather(prov, cityCode);
+  // }
   }
-}
-
-function mousePressed() {
-}
-
-function windowResized() {
 }
 
 // global callback from the settings GUI

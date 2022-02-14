@@ -179,13 +179,13 @@ Tabular data is also a text file, but it's structured as rows and columns of dat
 
 Sketch: **`csv`** 
 
-This is a minimal sketch showing how to load a csv into a `Table`, display some meta information, and iterate through the data. The output is printed to the Processing console (there is no graphical output).
+This is a minimal sketch showing how to load a csv into a p5.js `Table`, display some meta information, and iterate through the data. The output is printed to the Processing console (there is no graphical output).
 
 p5.js has built-in functions and classes enabling loading of csv ("comma-separated values") files. These are plain text files in which each line of text represents a row of a table, and columns of the table are delimited using commas (",") in each line of text in the file. The csv file included with this sketch is a table of Canadian postal codes and their corresponding place names, provinces, and coordinates.
 
 To load a csv file, we use the `loadTable()` function. Just like  `loadStrings()`, this can take in either a local filename or a URL pointing to a remote file. `loadTable()` returns a `p5.Table` object, a class built into p5.
 
-The `Table` class ([reference](https://p5js.org/reference/#/p5.Table)) has various methods to read and manipulate the table. For example, `.getRowCount()` and `.getColumnCount()` can be used to figure out the size of the table. Table columns can be indexed either using their number (int) or their title (string). To get all the column titles, use the `.columns` property.
+The [`Table` class](https://p5js.org/reference/#/p5.Table) has various methods to read and manipulate the table. For example, `.getRowCount()` and `.getColumnCount()` can be used to figure out the size of the table. Table columns can be indexed either using their number (int) or their title (string). To get all the column titles, use the `.columns` property.
 
 In this sketch, we iterate through the rows of the table. In each iteration, we obtain the row using `table.getRow(i)` where `i` is the row number. Each table row is represented using the `TableRow` class. We use the `TableRow.getString()` method to get the place name as a string for each row. `TableRow` has `.getNum()` to extract a numerical types from table cells.
 
@@ -249,13 +249,19 @@ To access constent in a specific xml element, we use `.getChild("channel")` to g
 
 Sketch: **`forecast`**
 
-This sketch loads a [weather feed](https://weather.gc.ca/rss/city/on-82_e.xml) from the Government of Canada, and displays current weather conditions for Canadian cities. Press a key to get the weather for a new random city.
+This sketch loads a [weather feed](https://weather.gc.ca/rss/city/on-82_e.xml) from the Government of Canada, and displays current weather conditions for Canadian cities. Press a key to get the weather for a new random city (unless it guess the wrong city code).
 
 As with the `rss` sketch, we have to understand the structure of the feed and can do this by opening the XML in a web browser. 
 * Near the top is a `title` tag with the name of the weather location. 
 * Farther down are a series of `entry` tags, each one has a `title` tag that describes what is in the entry. For example "Current Conditions" or a day and time period for a forecast.
 
-The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99. If it fails, it repeats with a new random number until it finds one that corresponds to a real region.
+The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99. 
+
+### Other Weather Feeds and Resources 
+
+* [ec-weather](https://github.com/jschnurr/ec-weather) is a library to transform the Environment Canada weather forecast raw feed raw into clean, well formatted JSON.
+
+* [Another weather feed](https://eccc-msc.github.io/open-data/msc-data/citypage-weather/readme_citypageweather-datamart_en/)
 
 
 <!-- #### Sketch: **`transit`**

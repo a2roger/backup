@@ -6,26 +6,39 @@
 
 function setup() {
 
-  // let url = 'http://www.cbc.ca/cmlink/rss-sports-curling';
-  let url = 'data/rss-sports-curling.rss';
+  createDebugWindow();
 
-  print("Loading rss feed: " + url);
+  // local version for testing
+  // let src = 'data/rss-sports-curling.rss';
 
-  let xml = loadXML(url, function () {
-    print("  loaded");
+  // load live rss feed
+  let src = 'http://www.cbc.ca/cmlink/rss-sports-curling';
+  // IMPORTANT! loading from remote files will cause "CORS" error 
+  // until you allow it in your browser
+
+  debug("Loading rss feed: " + src);
+
+  let xml = loadXML(src, function () {
+    debug("  loaded");
 
     //println(xml);
 
     let items = xml.getChild("channel").getChildren("item");
 
-    print(items.length + " items");
+    debug(items.length + " items");
 
     for (let x of items) {
 
       // best to check if element is there using 
       // x.hasAttribute("cbc:type") and  x.getString("cbc:type")
       // but we'll just go for it and hope for the best
-      print(x.getChild("title").getContent());
+      debug(x.getChild("title").getContent());
     }
   });
+
+  // just so you don't think this is broken
+  background(240)
+  fill(0)
+  textAlign(CENTER, CENTER);  
+  text('empty\ncanvas', width/2, height/2)
 }
