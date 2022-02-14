@@ -365,28 +365,60 @@ Set up your own Google API key, and run the streetview1 and streetview2 code.
 
 Sketch: **`twitter`**
 
-https://editor.p5js.org/brysonian/sketches/rJZ1BCd1f 
-
-
-https://github.com/jublo/codebird-js
-
 This sketch grabs a set of 100 tweets matching a given keyword ("#poem" by default).
+It uses [**CodeBird JS**](https://github.com/jublo/codebird-js) and requires Twitter API OAuth keys and tokens. 
 
-It uses the [**Simple Tweet** Processing library](https://github.com/gohai/processing-simpletweet), which in turn depends on the [**twitter4j** Java library](http://twitter4j.org/en/). See the `readme.md` file in the twitter code folder for instructions on setting up OAuth on Twitter.
+### OAuth
 
-To use the Simple Tweet library, the first thing to do is set the OAuth keys and tokens. We create a new `SimpleTweet` object and set the four different required keys and tokens with the `.setOAuth*()` methods.
+See the `readme.md` file in the twitter code folder for instructions on setting up OAuth on Twitter. You will need 4 strings of characters for OAuth, which you'll put in a `auth.js` file in the `_private/` folder. Here's an example:
 
-To get a list of tweets that match a query, we use the following code:
-```java
-QueryResult result = simpletweet.twitter.search(query);
-ArrayList<Status> tweets = (ArrayList)result.getTweets();
+```json
+{
+    "CONSUMER_KEY": "jJKwYVKkqnSkbr63NpK7Vzvkx",
+    "CONSUMER_SECRET": "lTMfwMs7rDxz8vPcxBD7Gy5lDO8GXnlIzPw2d8xVhqa1L4xOTw",
+    "TOKEN": "364475473-kMBumzdzoxKZcduTwFGizG0iyMldRx1CQtcRXm2w",
+    "TOKEN_SECRET": "KBjBbqUZ0of2SQZDFEqSFof7kQPpENigIh7d3BMUQyCjN"
+}
 ```
-where `simpletweet` is our `SimpleTweet` instance. `QueryResult` is a class specific to twitter4j, from which we extract an `ArrayList` of tweets (`Status`). For each tweet, we can get the text using `Status.getText()` and the username with `Status.getUser().getScreenName()`.
 
-There is much more to [Twitter Developer APIs](https://developer.twitter.com/en.html) and Search Tweet functionality in the twitter4j Java library. Note that not all of the Twitter API calls are wrapped in the Processing Library, but you can access them directly with "native" Java calls.
+### Using Codebird to fetch tweets
 
-### OAuth Setup
+Create a Codebird object a global variable:
 
+```js
+var cb = new Codebird();
+```
+
+Set the OAuth keys:
+
+```js
+// set OAuth keys
+cb.setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
+cb.setToken(TOKEN, TOKEN_SECRET);
+```
+
+Create a JSON object with to describe the parameters for a Twitter API function call:
+
+```js
+let parameters = {
+    q: keyword,
+    result_type: 'recent',
+    count: 20
+  };
+```
+
+Call the Twitter API function with the parameters and provide a callback function for the reply:
+
+```
+cb.__call(
+    'search_tweets',
+    parameters,
+    function(reply) { ... });
+```
+
+The reply from a 'search_tweets' has an array of `statuses`. Each status has several fields like the tweet `text`, language of the tweet, an array of tags that were used, etc.
+
+There is much more to [Twitter Developer APIs](https://developer.twitter.com/en.html) and search Tweet functionality in [CodeBird JS](https://github.com/jublo/codebird-js) library. 
 
 
 # Sketchbook Exercise 

@@ -12,9 +12,6 @@ let API_KEY = '';
 
 function preload() {
   // load API key from auth file
-  // (if this fails, make sure you create the auth_google.json file in the
-  // parent directory to the workshop repo, and that you have a valid Google
-  // API key)
   loadJSON("_private/auth.json", auth => {
     API_KEY = auth.API_KEY
   });

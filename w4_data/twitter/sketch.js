@@ -1,52 +1,50 @@
 
 
-var consumerKey = 'jJKwYVKkqnSkbr63NpK7Vzvkx';
-var consumerSecret = 'lTMfwMs7rDxz8vPcxBD7Gy5lDO8GXnlIzPw2d8xVhqa1L4xOTw';
-
-var token = '364475473-kMBumzdzoxKZcduTwFGizG0iyMldRx1CQtcRXm2w';
-var tokenSecret = 'KBjBbqUZ0of2SQZDFEqSFof7kQPpENigIh7d3BMUQyCjN';
-
+// https://github.com/jublo/codebird-js
 var cb = new Codebird();
 
+// keyword to search
+let keyword = ''
+
+// Twitter OAuth keys
+let CONSUMER_KEY
+let CONSUMER_SECRET
+let TOKEN
+let TOKEN_SECRET
+
 function preload() {
+  // load OAuth keys from auth file
+  loadJSON("_private/auth-notmine.json", auth => {
+    CONSUMER_KEY = auth.CONSUMER_KEY
+    CONSUMER_SECRET = auth.CONSUMER_SECRET
+    TOKEN = auth.TOKEN
+    TOKEN_SECRET  = auth.TOKEN_SECRET   
+  });
 }
-
-// function setup() {
-//   createCanvas(500, 500)
-  
-//  }
-
-function draw() {
-  // background(240)
- 
-}
-
-function keyPressed() {
-  if (key == ' ') {
-  }
-}
-
 
 function setup() {
-  createCanvas(500, 100);
+  createCanvas(100, 100);
+
+  keyword = 'boring'
 
   createDebugWindow()
 
-  // setup OAuth API
-  cb.setConsumerKey(consumerKey, consumerSecret);
-  cb.setToken(token, tokenSecret);
+  // set OAuth keys
+  cb.setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
+  cb.setToken(TOKEN, TOKEN_SECRET);
 
-  let options = {
-    q: "boring",
+  let parameters = {
+    q: keyword,
     result_type: 'recent',
-    count: 20
+    count: 50
   };
 
-  cb.__call(
-    "search_tweets",
-    options,
-    function(reply) {
+  debug('running Twitter API call ...')
 
+  cb.__call(
+    'search_tweets',
+    parameters,
+    function(reply) {
       let statuses = reply.statuses;
       for (let i = 0; i < statuses.length; i++) {
         let tweet = statuses[i];
@@ -56,10 +54,21 @@ function setup() {
       }
       // print the max_id which helps if you want to grab pages of data
       debug('max_id: ' + reply.search_metadata.max_id);
-
     }
   );
+}
 
+function draw() {
+  background(240)
+  fill(0)
+  textAlign(CENTER, CENTER);  
+  textSize(14);
+  text(keyword, width/2, height/2)
+}
+
+function keyPressed() {
+  if (key == ' ') {
+  }
 }
 
 
