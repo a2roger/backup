@@ -16,10 +16,8 @@ function preload() {
   // parent directory to the workshop repo, and that you have a valid Google
   // API key)
   loadJSON("_private/auth.json", auth => {
-    print(auth)
     API_KEY = auth.API_KEY
   });
-
 }
 
 function setup() {

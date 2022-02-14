@@ -311,7 +311,7 @@ Sketch: **`streetview2`**
 
 This sketch grabs images of random postal code locations.
 
-> Note: You need a Google Streetview API Key to run this code.
+> Note: You need a Google Streetview API Key to run this code, see above.
 
 This sketch uses a csv table of Canadian postal codes and latitude-longitude coordinates as the source of locations. It picks a random postal code, and passes the corresponding coordinates to the Streetview API. This is an example of how an artwork might combine multiple data sources in one piece.
 
@@ -319,7 +319,7 @@ To see if a location exists before grabbing an image, the sketch includes an `is
 
 ## Try and Experiment
 
-Set up a Google API key, and run the streetview1 and streetview2 code. Don't run it too many times, or you'll have to start paying for it.
+Set up your own Google API key, and run the streetview1 and streetview2 code. 
 
 ## Reference
 
