@@ -269,26 +269,41 @@ To experiment further:
 
 Sketch: **`streetview1`**
 
-This sketch shows how to grab Google streetview images using the Google Streetview API.
+This sketch shows how to grab Google streetview images using the Google Streetview Application Programming Interface (API). An API is a way for organizations to share data and functionality with programmers without the programmers having access or knowledge of the internal workings of the server application. There isn't any standard way to design an API, often each one is slightly different. In almost all cases, an API will require the developer to have a key so the organization can identify who's accessing their server and in some cases, also charge developers access.
 
-> Note: You need a [Google Streetview API Key](https://developers.google.com/maps/documentation/streetview/get-api-key) to run this code.
->
-> We also highly recommend that, for the course, you enable the "Allow Unsigned Usage" option of your Streetview API key, to avoid having to cryptographically sign every request to the API. To do this, navigate to:
-> https://console.cloud.google.com/google/maps-apis/credentials
-> You should see a webpage similar to the one in the image below.
->
-> Select "Street View Static API" from the drop-down (indicated with "**A**"), and then select "ALLOW UNSIGNED USAGE" (indicated with "**B**").
+Google Streetview uses a *querystring API*, meaning that it works by adding parameters to a special API URL performs actions using the API. Think of it like a function call using a special URL.
 
-Google Streetview uses a *querystring* API, meaning that adding parameters to a special API URL performs actions using the API. To get an image from Streetview, the URL *endpoint* is: https://maps.googleapis.com/maps/api/streetview. The parameters `size` (how big the image should be), `location` (a string representing a location, e.g., "48.8742,2.2948", "Kitchener,ON"), `fov`, `heading`, and `pitch` (these three represent the camera field-of-view and direction at the given `location`), and `key` (the API key you generated).
+To get an image from Streetview, the URL *endpoint* is: https://maps.googleapis.com/maps/api/streetview. The parameters `size` (how big the image should be), `location` (a string representing a location, e.g., "48.8742,2.2948", "Kitchener,ON"), `fov`, `heading`, and `pitch` (these three represent the camera field-of-view and direction at the given `location`), and `key` (the API key you generated).
 
 The start of the parameter list is indicated with "`?`" in the URL. Each parameter is included in the format `parameter=value`; for example, `size=500x500`. Multiple parameters are separated with "`&`". The sketch concatenates strings together to form a complete querystring:
+
 ```js
-String url = "https://maps.googleapis.com/maps/api/streetview" + 
+let url = "https://maps.googleapis.com/maps/api/streetview" + 
   "?size=" + w + "x" + h + 
   "&location=" + location + 
   "&fov=" + fov + "&heading=" + head + "&pitch=" + pitch + 
   "&key=" + API_KEY;
 ```
+
+### API Key Setup
+
+You need a [Google Streetview API Key](https://developers.google.com/maps/documentation/streetview/get-api-key) to run this code. It's a string of 38 characters that looks something like this:
+
+```
+uX83P2JVh0z49wJroBu9yAVdejmhFUoFAIzaS7F
+```
+
+To get one, you need to have a Google account and you need to provide billing information (i.e. a credit card). The cost to use this API is very low, about 0.8 cents per image with a credit of US$200 each month. So you'd have to retrieve about 25,000 streetview images in a month before you start paying. That's like retrieving one streetview image every second for more than two weeks, or creating a sketch that retrieves a streetview images every frame (at 60 FPS) and running your sketch for 7 hours. 
+
+We also highly recommend that, for the course, you enable the "Allow Unsigned Usage" option of your Streetview API key, to avoid having to cryptographically sign every request to the API. To do this, navigate to:
+https://console.cloud.google.com/google/maps-apis/credentials
+Select "Street View Static API" from the drop-down, and then select "ALLOW UNSIGNED USAGE".
+
+### API Key Security
+
+You don't want to include your API key in your repo. One way to keep it out of the repo is to create a `_private/` folder and add it to `.gitignore`, then store your auth there in a json file that you load when your sketch runs. There's a sample `auth.json` in the directory and the code is setup to load from a file like that in a `_private/` subfolder.
+
+However, it's impossible to hide an API key when it's used directly by a JavaScript program running in a webpage like this code demo. If you host your sketch with an API key in a `_private` folder on a public website, people can get your key. The only secure way to use API keys in a public website is to handle all API accesses on your own server. This way your API key never leaves your server, and it just forwards the results of the API access to your webpage application. 
 
 ## Processing
 
