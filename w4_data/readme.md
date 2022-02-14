@@ -46,10 +46,10 @@ Sketch: **`text`**
 
 This is a minimal sketch showing how to load text from a file. The output is printed to the console and to a textarea (there is no graphical output).
 
-It uses the p5.js `loadStrings()` function to load the lines of the specified file as an array of strings (text). The second argument is a callback function that triggers after the text is loaded:
+It uses the p5.js `loadStrings()` function to load the lines of the specified file src as an array of strings of text. The second argument is a callback function to execute after the text is loaded:
 
 ```js
-  let lines = loadStrings(fn, function() {
+  let lines = loadStrings(src, function() {
     print(`  loaded ${lines.length} lines`);  
     // ...
   });
@@ -60,13 +60,28 @@ To get all the text in a file as a single string, we join the strings returned f
 text = lines.join('\n');
 ```
 
-> **Cross-Origin Resource Sharing (CORS) Issue**
+### Loading Text from a Another Website
 
-`loadStrings()` also works for loading remote content, by passing a url. Try commenting out the `let fn` line and uncommenting the line to see how this works.
+`loadStrings()` can load content from anywhere by passing a url instead of a filepath. 
+
+Try changing the code to this:
 ```js
-//let fn = "https://www.gutenberg.org/files/1342/1342-0.txt";
+let src = "https://www.gutenberg.org/cache/epub/158/pg158.txt";
 ```
 
+> **WARNING!** This will cause a **Blocked by CORS Policy*** error until you explicitly allow this kind of access. 
+
+### Cross-Origin Resource Sharing (CORS)
+
+When you call loadStrings, its using a low-level JavaScript method that fetches data off of a remote server. This is fine if the remote data is on the same server (like `LocalHost` for your local VS Code server), but due to potential security threats, all modern browsers prevent code executing in a browser window from accessing data on other servers. [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) is the name of the security policy enforced. 
+
+In our sketch, we just want to load a text file from the Project Gutenberg site. There's really no security threat here. To allow access, the easiest way is to remove the CORS policy from your browser. The easiest way is with a plug-in like [Allow CORS](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en) for Chrome or [CORS Everywhere](https://addons.mozilla.org/en-CA/firefox/addon/cors-everywhere/) for Firefox. On Safari, you can disable CORS in the develop menu (Preferences > Advanced, select “Disable Cross-Origin Restrictions”).
+
+These settings only make your browser allow CORS, if you share a sketch that loads data from remote servers with others they would have the same CORS policy error. A more universal approach is to use a proxy server like [cors-anywhere](https://github.com/Rob--W/cors-anywhere#readme). 
+
+> For this course, the browser extension approach should be enough for installation artworks, etc., unless you want to post your sketch on a public webserver.
+
+Here's a [short Medium article](https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9) that explains what the CORS policy is (a bit technical) and some solutions. Here's [another short Medium article](https://medium.com/swlh/avoiding-cors-errors-on-localhost-in-2020-5a656ed8cefa) that has a few more solutions and is a bit lighter technically. 
 
 ## Processing Text 
 
@@ -82,7 +97,9 @@ let start = "Chapter 61";
 
 The sketch then adds the remainder of the file (the book contents without the frontmatter) to a string.
 
-*Tokenizing*: To get the individual words from the text to display, we use the p5.js `splitTokens(string, delimiter)`, which splits up a string at one or more occurrences of any character in `delimiter`. We pass in the book text as the `string` and `" "` (a space character) as the `delimiter`. This process is called *tokenization*.
+### String Tokenization 
+
+To get the individual words from the text to display, we use the p5.js `splitTokens(string, delimiter)`, which splits up a string at one or more occurrences of any character in `delimiter`. We pass in the book text as the `string` and `" "` (a space character) as the `delimiter`. This process is called *tokenization*.
 
 Processing has other functions that you may find useful for tokenization and other processing. The `split()` function works like `splitTokens()`, but splits on a specific substring rather than a set of characters. For example,
 
@@ -106,6 +123,8 @@ produce the array
 
 We also use the JavaScript string method `.includes(substring)`, that returns whether or not the string includes the given substring.
 
+### Animation
+
 To show the words at regular intervals, the sketch uses a parameter called `update` (controlled by the mouse's `x` position) as follows:
 
 ```js
@@ -116,11 +135,11 @@ if (frameCount % update == 0) {
 
 `frameCount` is the number of frames that have been shown since the sketch was first started (there are 60 frames per second, unless set differently using `frameRate()`). "`%`" is the modulo operator. When `frameCount % update` is equal to zero, this means that `frameCount` is divisible by `update` without a remainder. In other words, if `update` is set to `60`, this means that `index` will increase each second, whereas if `update` is set to `1`, this means that `index` will increase 60 times per second.
 
-To make the fading effect, the sketch uses the `alpha` variable, controlled by the mouse's `y` position. Rather than redrawing the background each frame, it draws a partially transparent black rectangle over the whole screen:
+To make the fading effect, background is called with an alpha transparency `p.alpha`:
 
 ```js
-fill(0, alpha);
-rect(0, 0, width, height);
+// semi transparent background to fade words
+background(0, p.alpha * 255);
 ```
 
 This makes previous white words dimmer and dimmer each frame until the next word is shown.
@@ -140,14 +159,16 @@ This causes the y-position of the word to float up and down, controlled by the p
 
 To better understand how to load and process data, let's visualize a piece of computer code as abstract fields of brackets. Try following these steps:
 
-1. Load some public source code from GitHub. For example, [`main.js`](https://github.com/processing/p5.js/blob/main/src/core/main.js) is the main module for p5.js.
-2. Create a loop to iterate through each character in the string of code (stored in the String `all` if you use the minimal text demo as starter code). 
+1. Add an extension or configure your browser to allow CORS access (see above).
+2. Copy the `text` sketch as a starting place.  
+3. In your copy, load some public source code from GitHub. For example, [`main.js`](https://github.com/processing/p5.js/blob/main/src/core/main.js) is the main module for p5.js.
+4. Create a loop to iterate through each character in the string of code (stored in the String `all` if you use the minimal text demo as starter code). 
     - `all.length` will give the total number of characters
     - `all.charAt(i)` will return the character at a position in the string
-3. In your loop, add a condition to only render the character using the `text()` function when the character is a bracket (square, round, curly).
-4. You'll have to keep track of the x and y position, similar to the temperature demo below.
-5. Tweak the spacing of characters, their fill colour (with transparency), and the size of you canvas (try it tall and thin like a print).
-6. You can make this "paint" the characters over time by tracking the current character position in a global variable and incrementing it each frame (which might be pretty slow) or write a loop in draw to look at 100 characters or so each frame.
+5. In your loop, add a condition to only render the character using the `text()` function when the character is a bracket (square, round, curly).
+6. You'll have to keep track of the x and y position, similar to the temperature demo below.
+7. Tweak the spacing of characters, their fill colour (with transparency), and the size of you canvas (try it tall and thin like a print).
+8. You can make this "paint" the characters over time by tracking the current character position in a global variable and incrementing it each frame (which might be pretty slow) or write a loop in draw to look at 100 characters or so each frame.
 
 
 # Tabular Data

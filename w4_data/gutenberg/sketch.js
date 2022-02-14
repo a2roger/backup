@@ -6,21 +6,32 @@
 
 // parameters
 let p = {
+  // opactity to draw each word
+  alpha: 0.1,
+  alphaMax: 0.2,
+  alphaMin: 0.0,
+  alphaStep:0.001,
+  // interval of frames to update the string
+  update: 16,
+  updateMin: 1, 
+  updateMax: 60,
+  updateStep: 1,
 }
 
 // place all text here
 let words
+// word to display
 let index = 0
 
 function preload() {
   // you can also load from the web by giving a URL
    // let fn = "https://www.gutenberg.org/files/1342/1342-0.txt";
-  let fn = "data/1342-0.txt";
+  let src = "data/1342-0.txt";
 
   // useful to print some messages to the console to track down bugs and 
   // problems with data sources
-  print(`Loading '${fn}'...`);
-  let lines = loadStrings(fn, function() {
+  print(`Loading '${src}'...`);
+  let lines = loadStrings(src, function() {
 
     print(`  loaded ${lines.length} lines`);  
   
@@ -44,8 +55,6 @@ function preload() {
     // split on whitespace to get individual words
     words = splitTokens(s, " ");
     print(`  found ${words.length} words in book`);
-
-    // text = lines.join('\n');
   });
 }
 
@@ -54,31 +63,25 @@ function setup() {
   
   // add params to a GUI
   createParamGui(p, paramChanged);
-  _paramGui.hide()
 
   // simple HTML textarea debug window
   createDebugWindow();
-
   debug(words.join('\n'));
 
   background(0);  
  }
 
  function draw() {
-  // background(0);
-  let alpha = adjustY(0, 50); // 10 looks nice
-
-  // black rect to fade out text
-  fill(0, alpha);
-  rect(0, 0, width, height);
-  
+   // semi transparent background to fade words
+  background(0, p.alpha * 255);
+ 
   // text position
   let x = width/2;
   let y = height/2;
 
   // float the text up and down
-  let floatRange = 100;
-  y += -floatRange/2 + floatRange * noise(frameCount/500.0);
+  // let floatRange = 100;
+  // y += -floatRange/2 + floatRange * noise(frameCount/500.0);
 
   // render the text
   fill(255);
@@ -86,39 +89,10 @@ function setup() {
   textAlign(CENTER, CENTER);  
   text(words[index], x, y);
   
-  // interval of frames to update the string
-  let update = int(adjustX(1, 60)); // ~16 looks nice
-  
   // simple timer method to do something every few frames
-  if (frameCount % update == 0) {
+  if (frameCount % p.update == 0) {
     index++;
   }
-}
-
-
-// helper functions to adjust values with mouse
-
-function adjustX(low, high) {
-   let v = map(mouseX, 0, width - 1, low, high); 
-   print(`adjustX: $v`);
-   return v;
-}
-
-function adjustY(low, high) {
-   let v = map(mouseY, 0, height - 1, low, high); 
-   print(`adjustY: $v`);
-   return v;
-}
-
-function keyPressed() {
-  if (key == ' ') {
-  }
-}
-
-function mousePressed() {
-}
-
-function windowResized() {
 }
 
 // global callback from the settings GUI
