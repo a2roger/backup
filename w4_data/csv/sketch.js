@@ -1,11 +1,4 @@
-// parameters
-let p = {
-  boolean: true,
-  numeric: 50,
-  numericMin: 0,
-  numericMax: 100,
-  numericStep: 1,
-}
+
 
 function preload() {
   // local file (in data/" directory of this sketch)
@@ -46,23 +39,7 @@ function setup() {
   text('empty\ncanvas', width/2, height/2)
  }
 
-function draw() {
-}
 
-function keyPressed() {
-  if (key == ' ') {
-  }
-}
-
-function mousePressed() {
-}
-
-function windowResized() {
-}
-
-// global callback from the settings GUI
-function paramChanged(name) {
-}
 
 
 

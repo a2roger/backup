@@ -222,7 +222,7 @@ To experiment further:
 
 * Experiment with different size points (using `strokeWeight()`) and different colours and transparency (using `stroke()`).
   
-* You also try connecting the postal code points by lines.
+* You can also try connecting the postal code points by lines.
    <!-- and try different sort orders on the table to see the effect (see the `Table.sort()` and `Table.sortReverse()` methods). -->
 
 # RSS Feeds in XML
