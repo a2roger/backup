@@ -11,10 +11,20 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(500, 500)
+  createCanvas(400, 400)
   
   // add params to a GUI
   createParamGui(p, paramChanged);
+  _paramGui.setPosition(10, 10); // can customize where GUI is drawn
+  // _paramGui.hide(); // uncomment to hide for presentations
+
+  // set colour for your frame
+  select('body').style('background: #000000;')
+
+  // don't centre
+  // select('body').style('place-items: start start;')
+  // _paramGui.setPosition(width + 10, 10); // can customize where GUI is drawn  
+
  }
 
 function draw() {
