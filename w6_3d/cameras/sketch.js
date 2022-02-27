@@ -1,45 +1,48 @@
+/*
+ * cameras demo
+ *   Control of a virtual 3D camera.
+ */
 
 // Camera parameters
-float camDist;
-float originX;
-float camRoll;
+let camDist = 0;
+let originX = 0;
+let camRoll = 0;
 
-void setup() {
-  size(300, 300, P3D);
-  frameRate(60); // macOS Big Sur bug workaround
+function setup() {
+  createCanvas(300, 300, WEBGL);
 }
 
-void draw() {
+function draw() {
   background(0);
-  
+
   lights();
-  
+
   camera(0, -100, camDist,
          originX, 0, 0,
          sin(camRoll), cos(camRoll), 0);
-  
+
   // ACTION!
 
-  if (keyPressed && key == '1') {
+  if (keyIsPressed && key == '1') {
       perspective(
         map(mouseY, 0, height, 0, PI),
-        1.0 * width/height, 
+        width/height,
         1, 1000);
   } else {
       camDist = mouseY * 3;
-  }       
-  
-  if (keyPressed && key == '2') {
+  }
+
+  if (keyIsPressed && key == '2') {
     camRoll = map(mouseX, 0, width, -HALF_PI, HALF_PI);
   } else {
     originX = map(mouseX, 0, width, -100, 100);
   }
-  
+
   // Draw a box on a plane
   noStroke();
-  fill(#668888);
+  fill("#668888");
   box(300, 1, 300);
   translate(0, -25, 0);
-  fill(#887766);
+  fill("#887766");
   box(50);
 }
