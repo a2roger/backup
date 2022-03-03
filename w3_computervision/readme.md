@@ -374,6 +374,11 @@ Sketch: **`contours`**
 
 Uses p5.cv.js, an opencv.js wrapper.
 
+
+Sketch: **`contoursV2`**
+
+Uses opencv.js directly.
+
 <!-- This sketch outlines different contours identified in a live feed of your computer's webcam. Contours are curves along regions with similar colours and lightness. With proper thresholding, you can use contour finding to track the outline of your arms or fingers as in works like *Text Rain* (Camille Utterbak and Romy Achituv, 1999) and *Hand From Above* (Chris O'Shea, 2009).
 
 To find the contours, this sketch calls the `opencv.findContours()` method. It takes two boolean parameters: the first controls whether to find nested contours (holes in other contours), the second controls whether to sort the resulting contours by size in descending order. The method returns all the identified Contours as an `ArrayList` of `Countour`s (a type built into the Processing OpenCV library).
