@@ -152,6 +152,13 @@ If we return to the `offset()` function now, if the `animate` global variable is
 2. Try making the waterfall texture animate in a different direction (e.g., sideways).
 
 
+### Sketch: **`videotexture`**
+
+This sketch shows how to use a video as a texture on a 3D object. The sketch shows the live camera footage on a rotating 3D cube.
+
+The texture is created by passing the current video frame (`video.get()`) to `texture()` before drawing the cube.
+
+
 ## Loading and Texturing External 3D Objects
 
 ### Sketch: **`simplemodel`**
