@@ -18,6 +18,7 @@ function setup() {
   video.hide();
 }
 
+// amount to rotate (in radians)
 let r = 0;
 
 function draw() {

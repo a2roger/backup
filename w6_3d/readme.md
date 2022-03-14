@@ -159,6 +159,13 @@ This sketch shows how to use a video as a texture on a 3D object. The sketch sho
 The texture is created by passing the current video frame (`video.get()`) to `texture()` before drawing the cube.
 
 
+### Sketch: **`mixedmodes`**
+
+This sketch shows how to use a mixture of 3D and 2D drawing: drawing 3D graphics into a buffer in a 2D sketch, and drawing a 2D buffer as a texture for a 3D object.
+
+Like how `WEBGL` can be passed to `createCanvas()`, it can also be passed to `createGraphics()`, independent of the canvas' rendering mode. This can allow you to create 2D HUD-like overlays on 3D scenes, or embed small bits of 3D graphics into a primarily 3D scene.
+
+
 ## Loading and Texturing External 3D Objects
 
 ### Sketch: **`simplemodel`**
