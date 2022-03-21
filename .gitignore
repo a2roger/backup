@@ -1,2 +1,7 @@
 .DS_Store
+
+# directories with keys etc.
 _private
+
+# node projects
+node_modules/
