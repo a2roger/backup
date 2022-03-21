@@ -43,9 +43,9 @@ It should print something like `8.5.5` which is the version of npm that was inst
 
 ## Create a Node webserver 
 
-In your own repo (or in a temporary directory) create a folder called `server`. 
+In your personal csfine383 repo, create a folder called `server`. 
 
-Open the terminal, and navigate to inside this folder using the `cd` command (on MacOS you can right-click and select "Services/Open Temrinal Here")
+Open the terminal, and navigate to inside this folder using the `cd` command (on MacOS you can right-click and select "Services/Open Terminal Here"). 
 
 Use npm to "initialize" (init) a new Node project inside this folder using:
 
@@ -63,7 +63,7 @@ npm install express
 
 After running the install command, you'll see "express" listed in the project `package.json` and lots of new files in a subfolder called `node_modules/`.
 
-We'll write code to create a little Node.js webserver. 
+We'll write code to create a Node.js webserver. 
 
 First, create a subfolder called `public/` for html pages to serve. Add a simple `index.html` page for testing like this:
 
@@ -267,6 +267,35 @@ Depending on the network, it may be possible to connect to a server using the co
 One solution is to connect each computer to the same router, open the port being used for websocket on the server computer, and then connect to the server computer's IP (usually starts with `192.168`) with the websocket clients.
 
 
+## Commit your finished Node project to your repo
+
+It's very important "ignore" the directory with all the installed Node packages. The one you generated in the steps above is 6.5 MB with almost 700 files --- and that after installing only two Node packages. Recommended practice is to not commit the `node_packages/` directory to a source code repository. 
+
+This is easily done with a `.gitignore` file. If you don't already have one, create the file in VS Code, add the contents below, and add it to the room of your repository. 
+
+```
+.DS_Store
+
+# directories with keys etc.
+_private
+
+# node projects
+node_modules/
+```
+
+Once added, you should see the `node_packages/` directory is grey and when you look at the "Source Control" tab, it won't list all the files in that directory. 
+
+
+## Initialize an existing Node.js project
+
+You can find the finished code for the steps above in the workshop "w5" repo in the `server/` folder. When you pull it and try to run it, it won't work since (as explained above) recommended practice is to not commit the `node_packages/` directory to a source code repository. 
+
+To initialize an existing Node project you pulled from a repo that doesn't have a `node_packages/`, use this npm command:
+
+```shell
+npm install
+```
+Once executed, you can run the server and clients as explained in the steps above.
 
 # Collaborative Drawing Artwork
 
