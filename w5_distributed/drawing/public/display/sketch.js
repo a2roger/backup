@@ -21,10 +21,10 @@ function setup() {
   // _paramGui.hide(); // uncomment to hide for presentations
 
   // set colour for your frame
-  select('body').style('background: #222222;')
+  select('body').style('background: #000000;')
 
   socket = io.connect('http://localhost:3000')
-  socket.emit('setup', { type: "input" })  
+  socket.emit('setup', { type: "display" })
 
   socket.on('draw', function(data) {
     print(data)
@@ -40,7 +40,7 @@ function setup() {
  }
 
 function draw() {
-  background(0, 32)
+  // background(240)
  
 }
 
@@ -54,8 +54,8 @@ function mousePressed() {
 
 function mouseDragged() {
   noStroke()
-  fill(255)
-  circle(mouseX, mouseY, 8);
+  fill('#ff0000')
+  circle(mouseX, mouseY, 16);
 
   let data = { x: mouseX, y: mouseY }
   socket.emit('draw', data)
