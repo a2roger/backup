@@ -36,12 +36,7 @@ let isRecording = false;
 function draw() {
   background(250);
 
-  pop();
-
-  circ;
-
   textAlign(CENTER, CENTER);
-
   text("SPACE to Record Clip", width / 2, height / 2);
 
   if (isRecording) {
