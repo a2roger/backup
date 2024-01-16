@@ -160,7 +160,7 @@ The flipping behaviour is instantaneous, adding some animation can really bring 
 gsap.to(this, { angle: a, duration: 0.5 });
 ```
 
-This uses the [GreenSock animation library](http://www.looksgood.de/libraries/Ani/) to change the value of the Agent field `angle` to the new target value in `a` over a duration of 0.5 seconds. This is called "tweening" or "keyframing". GreenSock will make this change in the background, and because we render Agents with those intermediate angle values at 60 FPS, we get an animation. Most GreenSock operations are triggered and configured using [the `gsap` object](https://greensock.com/docs/v3/GSAP). For example, try changing the `gsap.to` call to this:
+This uses the [GreenSock animation library](https://gsap.com/) to change the value of the Agent field `angle` to the new target value in `a` over a duration of 0.5 seconds. This is called "tweening" or "keyframing". GreenSock will make this change in the background, and because we render Agents with those intermediate angle values at 60 FPS, we get an animation. Most GreenSock operations are triggered and configured using [the `gsap` object](https://greensock.com/docs/v3/GSAP). For example, try changing the `gsap.to` call to this:
 
 ```js
 gsap.to(this, { angle: a, duration: 3, ease: "elastic.out(1.3, 0.3)" });
