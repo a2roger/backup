@@ -50,12 +50,11 @@ function draw() {
   colorMode(HSB, 360, 100, 100, 100);
 
   // update all agents
-  for (a of agents) {
-    a.update();
-  }
+  agents.forEach((a) => a.update());
 
   if (p.interact) {
-    // if two agents touch, then kill one and give the weight to the other
+    // if two agents touch, then reset one and give
+    // the weight to the other
     for (i = 0; i < agents.length; i++) {
       for (j = i + 1; j < agents.length; j++) {
         let a = agents[i];
@@ -77,9 +76,7 @@ function draw() {
   }
 
   // draw all agents
-  for (a of agents) {
-    a.draw();
-  }
+  agents.forEach((a) => a.draw());
 }
 
 // create the grid of agents, one agent per grid location

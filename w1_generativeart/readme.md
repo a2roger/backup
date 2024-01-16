@@ -254,9 +254,11 @@ See also GD **P.2.1.1**, and these code examples:
 
 Animates the change in position of circle Agents in a grid using controlled random generators.
 
-This sketch calls `Agent.update()` from an event functions other than `draw()`: `draw()` is called each frame to enable the circles to animate, but `Agent.update()` is called when SPACE is pressed, updating the positions for the agents to animate to using GreenSock animation library.
+This sketch calls `Agent.update()` from an event function other than `draw()`: `draw()` is called each frame to enable the circles to animate, but `Agent.update()` is called when SPACE is pressed, updating the positions for the agents to animate to using GreenSock animation library.
 
 This sketch uses `randomSeed()` to seed the random number generator; this means that each time the code is run, the results of the `random()` calls (and the resulting compositions) will be the same.
+
+> Using a _random seed_ is a great way to recreate a composition later.
 
 See also GD **P.2.1.2**, and these code examples:
 
@@ -276,6 +278,8 @@ See also GD **P.4.3.1**, and these code examples:
 Agents move around the canvas leaving a trail.
 
 The agents follow a semi-random direction and step size: `maxStep` controls how far the agent can travel each step, and `probTurn` controls how much the agent rotates each step.
+
+If the agent will exit the canvas after the update step, then its `reset` to a random location with a new colour, etc.
 
 Setting `p.interact = true` turns on additional inter-agent behaviour. If the agents move within a close distance of each other, one agent gets reset and the other accumulates its stroke weight.
 

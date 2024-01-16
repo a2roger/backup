@@ -1,11 +1,12 @@
 class Agent {
   constructor(x, y) {
-    // position
+    // agent position to get pixel colour
+    // (randomly move them slightly off the grid)
     let s = (p.randomness / 100) * 10;
     this.x = x + random(-s, s);
     s = (p.randomness / 100) * 10;
     this.y = y + random(-s, s);
-    // fill colour from image
+    // get fill colour from image
     this.color = sourceImage.get(x / p.imageSize, y / p.imageSize);
     // reduce opacity
     this.color[3] = 10;
