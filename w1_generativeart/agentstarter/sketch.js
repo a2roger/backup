@@ -16,15 +16,14 @@ let p = {
   myParam: 1,
   myParamMin: 0.1,
   myParamMax: 10.0,
-  myParamStep: 0.1,  
-
-}
+  myParamStep: 0.1,
+};
 
 // list of agents
-let agents
+let agents;
 
 function setup() {
-  createCanvas(600, 600)
+  createCanvas(600, 600);
 
   // add params to a GUI
   createParamGui(p, paramChanged);
@@ -33,11 +32,10 @@ function setup() {
   // s = getItem("params")
 
   // setup the window and create the agents
-  createAgents()
+  createAgents();
 }
 
 function draw() {
-
   // update all the agents
   for (a of agents) {
     a.update();
@@ -51,16 +49,15 @@ function draw() {
 
 // create the grid of agents, one agent per grid location
 function createAgents() {
-
   // setup the canvas
   if (p.fillScreen) {
-    resizeCanvas(windowWidth, windowHeight)
+    resizeCanvas(windowWidth, windowHeight);
   } else {
-    resizeCanvas(600, 600)
+    resizeCanvas(600, 600);
   }
 
   // clear the background
-  background(250);  
+  background(250);
 
   // clear agent list
   agents = [];
@@ -74,22 +71,22 @@ function createAgents() {
 
 function keyPressed() {
   // space to reset all agents
-  if (key == ' ') {
+  if (key == " ") {
     createAgents();
   }
   // SHIFT-S saves the current canvas
-  if (key == 'S') {
-    save('canvas.png')
+  if (key == "S") {
+    save("canvas.png");
   }
 }
 
 function windowResized() {
-  createAgents()
+  createAgents();
 }
 
 // global callback from the settings GUI
 function paramChanged(name) {
   if (name == "agentNum" || name == "fillScreen") {
-    createAgents()
+    createAgents();
   }
 }

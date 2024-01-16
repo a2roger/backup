@@ -2,7 +2,6 @@
  * Various Utilities
  */
 
-
 /**
  * Simple parameter adjustment GUI
  * uses p5.gui
@@ -13,20 +12,14 @@
  */
 let _paramGui;
 function createParamGui(params, callback) {
-
   // settings gui
-  _paramGui = createGui('Settings');
+  _paramGui = createGui("Settings");
   // settingsGui.prototype.addButton("Save", function () { storeItem("params", settings) });
-  _paramGui.addObject(params)
-  if (callback)
-    _paramGui.prototype.setGlobalChangeHandler(callback)
+  _paramGui.addObject(params);
+  if (callback) _paramGui.prototype.setGlobalChangeHandler(callback);
   // settingsGui.prototype.addRange('size', 1, 64, 32, 1, function(v) { print("size changed", v) } )
-
 
   _paramGui.setPosition(width + 10, 10);
   // the 's' key hides or shows the GUI
   _paramGui.prototype.setKey("s");
-
 }
-
-

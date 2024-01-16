@@ -18,13 +18,13 @@ let p = {
 
   circleSize: 30,
   tileSize: 40,
-}
+};
 
 // list of agents
-let agents
+let agents;
 
 function setup() {
-  createCanvas(600, 600)
+  createCanvas(600, 600);
 
   // add params to a GUI
   createParamGui(p, paramChanged);
@@ -33,11 +33,10 @@ function setup() {
   // s = getItem("params")
 
   // setup the window and create the agents
-  createAgents()
+  createAgents();
 }
 
 function draw() {
-
   background(240);
 
   // draw all the agents
@@ -48,12 +47,11 @@ function draw() {
 
 // create the grid of agents, one agent per grid location
 function createAgents() {
-
   // setup the canvas
   if (p.fillScreen) {
-    resizeCanvas(windowWidth, windowHeight)
+    resizeCanvas(windowWidth, windowHeight);
   } else {
-    resizeCanvas(600, 600)
+    resizeCanvas(600, 600);
   }
 
   // denominator is size of tile
@@ -75,8 +73,7 @@ function createAgents() {
 }
 
 function keyPressed() {
-  if (key == ' ') {
-
+  if (key == " ") {
     // note how agent update is called here, not always in draw
     for (a of agents) {
       a.update();
@@ -84,19 +81,17 @@ function keyPressed() {
   }
 }
 
-
 function windowResized() {
-  createAgents()
+  createAgents();
 }
 
 // global callback from the settings GUI
 function paramChanged(name) {
   if (name == "tileSize" || name == "fillScreen") {
-    createAgents()
+    createAgents();
   }
   if (name == "seed") {
     // generate random numbers starting from this "seed"
-    randomSeed(p.seed);    
+    randomSeed(p.seed);
   }
-
 }

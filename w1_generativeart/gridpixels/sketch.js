@@ -4,9 +4,8 @@
 
 // parameters
 let p = {
-
   // tile size
-  tileSize: 15, 
+  tileSize: 15,
   tileSizeMin: 4,
   tileSizeMax: 64,
 
@@ -16,22 +15,25 @@ let p = {
   // how large to make the image
   imageSize: 3,
   imageSizeMin: 1,
-  imageSizeMax: 10,  
-}
+  imageSizeMax: 10,
+};
 
 // list of agents
-let agents
+let agents;
 
 // image to use for randomness
-let sourceImage
+let sourceImage;
 
 function preload() {
-  sourceImage = loadImage("data/flowers.png")  
+  sourceImage = loadImage("data/flowers.png");
   // sourceImage = loadImage("data/portrait.png")
 }
 
 function setup() {
-  createCanvas(sourceImage.width * p.imageSize, sourceImage.height * p.imageSize)
+  createCanvas(
+    sourceImage.width * p.imageSize,
+    sourceImage.height * p.imageSize
+  );
 
   // add params to a GUI
   createParamGui(p, paramChanged);
@@ -40,11 +42,10 @@ function setup() {
   // s = getItem("params")
 
   // setup the window and create the agents
-  createAgents()
+  createAgents();
 }
 
 function draw() {
-
   // background(240);
 
   // image(sourceImage, 0, 0, width, height)
@@ -62,8 +63,10 @@ function draw() {
 
 // create the grid of agents, one agent per grid location
 function createAgents() {
-
-  resizeCanvas(sourceImage.width * p.imageSize, sourceImage.height * p.imageSize)  
+  resizeCanvas(
+    sourceImage.width * p.imageSize,
+    sourceImage.height * p.imageSize
+  );
 
   background(0);
 
@@ -86,19 +89,18 @@ function createAgents() {
 }
 
 function keyPressed() {
-  if (key == ' ') {
-    createAgents()
+  if (key == " ") {
+    createAgents();
   }
 }
 
-
 function windowResized() {
-  createAgents()
+  createAgents();
 }
 
 // global callback from the settings GUI
 function paramChanged(name) {
   if (name == "tileSize" || name == "imageSize") {
-    createAgents()
+    createAgents();
   }
 }

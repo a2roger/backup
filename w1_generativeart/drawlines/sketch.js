@@ -20,17 +20,17 @@ let p = {
   // controls if agents interact with each other
   // which creates other interesting effects
   interact: false,
-}
+};
 
 // list of agents
-let agents
+let agents;
 
 // two interactive parameters, see start of draw()
-let maxStep = 0
-let probTurn = 0
+let maxStep = 0;
+let probTurn = 0;
 
 function setup() {
-  createCanvas(600, 600)
+  createCanvas(600, 600);
 
   // add params to a GUI
   createParamGui(p, paramChanged);
@@ -39,11 +39,10 @@ function setup() {
   // s = getItem("params")
 
   // setup the window and create the agents
-  createAgents()
+  createAgents();
 }
 
 function draw() {
-
   // interactively adjust agent parameters
   maxStep = map(mouseX, 0, width, 0.1, 3);
   probTurn = map(mouseY, 0, height, 0.01, 0.1);
@@ -59,7 +58,6 @@ function draw() {
     // if two agents touch, then kill one and give the weight to the other
     for (i = 0; i < agents.length; i++) {
       for (j = i + 1; j < agents.length; j++) {
-
         let a = agents[i];
         let b = agents[j];
 
@@ -84,15 +82,13 @@ function draw() {
   }
 }
 
-
 // create the grid of agents, one agent per grid location
 function createAgents() {
-
   // setup the canvas
   if (p.fillScreen) {
-    resizeCanvas(windowWidth, windowHeight)
+    resizeCanvas(windowWidth, windowHeight);
   } else {
-    resizeCanvas(600, 600)
+    resizeCanvas(600, 600);
   }
 
   background("#000000");
@@ -100,27 +96,24 @@ function createAgents() {
   agents = [];
 
   // create an Agent object and place it at centre of each tile
-  for (i = 0; i < p.agentNum; i++)
-    agents.push(new Agent());
-
-  }
+  for (i = 0; i < p.agentNum; i++) agents.push(new Agent());
+}
 
 function keyPressed() {
-  if (key == ' ') {
+  if (key == " ") {
     createAgents();
-  } else if (key == 'x') {
-    print(agents[0])
+  } else if (key == "x") {
+    print(agents[0]);
   }
 }
 
-
 function windowResized() {
-  createAgents()
+  createAgents();
 }
 
 // global callback from the settings GUI
 function paramChanged(name) {
   if (name == "agentNum" || name == "fillScreen") {
-    createAgents()
+    createAgents();
   }
 }

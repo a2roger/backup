@@ -1,5 +1,3 @@
-
-
 // parameters
 let p = {
   // toggle filling screen or not
@@ -36,19 +34,18 @@ let p = {
   shapeOffset: 0,
   shapeOffsetMin: -100,
   shapeOffsetMax: 100,
-
-}
+};
 
 // list of agents
-let agents
+let agents;
 
 // estimate maximum distance from an agent
-let maxDist
+let maxDist;
 
-let shape
+let shape;
 
 function setup() {
-  createCanvas(600, 600)
+  createCanvas(600, 600);
 
   // add params to a GUI
   createParamGui(p, paramChanged);
@@ -56,11 +53,11 @@ function setup() {
   // load last params
   // s = getItem("params")
 
-  // load the SVG shape 
+  // load the SVG shape
   shape = loadImage("data/module_" + p.shapeNum + ".svg");
 
   // setup everything and create the agents
-  createAgents()
+  createAgents();
 }
 
 function draw() {
@@ -75,16 +72,13 @@ function draw() {
   }
 }
 
-
-
 // create the grid of agents, one agent per grid location
 function createAgents() {
-
   // setup the canvas
   if (p.fillScreen) {
-    resizeCanvas(windowWidth, windowHeight)
+    resizeCanvas(windowWidth, windowHeight);
   } else {
-    resizeCanvas(600, 600)
+    resizeCanvas(600, 600);
   }
 
   maxDist = sqrt(sq(width) + sq(height));
@@ -108,24 +102,24 @@ function createAgents() {
 
 function keyPressed() {
   // SHIFT-S saves the current canvas
-  if (key == 'S') {
-    save('canvas.png')
+  if (key == "S") {
+    save("canvas.png");
   }
 }
 
-
 function windowResized() {
-  createAgents()
+  createAgents();
 }
 
 // global callback from the settings GUI
 function paramChanged(name) {
   if (name == "tileSize" || name == "fillScreen") {
-    createAgents()
+    createAgents();
   }
 
   if (name == "shapeNum") {
-    shape = loadImage("data/module_" + p.shapeNum + ".svg", 
-       function () { createAgents(); });
+    shape = loadImage("data/module_" + p.shapeNum + ".svg", function () {
+      createAgents();
+    });
   }
 }
