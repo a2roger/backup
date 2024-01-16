@@ -54,7 +54,7 @@ function setup() {
   // s = getItem("params")
 
   // load the SVG shape
-  shape = loadImage("data/module_" + p.shapeNum + ".svg");
+  shape = loadImage(`data/module_${p.shapeNum}.svg`);
 
   // setup everything and create the agents
   createAgents();
@@ -118,7 +118,7 @@ function paramChanged(name) {
   }
 
   if (name == "shapeNum") {
-    shape = loadImage("data/module_" + p.shapeNum + ".svg", function () {
+    shape = loadImage(`data/module_${p.shapeNum}.svg`, function () {
       createAgents();
     });
   }

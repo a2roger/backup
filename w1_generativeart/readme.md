@@ -176,7 +176,7 @@ SVG files are images loaded using `loadImage()`, here's how the first shape is l
 
 ```js
 // load the SVG shape
-shape = loadImage("data/module_" + p.shapeNum + ".svg");
+shape = loadImage(`data/module_${p.shapeNum}.svg`);
 ```
 
 and each agent draws it in `Agent.draw()` using the `image()` function:
@@ -191,7 +191,7 @@ Here's how a new shape is loaded in paramChanged() (i.e. when a param is changed
 
 ```js
 if (name == "shapeNum") {
-  shape = loadImage("data/module_" + p.shapeNum + ".svg", function () {
+  shape = loadImage(`data/module_${p.shapeNum}.svg`, function () {
     createAgents();
   });
 }
