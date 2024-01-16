@@ -1,4 +1,7 @@
 *.code-workspace
+/p5types
+jsconfig.json
+
 
 # directories with keys etc.
 _private
