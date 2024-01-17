@@ -1,0 +1,28 @@
+
+const NoteType = {
+  ACCIACCATURA: 1/32,
+  QUARTER_ACCIACCATURA: 1/4 - 1/32,
+  EIGHTH_ACCIACCATURA: 1/8 - 1/32,
+  THIRTY_SECOND: 1/ 32,
+  SIXTEENTH: 1/16,
+  EIGHTH: 1/8,
+  QUARTER: 1/4,
+  HALF: 1/2,
+  WHOLE: 1,
+  DOTTED_WHOLE: 1 + 1/2,
+}
+
+const A4 = 440;
+const SEMITONE = 2 ** (1/12);
+
+const NoteFrequency = {
+  C4: A4/SEMITONE**9,
+  D4: A4/SEMITONE**7,
+  E4: A4/SEMITONE**5,
+  F4: A4/SEMITONE**4,
+  G4: A4/SEMITONE**2,
+  A4: A4,
+  B4: A4*SEMITONE**2,
+  C5: A4*SEMITONE**3,
+  REST: -1,
+}
