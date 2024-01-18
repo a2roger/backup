@@ -102,7 +102,7 @@ function windowResized() {}
 
 // global callback from the settings GUI
 function paramChanged(name) {
-  if (name == "bins" || name == "smoothing") {
+  if (name == "smoothing") {
     initalizeAnalysis();
   }
 }

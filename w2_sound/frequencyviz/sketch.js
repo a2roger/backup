@@ -1,5 +1,3 @@
-
-
 // parameters
 let p = {
   // toggle filling screen or not
@@ -18,38 +16,35 @@ let p = {
   bins: 8,
   binsMin: 4,
   binsMax: 10,
-}
+};
 
 // my sound file
 let sound;
 let soundFFT;
 
 function preload() {
-  sound = loadSound("data/mecha-action.mp3")
+  sound = loadSound("data/mecha-action.mp3");
 }
 
 function setup() {
-  createCanvas(600, 300)
+  createCanvas(600, 300);
 
   // add params to a GUI
   createParamGui(p, paramChanged);
 
-  // sound.play()
-  // sound.setLoop(true)
-  sound = new p5.AudioIn()
-  sound.start()
+  sound.play();
+  sound.setLoop(true);
 
   initalizeAnalysis();
 }
 
 function initalizeAnalysis() {
-  print(`creating FFT with ${2 ** p.bins} bins`)
+  print(`creating FFT with ${2 ** p.bins} bins`);
   soundFFT = new p5.FFT(p.smoothing, 2 ** p.bins);
   soundFFT.setInput(sound);
 }
 
 function draw() {
-
   background(250);
 
   let spectrum = soundFFT.analyze();
@@ -61,7 +56,7 @@ function draw() {
     for (let i = 0; i < spectrum.length; i++) {
       let x = map(i, 0, spectrum.length, 0, width);
       let h = -height + map(spectrum[i], 0, 255, height, 0);
-      rect(x, height, width / spectrum.length, h)
+      rect(x, height, width / spectrum.length, h);
     }
   }
 
@@ -82,15 +77,20 @@ function draw() {
 
   // spectral centroid visualized as red bar
   if (p.centroid) {
-
     let spectralCentroid = soundFFT.getCentroid();
     // the mean_freq_index calculation is for the display.
     let nyquist = 22050;
     let mean_freq_index = spectralCentroid / (nyquist / spectrum.length);
-    let centroidplot = map(log(mean_freq_index), 0, log(spectrum.length), 0, width);
-    fill(255, 0, 0, 200); 
+    let centroidplot = map(
+      log(mean_freq_index),
+      0,
+      log(spectrum.length),
+      0,
+      width
+    );
+    fill(255, 0, 0, 200);
     noStroke();
-    rect(centroidplot, 0, width / spectrum.length, height)
+    rect(centroidplot, 0, width / spectrum.length, height);
   }
 
   // frequency band energy visualized as red circles
@@ -101,20 +101,19 @@ function draw() {
       soundFFT.getEnergy("mid"),
       soundFFT.getEnergy("highMid"),
       soundFFT.getEnergy("treble"),
-    ]
+    ];
     energy.forEach(function (v, i) {
       let x = map(i, 0, energy.length - 1, 50, width - 50);
-      let y = map(v, 0, 255, height, 0)
-      let d = map(i, 0, energy.length - 1, 80, 30)
-      fill(255, 0, 0, 100);       
+      let y = map(v, 0, 255, height, 0);
+      let d = map(i, 0, energy.length - 1, 80, 30);
+      fill(255, 0, 0, 100);
       circle(x, y, d);
     });
   }
 }
 
-
 function keyPressed() {
-  if (key = " ") {
+  if ((key = " ")) {
     if (sound.isPlaying()) {
       sound.pause();
     } else {
@@ -123,11 +122,9 @@ function keyPressed() {
   }
 }
 
-function mousePressed() {
-}
+function mousePressed() {}
 
-function windowResized() {
-}
+function windowResized() {}
 
 // global callback from the settings GUI
 function paramChanged(name) {

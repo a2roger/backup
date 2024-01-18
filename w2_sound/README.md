@@ -192,7 +192,7 @@ let peak = {
 };
 ```
 
-The gsap tween has a callback to reset the peak level after the animation finishes, but a new tween "overwrites" any previous ones (i.e. the callback is only triggered when the animation fully completes).
+The gsap tween has a callback to reset the peak level _after_ the animation finishes, but a new tween "overwrites" any previous one (i.e. the callback is only triggered when the animation fully completes).
 
 ```js
 // start new animation with callback function on completion
@@ -208,6 +208,8 @@ gsap.to(peak, {
   },
 });
 ```
+
+This has the effect that: (1) each time a new highest peak is found, the peak visualization circle is drawn at full opacity and the animation starts to fade it out; (2) when the animation finishes, then the high peak value is reset to 0 and the very next frame the peak visualization will appear (and likely increase until it reaches a high peak within the animation duration time).
 
 ## Sketch: **`frequencyviz`**
 
