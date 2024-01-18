@@ -396,11 +396,11 @@ You can also try the [p5.PolySynth](https://p5js.org/reference/#/p5.PolySynth) c
 
 MIDI stands for _Musical Instrument Digital Interface_, and refers to a number of specifications, including a music file format. MIDI files only store the notes and instruments of a piece of music, like sheet music. This means that the file sizes are very small in comparison to normal audio files like MP3 and WAV. However, it also means that the computer playing the MIDI file needs to have a _sound bank_ with the sounds of different instruments, so it knows how to play it. Due to the compactness of the file format, many early computer music compositions were stored in MIDI or similar (e.g., MOD, XM) formats. -->
 
-## (Future TODO) Sketch: **`generativesound`**
+## Sketch: **`oscillator_agents`**
 
-This workshop really should also have a demo showing how to use the agent.js class to generate sound.
+A demo showing how to use the agent.js class to generate sound.
 
-**Discussion**: how could we do that?
+<!-- **Discussion**: how could we do that? -->
 
 # Sketchbook Entry
 
