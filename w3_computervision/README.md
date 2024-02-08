@@ -2,8 +2,6 @@
 
 Learn the basics of interactive computer vision and applied machine learning. We'll primarily focus on different types of body tracking which can be used as input for many kinds of interactive art installations.
 
-> **Make sure you have the latest 383 Workshop code from Gitlab** You should have cloned the course workshop GitLab project to your computer already, so updating is as easy as typing `git pull` in the terminal or selecting "Pull" from the "Source Control" sidebar in VS Code.
-
 ## Goals
 
 1. Learn about the [ml5.js](https://learn.ml5js.org/#/) library for computer vision tracking:
@@ -28,7 +26,7 @@ Learn the basics of interactive computer vision and applied machine learning. We
 
 **Daniel Shiffman's video ["A Beginner's Guide to Machine Learning with ml5.js"](https://youtu.be/jmznx0Q1fP0).** He introduces the ml5 library and explains key concepts behind behind machine learning.
 
-* This is the first video in a [series about machine learning and ml5](https://thecodingtrain.com/learning/ml5/).
+* This is the first video in a [series about machine learning and ml5](https://thecodingtrain.com/tracks/ml5js-beginners-guide).
 
 **Golan Levin, [Computer Vision for Artists and Designers: Pedagogic Tools and Techniques for Novice Programmers](https://link-springer-com.proxy.lib.uwaterloo.ca/article/10.1007/s00146-006-0049-2)** (UW Library link, alternatively [an archived version available through the Internet Archive](https://web.archive.org/web/20120330064719/http://www.flong.com/texts/essays/essay_cvad/))
 
@@ -85,7 +83,7 @@ facemesh = ml5.facemesh(video, modelReady);
 
 This means that each time a "predict" event is triggered inside the model, it should update the global variable with all the predictions for that frame. The predictions will be all the information for faces the model found in the scene, such as eye position, bounding box of each face, etc. 
 
-There are also various options you can set when initialization the model. 
+There are also various options you can set when initializing the model. 
 
 ## Accessing the Predictions
 
@@ -132,14 +130,14 @@ This code extracts the x, y, and z coordinates of the `leftCheek` annotation of 
 let pts = predictions[0].annotations['leftCheek'][0]
 ```
 
-The x and y coordinates are first and second element in the `pts` array:
+The x and y coordinates are the first and second element in the `pts` array:
 
 ```js
 let x = pts[0]
 let y = pts[1]
 ```
 
-There's a coding convention in JavaScript to assign array element values to multiple variables like this:
+There's a coding convention in JavaScript called "destructuring" to assign array element values to multiple variables like this:
 
 ```js
 let [x, y] = pts
@@ -150,17 +148,17 @@ Since we have an array of faces in the predictions json, we usually *iterate* th
 
 ```js
 // p will each face in the array
-for (let p of predictions) {
+predictions.forEach((p) => {
 	// now we can get the x and y coordinates in one step
 	let [x, y] = p.annotations['leftCheek'][0]
 	// using those x and y coordinates, we can do something
 	...
-}
+});
 ```
 
 ### Performance Considerations
 
-This sketch shows its performance in frames per second (FPS) in the top left of the output window (using the `frameRate` built-in variable). Ideally, this number should be about 60 FPS, but when doing computationally intensive computer vision, this number might reduce drastically. Below around 20 FPS, this latency will start to become readily apparent and could detract from a composition.
+This sketch shows its performance in frames per second (FPS) in the top left of the output window (using the `frameRate` built-in variable). Ideally, this number should be about 60 FPS, but when doing computationally intensive computer vision, this number might reduce drastically. Below around 20 FPS, this latency will start to become readily apparent and could detract from an artwork.
 
 With ml5, the prediction rate isn't directly tied to the framerate. This means your video frames may "get ahead" of the prediction, since a few video frames will be rendered before the next prediction arrives. 
 
@@ -183,9 +181,9 @@ Let's write some code to do a simple "face swap" with an emoji.
 3. In your faceSwap function, iterate through all predictions: 
 
 	```js
-	for (let p of predictions) {
+	predictions.foreach((p)) => {
 		
-	}
+	});
 	```
 
 4. In each loop iteration, get the value of the `leftCheek` and `rightCheek` annotated points:
@@ -213,7 +211,7 @@ Let's write some code to do a simple "face swap" with an emoji.
 	const y = (ly + ry) / 2
 	```
 
-7. Draw the emojii image at those points:
+7. Draw the emojii image centred at the midpoint:
    
    ```js
    image(emoji, x, y)
@@ -224,12 +222,14 @@ Let's write some code to do a simple "face swap" with an emoji.
 8. We could do some math and move the image up, but p5 also has a way of changing what part of the image is used for positioning. Change your code to this:
 
 	```js
+	push()
     imageMode(CENTER)
     image(emoji, x, y)
-    imageMode(CORNER)
+    pop()
 	```
 
-	It's important to change the imageMode back to CORNER after, or else your video frame will also be displayed from the center.
+	It's important to save the state of the drawing context with `push()` then restore it after with `pop()`. This will return the imageMode back to CORNER, if you don'
+	t, your video frame will also be displayed from the center.
 
 	This looks ok, but the 200 by 200 emoji size doesn't change when you move farther or close to the camera. 
 
@@ -370,18 +370,16 @@ Use `adjustX` and `adjustY` to change different parameters of the pipeline to cr
 
 ## Contours
 
-Sketch: **`contours`**
+~~Sketch: **`contours`**~~ <- demo seems to be broken
 
-Uses p5.cv.js, an opencv.js wrapper.
+~~Uses p5.cv.js, an opencv.js wrapper.~~
 
 
-Sketch: **`contoursV2`**
+Sketch: **`contours-cv`**
 
-Uses opencv.js directly.
+This sketch outlines different contours identified in a live feed of your computer's webcam. Contours are curves along regions with similar colours and lightness. With proper thresholding, you can use contour finding to track the outline of your arms or fingers as in works like *Text Rain* (Camille Utterbak and Romy Achituv, 1999) and *Hand From Above* (Chris O'Shea, 2009).
 
-<!-- This sketch outlines different contours identified in a live feed of your computer's webcam. Contours are curves along regions with similar colours and lightness. With proper thresholding, you can use contour finding to track the outline of your arms or fingers as in works like *Text Rain* (Camille Utterbak and Romy Achituv, 1999) and *Hand From Above* (Chris O'Shea, 2009).
-
-To find the contours, this sketch calls the `opencv.findContours()` method. It takes two boolean parameters: the first controls whether to find nested contours (holes in other contours), the second controls whether to sort the resulting contours by size in descending order. The method returns all the identified Contours as an `ArrayList` of `Countour`s (a type built into the Processing OpenCV library).
+<!-- To find the contours, this sketch calls the `opencv.findContours()` method. It takes two boolean parameters: the first controls whether to find nested contours (holes in other contours), the second controls whether to sort the resulting contours by size in descending order. The method returns all the identified Contours as an `ArrayList` of `Countour`s (a type built into the Processing OpenCV library).
 
 In `draw()`, we iterate through each of the contours and draw them in yellow. To draw the full contour directly, we just call `c.draw()`, where `c` is the contour. The library also provides methods to get simplified versions of the contour:
 * An approximate contour can be obtained with `Contour.getPolygonApproximation()` (drawn in red in the output window). This approximation retains most of the details of the full contour, but contains much fewer points and is therefore easier to process.
@@ -394,7 +392,7 @@ This sketch uses the mouse to tweak filter parameters. `adjustX()` controls morp
 
 ### Experiments
 
-Adjust the lighting, the background in your camera frame, and the pipeline so your body is recognized as a single contour.
+Adjust the lighting, the background in your camera frame, and the pre-processing so your body is recognized as a single contour.
 
 
 <!-- ## Colour Tracking

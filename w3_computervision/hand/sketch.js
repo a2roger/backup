@@ -2,8 +2,8 @@
 let p = {
   boundBox: true,
   annotations: false,
-  landmarks: false
-}
+  landmarks: false,
+};
 
 // the model
 let handpose;
@@ -12,11 +12,10 @@ let predictions = [];
 // video capture
 let video;
 
-function preload() {
-}
+function preload() {}
 
 function setup() {
-  createCanvas(640, 480)
+  createCanvas(640, 480);
 
   video = createCapture(VIDEO);
   video.size(width, height);
@@ -29,7 +28,7 @@ function setup() {
 
   // This sets up an event that fills the global variable "predictions"
   // with an array every time new predictions are made
-  handpose.on("predict", results => {
+  handpose.on("predict", (results) => {
     predictions = results;
   });
 
@@ -42,47 +41,46 @@ function modelReady() {
 }
 
 function draw() {
-  background('#0000cc')
+  background("#0000cc");
   image(video, 0, 0, width, height);
 
   // different visualizations
-  if (p.boundBox) drawBoundingBoxes()
-  if (p.landmarks) drawLandmarks()
-  if (p.annotations) drawAllAnnotations()
+  if (p.boundBox) drawBoundingBoxes();
+  if (p.landmarks) drawLandmarks();
+  if (p.annotations) drawAllAnnotations();
 
-    // if (predictions.length > 0) {
+  // if (predictions.length > 0) {
   //   drawAnnotation(predictions[0], "silhouette")
   // }
 
   // debug info
-  drawFps()
+  drawFps();
 }
 
 // draw bounding boxes around all detected hands
 function drawBoundingBoxes() {
+  let c = "#ff0000";
 
-  let c = "#ff0000"
-
-  for (let p of predictions) {
-    const bb = p.boundingBox
+  predictions.forEach((p) => {
+    const bb = p.boundingBox;
     // get bb coordinates
-    const x = bb.topLeft[0]
-    const y = bb.topLeft[1]
-    const w = bb.bottomRight[0] - x
-    const h = bb.bottomRight[1] - y
+    const x = bb.topLeft[0];
+    const y = bb.topLeft[1];
+    const w = bb.bottomRight[0] - x;
+    const h = bb.bottomRight[1] - y;
 
     // draw the bounding box
-    stroke(c)
-    strokeWeight(2)
-    noFill()
-    rect(x, y, w, h)
+    stroke(c);
+    strokeWeight(2);
+    noFill();
+    rect(x, y, w, h);
     // draw the confidence
-    noStroke()
-    fill(c)
-    textAlign(LEFT, BOTTOM)
-    textSize(20.0)
-    text(p.handInViewConfidence.toFixed(2), x, y - 10)
-  }
+    noStroke();
+    fill(c);
+    textAlign(LEFT, BOTTOM);
+    textSize(20.0);
+    text(p.handInViewConfidence.toFixed(2), x, y - 10);
+  });
 }
 
 /* list of annotations:      
@@ -95,94 +93,84 @@ palmBase
 */
 
 function drawAnnotation(prediction, name, color = "#0000ff") {
-  let pts = prediction.annotations[name]
+  let pts = prediction.annotations[name];
   if (pts.length == 1) {
-    const [x, y] = pts[0]
-    noStroke()
-    fill(color)
-    ellipse(x, y, 12)
+    const [x, y] = pts[0];
+    noStroke();
+    fill(color);
+    ellipse(x, y, 12);
   } else {
-    let [px, py] = pts[0]
+    let [px, py] = pts[0];
     for (let i = 1; i < pts.length; i++) {
-      const [x, y] = pts[i]
-      stroke(color)
-      strokeWeight(4)
-      noFill()
-      line(px, py, x, y)
-      px = x
-      py = y
+      const [x, y] = pts[i];
+      stroke(color);
+      strokeWeight(4);
+      noFill();
+      line(px, py, x, y);
+      px = x;
+      py = y;
     }
   }
 }
 
 function drawAllAnnotations() {
-
-  for (let p of predictions) {
-    let keyNum = Object.keys(p.annotations).length
-    let i = 0
+  predictions.forEach((p) => {
+    let keyNum = Object.keys(p.annotations).length;
+    let i = 0;
     for (let n in p.annotations) {
       // make a rainbow
-      let hue = map(i++, 0, keyNum, 0, 360)
-      let c = color(`hsb(${hue}, 100%, 100%)`)
+      let hue = map(i++, 0, keyNum, 0, 360);
+      let c = color(`hsb(${hue}, 100%, 100%)`);
       // draw the annotation
-      drawAnnotation(p, n, c)
+      drawAnnotation(p, n, c);
     }
-  }
+  });
 }
 
 // Draw dots for all detected landmarks
 function drawLandmarks() {
-
-  for (let p of predictions) {
-
+  predictions.forEach((p) => {
     const landmarks = p.landmarks;
 
     for (let k of landmarks) {
       const [x, y] = k;
 
-      stroke(128)
-      strokeWeight(1)
+      stroke(128);
+      strokeWeight(1);
       fill(255);
       ellipse(x, y, 10, 10);
     }
-  }
+  });
 }
-
 
 function keyPressed() {
   if (key == "?") {
-    if (predictions)
-      print(JSON.stringify(predictions, null, 2))
-  }  else if (key === "a") {
+    if (predictions) print(JSON.stringify(predictions, null, 2));
+  } else if (key === "a") {
     if (predictions) {
       for (a in predictions[0].annotations) {
-        print(a)
+        print(a);
       }
     }
   }
 }
 
-function mousePressed() {
-}
+function mousePressed() {}
 
-function windowResized() {
-}
+function windowResized() {}
 
 // global callback from the settings GUI
-function paramChanged(name) {
-}
+function paramChanged(name) {}
 
-
-fps = 0
+fps = 0;
 
 function drawFps() {
-  let a = 0.01
-  fps = a * frameRate() + (1 - a) * fps
-  stroke(255)
-  strokeWeight(0.5)
-  fill(0)
-  textAlign(LEFT, TOP)
-  textSize(20.0)
-  text(this.fps.toFixed(1), 10, 10)
+  let a = 0.01;
+  fps = a * frameRate() + (1 - a) * fps;
+  stroke(255);
+  strokeWeight(0.5);
+  fill(0);
+  textAlign(LEFT, TOP);
+  textSize(20.0);
+  text(this.fps.toFixed(1), 10, 10);
 }
-
