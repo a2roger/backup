@@ -1,27 +1,26 @@
-
-
 function preload() {
   // local file (in data/" directory of this sketch)
-  let fn = "data/ca_postal_codes.csv";
+  let filename = "data/ca_postal_codes.csv";
 
-// remember, always good to print out some information about the 
+  // remember, always good to print out some information about the
   // data you loaded to help diagnose problems
-  print(`Loading '${fn}'...`);
-  table = loadTable(fn, 'csv', 'header', function() {
-    print(`  loaded ${table.getRowCount()} rows in ${table.getColumnCount()} columns`);
+  print(`Loading '${filename}'...`);
+  table = loadTable(filename, "csv", "header", function () {
+    print(
+      `  loaded ${table.getRowCount()} rows in ${table.getColumnCount()} columns`
+    );
   });
 }
 
 function setup() {
-  
   // simple HTML textarea debug window
   createDebugWindow();
 
   // print out the column names and types (good for diagnosing problems)
-  for (c of table.columns) {
-    debug(`${c}: ${typeof(c)}`);
-  }
-  
+  table.columns.forEach((c) => {
+    debug(`${c}: ${typeof c}`);
+  });
+
   // try sorting the data
   //table.sort("Longitude");
 
@@ -30,16 +29,11 @@ function setup() {
     let r = table.getRow(i);
     let s = r.getString("Place Name");
     debug(`${i} ${s}`);
-  }  
+  }
 
   // just so you don't think this is broken
-  background(240)
-  fill(0)
-  textAlign(CENTER, CENTER);  
-  text('empty\ncanvas', width/2, height/2)
- }
-
-
-
-
-
+  background(240);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("empty\ncanvas", width / 2, height / 2);
+}

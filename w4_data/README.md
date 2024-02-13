@@ -21,8 +21,6 @@ Meta lists of online resources for data and data APIs.
 
 * [A collective list of free APIs for use in software and web development](https://github.com/public-apis/public-apis)
 
-* [50 Amazing Free Data Sources You Should Know (infogram)](https://infogram.com/blog/free-data-sources/)
-
 * [10 Great Places to Find Free Datasets for Your Next Project](https://careerfoundry.com/en/blog/data-analytics/where-to-find-free-datasets/)
 
 * [20 Awesome Sources of Free Data](https://www.searchenginejournal.com/free-data-sources/302601/)
@@ -207,7 +205,7 @@ which gives us a hue range of 0 to 360, and saturation, brightness, and opacity 
 
 ## Try and Experiment
 
-Let's start from the `csv` sketch to try and make a visualization similar to the `temperature` sketch. Try following these steps:
+Starting from the `csv` sketch, make a visualization similar to the `temperature` sketch. Try following these steps:
 
 1. Extract the longitude and latitude of each postal code using the `TableRow.getNum()` method (like in the temperature demo).
    
@@ -235,15 +233,15 @@ RSS stands for [Really Simple Syndication](https://en.wikipedia.org/wiki/RSS), a
 
 Sketch: **`rss`**
 
-This sketch loads an RSS feed of [curling news](http://www.cbc.ca/cmlink/rss-sports-curling) and shows how to do some XML processing by printing the title of each news story. The output is printed to the Processing console (there is no graphical output).
+This sketch loads a [CBC News RSS feed](https://www.cbc.ca/rss/) and shows how to do some XML processing by printing the title of each news story. The output is printed to the Processing console (there is no graphical output).
 
-RSS data is just a specific format of feed data stored as XML, and is usually hosted on a webserver. To load in the XML feed, we use the `loadXML()` function. This function can takes either a local filename or a URL pointing to a remote file, just like `loadStrings()` and `loadTable()`. `loadXML()` returns an instance of the p5.js `XML` class.
+RSS data is just a specific format of feed data stored as XML, and is usually hosted on a webserver. To load in the XML feed, we use the `loadXML()` function. This function takes either a local filename or a URL pointing to a remote file (just like `loadStrings()` and `loadTable()`). `loadXML()` returns an instance of the p5.js `XML` class.
 
-To figure out where the data is within the XML RSS feed, you can inspect it using a web browser, or download it and use a text editor. Try opening the [feed XML in the sketch](http://www.cbc.ca/cmlink/rss-sports-curling) to see what it looks like. The `<![CDATA[ ... ]]>` tags you see around text are special tags indicating that the contained text is *character data*, and should not be interpreted as XML itself.
+To figure out where the data is within the XML RSS feed, you can inspect it using a web browser, or download it and use a text editor. Try opening the [feed XML in the sketch](https://www.cbc.ca/webfeed/rss/rss-sports-curling) to see what it looks like. The `<![CDATA[ ... ]]>` tags you see around text are special tags indicating that the contained text is *character data*, and should not be interpreted as XML itself.
 
 In the case of this curling news, there is one `channel` tag (called an xml "element") that contains several `item` tags. Each `item` a single news story with a `title` tag for the title as well as other elements for things the publication date, story description, etc. 
 
-To access constent in a specific xml element, we use `.getChild("channel")` to get the channel tag, and then `.getChildren("item")` to get an array of `XML` objects representing each of the item elements. Iterating through each item element, we get the title text with `.getChild("title").getContent()`.
+To access content in a specific xml element, we use `.getChild("channel")` to get the channel tag, and then `.getChildren("item")` to get an array of `XML` objects representing each of the item elements. Iterating through each item element, we get the title text with `.getChild("title").getContent()`.
 
 ## Weather XML
 
@@ -251,11 +249,13 @@ Sketch: **`forecast`**
 
 This sketch loads a [weather feed](https://weather.gc.ca/rss/city/on-82_e.xml) from the Government of Canada, and displays current weather conditions for Canadian cities. Press a key to get the weather for a new random city (unless it guess the wrong city code).
 
-As with the `rss` sketch, we have to understand the structure of the feed and can do this by opening the XML in a web browser. 
+As with the `rss` sketch, we have to understand the structure of the feed. You can do this by opening the XML in a web browser. 
 * Near the top is a `title` tag with the name of the weather location. 
 * Farther down are a series of `entry` tags, each one has a `title` tag that describes what is in the entry. For example "Current Conditions" or a day and time period for a forecast.
 
-The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99. 
+The Government of Canada's weather website indexes each region by province and an id number. For example, Kitchener-Waterloo is Ontario 83, Toronto is Ontario 143, and Vancouver is British Columbia 74. Because the mapping of these numbers is unclear, this sketch tries a random number from 1 to 99. There is a [list of weather feed URLs](https://www.canada.ca/en/environment-climate-change/services/weather-general-tools-resources/weatheroffice-online-services/data-services.html), so it would be possible to create a data file matching city name to id number. 
+
+> It might be interesting to use combine the live weather RSS with the postal code data source. 
 
 ### Other Weather Feeds and Resources 
 
@@ -278,7 +278,7 @@ http://www.grt.ca/en/about-grt/open-data.aspx -->
 
 Let's extract a block of html with various readings from a real ocean buoy. Try following these steps:
 
-1. Start with this RSS feed: [http://www.ndbc.noaa.gov/data/latest_obs/51202.rss]()
+1. Start with this RSS feed: <https://www.ndbc.noaa.gov/data/latest_obs/51202.rss>
 2. Open it in the browser and look at the XML (note this one has a style sheet, so you may need to "view source" to see raw XML)
 3. Locate the `<description>` block.
 4. Create a sketch to open the feed, extract the `<description>` as a string, and print out the value.
@@ -296,20 +296,23 @@ To experiment further:
 
 Sketch: **`streetview1`**
 
-This sketch shows how to grab Google streetview images using the Google Streetview Application Programming Interface (API). An API is a way for organizations to share data and functionality with programmers without the programmers having access or knowledge of the internal workings of the server application. There isn't any standard way to design an API, often each one is slightly different. In almost all cases, an API will require the developer to have a key so the organization can identify who's accessing their server and in some cases, also charge developers access.
+This sketch shows how to grab Google streetview images using the [Google Street View Static Application Programming Interface (API)](https://developers.google.com/maps/documentation/streetview). An API is a way for organizations to share data and functionality with programmers without the programmers having access or knowledge of the internal workings of the server application. There isn't any standard way to design an API, often each one is slightly different. In almost all cases, an API will require the developer to have a key so the organization can identify who's accessing their server and in some cases, also charge developers access.
 
-Google Streetview uses a *querystring API*, meaning that it works by adding parameters to a special API URL performs actions using the API. Think of it like a function call using a special URL.
+This Street View API uses a *querystring API*, meaning that it works by adding parameters to a special API URL performs actions using the API. Think of it like a function call using a special URL.
 
-To get an image from Streetview, the URL *endpoint* is: https://maps.googleapis.com/maps/api/streetview. The parameters `size` (how big the image should be), `location` (a string representing a location, e.g., "48.8742,2.2948", "Kitchener,ON"), `fov`, `heading`, and `pitch` (these three represent the camera field-of-view and direction at the given `location`), and `key` (the API key you generated).
+To get an image from Street View, the URL *endpoint* is: https://maps.googleapis.com/maps/api/streetview. The parameters `size` (how big the image should be), `location` (a string representing a location, e.g., "48.8742,2.2948", "Kitchener,ON"), `fov`, `heading`, and `pitch` (these three represent the camera field-of-view and direction at the given `location`), and `key` (the API key you generated).
 
 The start of the parameter list is indicated with "`?`" in the URL. Each parameter is included in the format `parameter=value`; for example, `size=500x500`. Multiple parameters are separated with "`&`". The sketch concatenates strings together to form a complete querystring:
 
 ```js
-let url = "https://maps.googleapis.com/maps/api/streetview" + 
-  "?size=" + w + "x" + h + 
-  "&location=" + location + 
-  "&fov=" + fov + "&heading=" + head + "&pitch=" + pitch + 
-  "&key=" + API_KEY;
+  let url =
+    "https://maps.googleapis.com/maps/api/streetview" +
+    `?size=${w}x${h}` +
+    `&location=${location}` +
+    `&fov=${fov}` +
+    `&heading=${head}` +
+    `&pitch=${pitch}` +
+    `&key=${API_KEY}`;
 ```
 
 ### API Key Setup
@@ -320,13 +323,26 @@ You need a [Google Streetview API Key](https://developers.google.com/maps/docume
 uX83P2JVh0z49wJroBu9yAVdejmhFUoFAIzaS7F
 ```
 
-To get one, you need to have a Google account and you do need to provide billing information to Google (i.e. a credit card). You may already have this setup if you buy apps on the Android Play Store.
+To get one, you need to have a Google account and you  need to provide billing information to Google (i.e. a credit card). You may already have this setup if you buy apps on the Android Play Store.
 
-> The cost to use this API is very low, about 0.8 cents per image with a credit of US$200 each month. So you'd have to retrieve about 25,000 streetview images in a month before you start paying. That's like retrieving one streetview image every second for more than two weeks, or creating a sketch that retrieves a streetview images every frame (at 60 FPS) and running your sketch for 7 hours. 
+> The cost to use this API is very low, about 0.8 cents per image with a credit of US$200 each month. So you'd have to retrieve about 25,000 street view images in a month before you start paying. That's like retrieving one street view image every second for more than two weeks, or creating a sketch that retrieves a street view images every frame (at 60 FPS) and running your sketch for 7 hours. 
 
-We also recommend that, for the course, you enable the "Allow Unsigned Usage" option of your Streetview API key, to avoid having to cryptographically sign every request to the API. To do this, navigate to:
+#### Steps 
+
+> ⚠️ **Browser extensions that block cookies or ads will cause issues with Google Cloud Console.** Make sure these are disabled. 
+
+1. Open the [Google Cloud Console](https://console.cloud.google.com/). 
+2. Go to 'APIs & Services', then 'Credentials'.
+3. Click '+ CREATE CREDENTIALS' and choose 'API key'
+4. In the API created dialog, you'll see a warning that your key is unrestricted. Choose "edit API key" to restrict it. 
+5. Set the 'API restrictions' to 'Restrict key'. Select these the 'Street View Static API'. 
+6. Press 'Save' and and your key is ready to be used. 
+7. Test your key by pasting it *at the end of this URL*: https://maps.googleapis.com/maps/api/streetview?location=Z%C3%BCrich&size=400x400&key=
+   
+
+<!-- We also recommend that, for the course, you enable the "Allow Unsigned Usage" option of your Street View API key, to avoid having to cryptographically sign every request to the API. To do this, navigate to:
 https://console.cloud.google.com/google/maps-apis/credentials
-Select "Street View Static API" from the drop-down, and then select "ALLOW UNSIGNED USAGE".
+Select "Street View Static API" from the drop-down, and then select "ALLOW UNSIGNED USAGE". -->
 
 ### API Key Security
 
@@ -336,17 +352,17 @@ However, it's impossible to hide an API key when it's used directly by a JavaScr
 
 > For this course, we are most likely creating artworks that are not hosted on a public server, so it should be fine to use the non-server approach used in this demo sketch.
 
-## Processing
+## Combining Different Data Sources
 
 Sketch: **`streetview2`**
 
 This sketch grabs images of random postal code locations.
 
-> Note: You need a Google Streetview API Key to run this code, see above.
+> ⚠️ Note: You need a Google Streetview API Key to run this code, see above.
 
-This sketch uses a csv table of Canadian postal codes and latitude-longitude coordinates as the source of locations. It picks a random postal code, and passes the corresponding coordinates to the Streetview API. This is an example of how an artwork might combine multiple data sources in one piece.
+This sketch uses a csv table of Canadian postal codes and latitude-longitude coordinates as the source of locations. It picks a random postal code, and passes the corresponding coordinates to the Street View API. This is an example of how an artwork might combine multiple data sources in one piece.
 
-Note in some cases, there is no streeview image, so you'll see a defaut grey image not found image. 
+Note in some cases, there is no street view image, so you'll see a default grey image not found image. 
 
 > There is some unfinished code for a `isStreetViewImage()` function to check if there's a streetview image at the specified lat and long location.
 It uses the `metadata` Streetview "endpoint" which returns a JSON object describing the image. For instance, there's a `status` that will be `"OK"` if  the location has a corresponding image. 

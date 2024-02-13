@@ -1,24 +1,23 @@
 /*
  * rss feed data demo
  *   Loads and displays a news feed from CBC
- * 
+ *
  */
 
 function setup() {
-
   createDebugWindow();
 
   // local version for testing
   // let src = 'data/rss-sports-curling.rss';
 
   // load live rss feed
-  let src = 'http://www.cbc.ca/cmlink/rss-sports-curling';
-  // IMPORTANT! loading from remote files will cause "CORS" error 
+  let src = "https://www.cbc.ca/webfeed/rss/rss-sports-curling";
+  // IMPORTANT! loading from remote files will cause "CORS" error
   // until you allow it in your browser
 
   debug("Loading rss feed: " + src);
 
-  let xml = loadXML(src, function () {
+  loadXML(src, (xml) => {
     debug("  loaded");
 
     //println(xml);
@@ -28,8 +27,7 @@ function setup() {
     debug(items.length + " items");
 
     for (let x of items) {
-
-      // best to check if element is there using 
+      // best to check if element is there using
       // x.hasAttribute("cbc:type") and  x.getString("cbc:type")
       // but we'll just go for it and hope for the best
       debug(x.getChild("title").getContent());
@@ -37,8 +35,8 @@ function setup() {
   });
 
   // just so you don't think this is broken
-  background(240)
-  fill(0)
-  textAlign(CENTER, CENTER);  
-  text('empty\ncanvas', width/2, height/2)
+  background(240);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("empty\ncanvas", width / 2, height / 2);
 }
