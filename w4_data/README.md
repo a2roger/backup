@@ -8,8 +8,8 @@ In this workshop, we'll review different code examples that illustrate technique
 * Use `Table` to load and index data from a CSV file.
 * Use `XML` to load and search for content in a RSS feed.
 * Create querystring URLs to access data.
-* Use `JSONObject` to process responses from data sources.
-* Learn about OAuth and APIs like Twitter's
+* ~~Use `JSONObject` to process responses from data sources.~~
+
 
 ## Resources
 
@@ -26,10 +26,6 @@ Meta lists of online resources for data and data APIs.
 * [20 Awesome Sources of Free Data](https://www.searchenginejournal.com/free-data-sources/302601/)
 
 * [100+ of the Best Free Data Sources For Your Next Project](https://www.columnfivemedia.com/100-best-free-data-sources-infographic/)
-
-## Recommended Viewing and Reading 
-
-TBD
 
 ## Set Up
 
@@ -375,18 +371,14 @@ Set up your own Google API key, and run the streetview1 and streetview2 code.
 
 [Google Street View Image API](https://developers.google.com/maps/documentation/streetview/intro)
 
-# OAuth APIs
+<!-- # OAuth APIs
 
-## Twitter API to Access Tweets
+Twitter/X now charges for most API access and they changed their APIs: so previous OAuth demo with Twitter is now broken and unable to work without $100/month fee. 
 
-Sketch: **`twitter`**
-
-This sketch grabs a set of 100 tweets matching a given keyword ("#poem" by default).
-It uses [**CodeBird JS**](https://github.com/jublo/codebird-js) and requires Twitter API OAuth keys and tokens. 
 
 ### OAuth
 
-See the `readme.md` file in the twitter code folder for instructions on setting up OAuth on Twitter. You will need 4 strings of characters for OAuth, which you'll put in a `auth.js` file in the `_private/` folder. Here's an example:
+You will need 4 strings of characters for OAuth, which you'll put in a `auth.js` file in the `_private/` folder. Here's an example:
 
 ```json
 {
@@ -395,46 +387,9 @@ See the `readme.md` file in the twitter code folder for instructions on setting 
     "TOKEN": "364475473-kMBumzdzoxKZcduTwFGizG0iyMldRx1CQtcRXm2w",
     "TOKEN_SECRET": "KBjBbqUZ0of2SQZDFEqSFof7kQPpENigIh7d3BMUQyCjN"
 }
-```
+``` -->
 
-### Using Codebird to fetch tweets
 
-Create a Codebird object a global variable:
-
-```js
-var cb = new Codebird();
-```
-
-Set the OAuth keys:
-
-```js
-// set OAuth keys
-cb.setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
-cb.setToken(TOKEN, TOKEN_SECRET);
-```
-
-Create a JSON object with to describe the parameters for a Twitter API function call:
-
-```js
-let parameters = {
-    q: keyword,
-    result_type: 'recent',
-    count: 20
-  };
-```
-
-Call the Twitter API function with the parameters and provide a callback function for the reply:
-
-```
-cb.__call(
-    'search_tweets',
-    parameters,
-    function(reply) { ... });
-```
-
-The reply from a 'search_tweets' has an array of `statuses`. Each status has several fields like the tweet `text`, language of the tweet, an array of tags that were used, etc.
-
-There is much more to [Twitter Developer APIs](https://developer.twitter.com/en.html) and search Tweet functionality in [CodeBird JS](https://github.com/jublo/codebird-js) library. 
 
 
 # Sketchbook Exercise 
